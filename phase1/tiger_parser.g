@@ -32,6 +32,10 @@ funct_declaration_list
     |
     ;
 
+funct_declaration
+    :   ret_type Identifier 
+    |
+
 
 
 
