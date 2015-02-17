@@ -1,4 +1,4 @@
-lexer grammar Tiger;
+parser grammar Tiger;
 
 options {
 
