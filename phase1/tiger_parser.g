@@ -136,3 +136,79 @@ stat_seq
     ;
 
 stat
+    :   value ASSIGN expr SEMI
+    |   IF expr THEN stat_seq ENDIF
+    |   IF expr THEN stat_seq ELSE stat_seq ENDIF SEMI
+    |   WHILE expr DO stat_seq ENDDO
+    |   FOR Identifier ASSIGN index_expr TO index_expr DO stat_seq ENDDO
+    |   opt_prefix Identifier LPAREN expr_list RPAREN SEMI
+    |   BREAK SEMI
+    |   RETURN expr SEMI
+    |   block
+    ;
+
+opt_prefix
+    :   value ASSIGN
+    |   
+    ;
+
+expr
+    :   const
+    |   value
+    |   expr binary_operator expr
+    |   LPAREN expr RPAREN
+    ;
+
+const
+    :   IntegerLiteral
+    |   FixedPointLiteral
+    ;
+
+/* arithmetic, comparative and logical and & and or | operators*/
+binary_operator
+    :   PLUS
+    |   MINUS
+    |   MULT
+    |   DIV
+    |   EQ
+    |   NEQ
+    |   LESSER
+    |   LESSEREQ
+    |   GREATER
+    |   GREATEREQ
+    |   AND
+    |   OR
+    ;
+
+expr_list
+    :   expr expr_list_tail
+    |
+    ;
+
+expr_list_tail
+    :   COMMA expr expr_list_tail
+    |   
+    ;
+
+value
+    :   Identifier value_tail
+    ;
+
+value_tail
+    :   '[' index_expr']'
+    |   '[' index_expr']' '[' index-expr ']'
+    |
+    ;
+
+index_expr
+    :   IntegerLiteral
+    |   Identifier
+    |   index_expr index_oper index_expr
+    ;
+
+/* +. and * are the only ones allowed in index expressions*/
+index_oper
+    :   PLUS
+    |   MINUS
+    |   MULT
+    ;
