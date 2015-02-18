@@ -106,7 +106,7 @@ Digits
     :   ('0'..'9')+
     ;
 
-IntergerLiteral
+IntegerLiteral
     :   0 | natural_number digit*
     ;
 
