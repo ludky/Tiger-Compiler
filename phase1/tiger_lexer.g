@@ -68,7 +68,7 @@ COMMA       :   ',';
 COLON       :   ':';
 SEMI        :   ';';
 LPAREN      :   '(';
-ROAREN      :   ')';
+RPAREN      :   ')';
 LBRACK      :   '{';
 RBRACK      :   '}';
 PLUS        :   '+';
