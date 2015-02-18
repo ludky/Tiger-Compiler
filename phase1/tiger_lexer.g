@@ -80,7 +80,7 @@ NEQ         :   '<>';
 LESSER      :   '<';
 LESSEREQ    :   '<=';
 GREATER     :   '>';
-GREATERQ    :   '>=';
+GREATEREQ    :   '>=';
 AND         :   '&';
 OR          :   '|';
 ASSIGN      :   ':=';
