@@ -27,14 +27,13 @@ tiger_program
     ;
 
 funct_declaration_list
-    :   funct_declaration
-    |   funct_declaration_list
+    :   funct_declaration funct_declaration_list
     |
     ;
 
 funct_declaration
-//    :   ret_type Identifier '(' param_list ')' BEGIN block_list END ';'
-    :   ret_type Identifier LPAREN param_list RPAREN BEGIN block_list END SEMI
+//    :   ret_type FUNCTION Identifier '(' param_list ')' BEGIN block_list END ';'
+    :   ret_type FUNCTION Identifier LPAREN param_list RPAREN BEGIN block_list END SEMI
     ;
 
 /* main is mandatory in every program, no parameters, no return value. */
