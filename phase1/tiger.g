@@ -52,7 +52,7 @@ NatrualNumber
     ;
 
 FixedPointLiteral
-    :   (IntergerLiteral '.' digit?digit?digit)
+    :   (IntergerLiteral '.' digit | digit digit | digit digit digit)
     ;
 
 
