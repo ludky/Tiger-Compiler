@@ -2,6 +2,7 @@ grammar Tiger;
 
 
 options {
+    k = 1;
     language = Java;
 }
 
@@ -18,51 +19,6 @@ tokens {
 
 program
     :   tiger_program
-    ;
-
-
-
-
-//Lexical rules
-
-Identifier
-    :   Letter (Letter | Digit | '_')*
-    ;
-
-fragment
-Letter
-    :   ('A'..'Z')
-    |   ('a'..'z')
-    ;
-fragment
-Digit
-    :   ('0'..'9')
-    ;
-fragment
-Digits
-    :   ('0'..'9')+
-    ;
-
-NaturalNumber
-    :    ('1'..'9')
-    ;
-
-IntegerLiteral
-    :   0 | NaturalNumber Digit*
-    ;
-
-fragment
-NatrualNumber
-    :   ('1'..'9')
-    ;
-
-FixedPointLiteral
-    :   (IntegerLiteral '.' Digit | Digit Digit | Digit Digit Digit)
-    ;
-
-
-Comment
-    :   '/*' ( options {greedy=false;} : . )* '*/'
     ;
 
 // Reserved key words
@@ -111,7 +67,47 @@ AND         :   '&';
 OR          :   '|';
 ASSIGN      :   ':=';
 
+//Lexical rules
 
+Identifier
+    :   Letter (Letter | Digit | '_')*
+    ;
+
+fragment
+Letter
+    :   ('A'..'Z')
+    |   ('a'..'z')
+    ;
+fragment
+Digit
+    :   ('0'..'9')
+    ;
+fragment
+Digits
+    :   ('0'..'9')+
+    ;
+
+NaturalNumber
+    :    ('1'..'9')
+    ;
+
+IntegerLiteral
+    :   0 | NaturalNumber Digit*
+    ;
+
+fragment
+NatrualNumber
+    :   ('1'..'9')
+    ;
+
+FixedPointLiteral
+    :   (IntegerLiteral '.' Digit | Digit Digit | Digit Digit Digit)
+    ;
+
+
+Comment
+    :   '/*' ( options {greedy=false;} : . )* '*/'
+    ;
 
 
 //parser
@@ -187,13 +183,14 @@ var_declaration_list
 
 type_declaration
 //    :   type Idemtifier '=' type ';'
-    :   type Identifier EQ type SEMI
+//    :   type Identifier EQ type SEMI
+    : TYPE Identifier EQ type SEMI
     ;
 
 type
     :   base_type
-    |   ARRAY '[' IntegerLiteral ']' OF base_type
-    |   ARRAY '[' IntegerLiteral ']' '[' IntegerLiteral ']' OF base_type
+    |   ARRAY LBRACK IntegerLiteral RBRACK OF base_type
+    |   ARRAY LBRACK IntegerLiteral RBRACK LBRACK IntegerLiteral RBRACK OF base_type
     ;
 
 type_id
@@ -208,7 +205,7 @@ base_type
 
 var_declaration
 //    :   var Identifier ':' type_id optional_init ';'
-    :   VAR Identifier COLON type_id optional_init SEMI
+    :   VAR id_list COLON type_id optional_init SEMI
     ;
 
 id_list
@@ -223,16 +220,17 @@ optional_init
     ;
 
 stat_seq
-    :   stat
-    |   stat stat_seq
+//    :   stat
+//    |   stat stat_seq
+    : stat (stat_seq)?
     ;
 
 stat
     :   value ASSIGN expr SEMI
-    |   IF expr THEN stat_seq ENDIF
+    |   IF expr THEN stat_seq ENDIF SEMI
     |   IF expr THEN stat_seq ELSE stat_seq ENDIF SEMI
-    |   WHILE expr DO stat_seq ENDDO
-    |   FOR Identifier ASSIGN index_expr TO index_expr DO stat_seq ENDDO
+    |   WHILE expr DO stat_seq ENDDO SEMI
+    |   FOR Identifier ASSIGN index_expr TO index_expr DO stat_seq ENDDO SEMI
     |   opt_prefix Identifier LPAREN expr_list RPAREN SEMI
     |   BREAK SEMI
     |   RETURN expr SEMI
