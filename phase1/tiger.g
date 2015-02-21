@@ -377,15 +377,52 @@ value_tail
     |
     ;
 
+/*
 index_expr
     :   IntegerLiteral
     |   Identifier
     |   index_expr index_oper index_expr
     ;
+*/
+
+
+
+index_expr
+    :	index_expr2 index_expr_add
+    ;
+    
+index_expr2
+    :	primary_index_expr index_expr_mult
+    ;       
+
+
+primary_index_expr
+    :	IntegerLiteral
+    |  	Identifier
+    ;
+
+index_expr_mult
+    :	index_mult primary_index_expr index_expr_mult
+    ;
+    
+index_mult
+    :	'*'
+    ;
+    
+index_expr_add
+    :	index_add index_expr2 index_expr_add
+    ;
+    
+index_add
+    :	'+'
+    |   '-'
+    ;
+
 
 /* +. and * are the only ones allowed in index expressions*/
+/*
 index_oper
-    :   PLUS
-    |   MINUS
-    |   MULT
+    :   index_add
+    |   index_mult
     ;
+    */
