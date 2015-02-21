@@ -1,5 +1,6 @@
 grammar Tiger;
 
+
 options {
     language = Java;
 }
@@ -25,7 +26,7 @@ program
 //Lexical rules
 
 Identifier
-    :   letter (letter | digit | '_')*
+    :   Letter (Letter | Digit | '_')*
     ;
 
 fragment
@@ -42,8 +43,12 @@ Digits
     :   ('0'..'9')+
     ;
 
+NaturalNumber
+    :    ('1'..'9')
+    ;
+
 IntegerLiteral
-    :   0 | natural_number digit*
+    :   0 | NaturalNumber Digit*
     ;
 
 fragment
@@ -52,7 +57,7 @@ NatrualNumber
     ;
 
 FixedPointLiteral
-    :   (IntergerLiteral '.' digit | digit digit | digit digit digit)
+    :   (IntegerLiteral '.' Digit | Digit Digit | Digit Digit Digit)
     ;
 
 
@@ -81,7 +86,6 @@ DO          :   'do';
 ENDDO       :   'enddo';
 FOR         :   'for';
 TO          :   'to';
-DO          :   'do';
 BREAK       :   'break';
 RETURN      :   'return';
 
@@ -183,13 +187,13 @@ var_declaration_list
 
 type_declaration
 //    :   type Idemtifier '=' type ';'
-    :   type Idemtifier EQ type SEMI
+    :   type Identifier EQ type SEMI
     ;
 
 type
     :   base_type
-    |   array '[' IntegerLiteral ']' OF base_type
-    |   array '[' IntegerLiteral ']' '[' IntegerLiteral ']' OF base_type
+    |   ARRAY '[' IntegerLiteral ']' OF base_type
+    |   ARRAY '[' IntegerLiteral ']' '[' IntegerLiteral ']' OF base_type
     ;
 
 type_id
@@ -204,7 +208,7 @@ base_type
 
 var_declaration
 //    :   var Identifier ':' type_id optional_init ';'
-    :   var Identifier COLON type_id optional_init SEMI
+    :   VAR Identifier COLON type_id optional_init SEMI
     ;
 
 id_list
@@ -286,9 +290,8 @@ comparative_expr
     ;
 
 logic_expr
-    :   and_or_operator expr_lev3 logic expr
-
-
+    :   and_or_operator expr_lev3 logic_expr
+    ;
 
 
 const
@@ -370,7 +373,7 @@ value
 
 value_tail
     :   '[' index_expr']'
-    |   '[' index_expr']' '[' index-expr ']'
+    |   '[' index_expr']' '[' index_expr ']'
     |
     ;
 
