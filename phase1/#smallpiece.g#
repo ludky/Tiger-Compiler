@@ -1,9 +1,0 @@
-arithmetic_expr
-    expr_lev1 expr1_tail
-
-expr1_tail
-    :   mult expr1_tail
-    |
-    ;
-
-expr_lev2
