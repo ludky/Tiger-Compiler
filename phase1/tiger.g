@@ -269,7 +269,7 @@ stat
     :	if_else_expr ENDIF SEMI
     |   WHILE expr DO stat_seq ENDDO SEMI
     |   FOR Identifier ASSIGN index_expr TO index_expr DO stat_seq ENDDO SEMI
-  //  |	Identifier ((value_tail ASSIGN expr_or_list) | LPAREN expr_list RPAREN) SEMI
+    |	Identifier ((value_tail ASSIGN expr_or_list) | LPAREN expr_list RPAREN) SEMI
     |   BREAK SEMI
     |   RETURN expr SEMI
     |   block
