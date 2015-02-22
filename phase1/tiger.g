@@ -114,7 +114,7 @@ Comment
 tiger_program
     :   type_declaration_list funct_declaration_list main_function
     ;
-
+/*
 funct_declaration_list
     :   funct_declaration funct_declaration_list
     |
@@ -125,6 +125,12 @@ funct_declaration
  //   :	ret_type FUNCTION Identifier LPAREN param_list RPAREN BEGIN block_list END SEMI	
     :   VOID (funct_declaration_tail)?
     |	type_id funct_declaration_tail
+    ;
+*/
+
+funct_declaration_list
+    :   type_id funct_declaration_tail funct_declaration_list
+    |   VOID (funct_declaration_tail funct_declaration_list)?
     ;
     
 funct_declaration_tail
