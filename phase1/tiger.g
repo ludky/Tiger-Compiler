@@ -266,8 +266,14 @@ stat
 
       
 expr_or_list
-    :	Identifier? (expr | LPAREN expr_list RPAREN)
+    : const expr_tail
+    | Identifier (value_tail expr_tail | LPAREN expr_list RPAREN)
+    | LPAREN expr RPAREN expr_tail
     ;
+    
+expr_tail
+	: mult_expr addtion_expr comparative_expr logic_expr
+	;
 
 
 
