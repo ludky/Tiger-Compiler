@@ -122,12 +122,13 @@ funct_declaration_list
 
 funct_declaration
 //    :   ret_type FUNCTION Identifier '(' param_list ')' BEGIN block_list END ';'
-    :   VOID funct_declaration_tail
-//    :	type_id funct_declaration_tail
+ //   :	ret_type FUNCTION Identifier LPAREN param_list RPAREN BEGIN block_list END SEMI	
+    :   VOID (funct_declaration_tail)?
+    |	type_id funct_declaration_tail
     ;
-
+    
 funct_declaration_tail
-    :	FUNCTION Identifier LPAREN param_list RPAREN BEGIN block_list END SEMI
+    :	FUNCTION Identifier LPAREN param_list RPAREN BEGIN block_list END SEMI funct_declaration
     ;
 
 
@@ -135,13 +136,14 @@ funct_declaration_tail
 /* main is mandatory in every program, no parameters, no return value. */
 main_function
 //    :   VOID MAIN '(' ')' BEGIN block_list END ';'
-    :   VOID MAIN LPAREN RPAREN BEGIN block_list END SEMI
+    :   MAIN LPAREN RPAREN BEGIN block_list END SEMI
     ;
-
+/*
 ret_type
     :   VOID
     |   type_id
     ;
+*/
 
 param_list
     :   param param_list_tail
