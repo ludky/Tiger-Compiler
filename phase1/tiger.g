@@ -1,4 +1,4 @@
-grammar Tiger;
+grammar tiger;
 
 
 options {
@@ -92,7 +92,7 @@ NaturalNumber
     ;
 
 IntegerLiteral
-    :   0 | NaturalNumber Digit*
+    :   '0' | NaturalNumber Digit*
     ;
 
 fragment
@@ -404,7 +404,7 @@ index_expr_mult
     ;
     
 index_mult
-    :	'*'
+    :	MULT
     ;
     
 index_expr_add
@@ -412,8 +412,8 @@ index_expr_add
     ;
     
 index_add
-    :	'+'
-    |   '-'
+    :	PLUS
+    |   MINUS
     ;
 
 
