@@ -4,23 +4,16 @@ grammar tiger;
 options {
     k = 1;
     language = Java;
-    output = AST;
+  //  output = AST;
 }
-
-tokens {
-
-}
-
-@header {
-
-}
-
 
 
 
 program
-    :   tiger_program
+ //   :   tiger_program
+    :	type_declaration_list funct_declaration_list main_function
     ;
+
 
 // Reserved key words
 FUNCTION    :   'function';
@@ -112,9 +105,12 @@ Comment
 
 
 //parser
+/*
 tiger_program
     :   type_declaration_list funct_declaration_list main_function
     ;
+*/
+
 
 /*
 funct_declaration_list
@@ -124,11 +120,19 @@ funct_declaration_list
 
 funct_declaration
 //    :   ret_type FUNCTION Identifier '(' param_list ')' BEGIN block_list END ';'
- //   :	ret_type FUNCTION Identifier LPAREN param_list RPAREN BEGIN block_list END SEMI	
-    :   funct_declaration_tail
-    |	type_id funct_declaration_tail
+    :	ret_type FUNCTION Identifier LPAREN param_list RPAREN BEGIN block_list END SEMI	
+
     ;
-*/    
+ret_type
+    :	VOID
+    |	type_id
+    ;
+
+*/
+
+
+
+
 funct_declaration_list
     : type_id funct_declaration_tail funct_declaration_list
     | VOID (funct_declaration_tail funct_declaration_list)?
@@ -141,10 +145,16 @@ funct_declaration_tail
 
     
 /* main is mandatory in every program, no parameters, no return value. */
+
+
+
+
 main_function
 //    :   VOID MAIN '(' ')' BEGIN block_list END ';'
     :   VOID MAIN LPAREN RPAREN BEGIN block_list END SEMI
     ;
+
+
 /*
 ret_type
     :   VOID
@@ -259,7 +269,7 @@ stat
     :	if_else_expr ENDIF SEMI
     |   WHILE expr DO stat_seq ENDDO SEMI
     |   FOR Identifier ASSIGN index_expr TO index_expr DO stat_seq ENDDO SEMI
-    |	Identifier ((value_tail ASSIGN expr_or_list) | LPAREN expr_list RPAREN) SEMI
+  //  |	Identifier ((value_tail ASSIGN expr_or_list) | LPAREN expr_list RPAREN) SEMI
     |   BREAK SEMI
     |   RETURN expr SEMI
     |   block
