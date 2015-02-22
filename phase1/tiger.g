@@ -122,9 +122,16 @@ funct_declaration_list
 
 funct_declaration
 //    :   ret_type FUNCTION Identifier '(' param_list ')' BEGIN block_list END ';'
-    :   ret_type FUNCTION Identifier LPAREN param_list RPAREN BEGIN block_list END SEMI
+//    :   VOID funct_declaration_tail
+    :	type_id funct_declaration_tail
     ;
 
+funct_declaration_tail
+    :	FUNCTION Identifier LPAREN param_list RPAREN BEGIN block_list END SEMI
+    ;
+
+
+    
 /* main is mandatory in every program, no parameters, no return value. */
 main_function
 //    :   VOID MAIN '(' ')' BEGIN block_list END ';'
@@ -189,9 +196,14 @@ type_declaration
 
 type
     :   base_type
-    |   ARRAY LBRACK IntegerLiteral RBRACK OF base_type
-    |   ARRAY LBRACK IntegerLiteral RBRACK LBRACK IntegerLiteral RBRACK OF base_type
+    |   ARRAY LBRACK arr_brack OF base_type
+//    |   ARRAY LBRACK IntegerLiteral RBRACK LBRACK IntegerLiteral RBRACK OF base_type
     ;
+
+arr_brack
+    :	(LBRACK IntegerLiteral RBRACK)?
+    ;
+
 
 type_id
     :   base_type
@@ -209,10 +221,16 @@ var_declaration
     ;
 
 id_list
-    :   Identifier
+    :   Identifier id_list_tail
 //    |   Identifier ',' id_list
-    |   Identifier COMMA id_list
+ //   |   Identifier COMMA id_list
     ;
+    
+id_list_tail
+    :	COMMA id_list
+    |
+    ;
+    
 
 optional_init
     :   ASSIGN const
@@ -222,25 +240,53 @@ optional_init
 stat_seq
 //    :   stat
 //    |   stat stat_seq
-    : stat (stat_seq)?
+    : stat stat_seq
     ;
 
 stat
-    :   value ASSIGN expr SEMI
-    |   IF expr THEN stat_seq ENDIF SEMI
-    |   IF expr THEN stat_seq ELSE stat_seq ENDIF SEMI
+    //:   value ASSIGN expr SEMI
+    :	value ASSIGN expr_or_list SEMI	
+    |   if_else_expr ENDIF SEMI
+//    |   IF expr THEN stat_seq ELSE stat_seq ENDIF SEMI
     |   WHILE expr DO stat_seq ENDDO SEMI
     |   FOR Identifier ASSIGN index_expr TO index_expr DO stat_seq ENDDO SEMI
-    |   opt_prefix Identifier LPAREN expr_list RPAREN SEMI
+ //   |   value ASSIGN Identifier LPAREN expr_list RPAREN SEMI
     |   BREAK SEMI
     |   RETURN expr SEMI
     |   block
     ;
 
+    
+expr_or_list
+    :	single_expr
+    |	Identifier multi_expr //LPAREN expr_list RPAREN
+    ;
+    
+single_expr
+    :	expr
+    ;
+
+multi_expr
+    :	LPAREN expr_list RPAREN
+    ;
+    
+    
+if_else_expr
+    :	IF expr THEN stat_seq else_expr ENDIF SEMI
+    ;
+    
+else_expr    
+    :	ELSE stat_seq
+    |
+    ;	
+
+/*
 opt_prefix
     :   value ASSIGN
     |   
     ;
+*/
+
 /*
 expr
     :   const
@@ -365,13 +411,19 @@ expr_list_tail
     |   
     ;
 
+
+
+
 value
     :   Identifier value_tail
     ;
 
 value_tail
-    :   '[' index_expr']'
-    |   '[' index_expr']' '[' index_expr ']'
+    :   '[' index_expr']' value_tail_tail
+    ;
+    
+value_tail_tail
+    :	'[' index_expr ']'
     |
     ;
 
