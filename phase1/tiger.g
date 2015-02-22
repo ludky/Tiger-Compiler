@@ -253,29 +253,27 @@ stat_seq
     ;
 
 stat
-  //  :   value ASSIGN expr SEMI
+   // :   value ASSIGN expr SEMI
    // :	value ASSIGN expr_or_list SEMI	
-   :	assign_value expr_list SEMI
-    |   if_else_expr ENDIF SEMI
+ //  :	assign_value expr_list SEMI
+    :	 if_else_expr ENDIF SEMI
 //    |   IF expr THEN stat_seq ELSE stat_seq ENDIF SEMI
     |   WHILE expr DO stat_seq ENDDO SEMI
     |   FOR Identifier ASSIGN index_expr TO index_expr DO stat_seq ENDDO SEMI
-  //  |   value ASSIGN Identifier LPAREN expr_list RPAREN SEMI
+//    |   opt_prefix Identifier LPAREN expr_list RPAREN SEMI
+    |	Identifier LPAREN expr_list RPAREN SEMI
+    |	value ASSIGN expr_or_list SEMI
     |   BREAK SEMI
     |   RETURN expr SEMI
     |   block
     ;
     
-assign_value
-    :	value ASSIGN Identifier?
-    ;
-
-    
 expr_or_list
-    :	single_expr
-    |	Identifier multi_expr //LPAREN expr_list RPAREN
+    :	expr
+    |	Identifier LPAREN expr_list RPAREN SEMI//LPAREN expr_list RPAREN
     ;
     
+    /*
 single_expr
     :	expr
     ;
@@ -283,7 +281,7 @@ single_expr
 multi_expr
     :	LPAREN expr_list RPAREN
     ;
-    
+*/    
     
 if_else_expr
     :	IF expr THEN stat_seq else_expr ENDIF SEMI
@@ -433,6 +431,7 @@ value
 
 value_tail
     :   '[' index_expr']' value_tail_tail
+    |
     ;
     
 value_tail_tail
