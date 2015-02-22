@@ -253,68 +253,25 @@ stat_seq
     ;
 
 stat
-    :	if_else_expr ENDIF SEMI
+   // :   value ASSIGN expr SEMI
+   // :	value ASSIGN expr_or_list SEMI	
+ //  :	assign_value expr_list SEMI
+    :	 if_else_expr ENDIF SEMI
+//    |   IF expr THEN stat_seq ELSE stat_seq ENDIF SEMI
     |   WHILE expr DO stat_seq ENDDO SEMI
     |   FOR Identifier ASSIGN index_expr TO index_expr DO stat_seq ENDDO SEMI
-    //   :   value ASSIGN expr SEMI
-    //    |   opt_prefix Identifier LPAREN expr_list RPAREN SEMI
-    |	Identifier ((value_tail ASSIGN expr_or_list) | LPAREN expr_list RPAREN) SEMI
+//    |   opt_prefix Identifier LPAREN expr_list RPAREN SEMI
+    |	Identifier LPAREN expr_list RPAREN SEMI
+    |	value ASSIGN expr_or_list SEMI
     |   BREAK SEMI
     |   RETURN expr SEMI
     |   block
     ;
-
-      
+    
 expr_or_list
-    :	Identifier? (expr | LPAREN expr_list RPAREN)
+    :	expr
+    |	Identifier LPAREN expr_list RPAREN SEMI//LPAREN expr_list RPAREN
     ;
-
-
-
-/*    
-stat_expr
-    :  stat_expr_lev3 stat_logic_expr 
-    ;
-
-stat_expr_lev3
-    :  stat_expr_lev2 stat_comparative_expr
-    ;
-
-stat_expr_lev2
-    :   stat_expr_lev1 stat_addtion_expr
-    ;
-
-stat_expr_lev1
-    :   stat_primary_expression stat_mult_expr
-    ;
-
-stat_primary_expression
-    :   const
-    |   Identifier value_tail
-    |   stat_expr
-    ;
-
-stat_mult_expr
-    :   mult_operator stat_primary_expression stat_mult_expr
-    |
-    ;
-
-stat_addtion_expr
-    :   addition_operator stat_expr_lev1 stat_addtion_expr
-    |
-    ;
-
-stat_comparative_expr
-    :   comparative_operator stat_expr_lev2 stat_comparative_expr
-    |
-    ;
-
-stat_logic_expr
-    :   and_or_operator stat_expr_lev3 stat_logic_expr
-    ;
-    
-    */
-    
     
     /*
 single_expr
@@ -531,3 +488,65 @@ index_oper
     |   index_mult
     ;
     */
+
+
+//本来是 
+//stat
+    //: value ASSIGN expr
+    //| (value ASSIGN)? Identifier LPAREN expr_list RPAREN SEMI
+    //可以写成:
+    : value ASSIGN (expr | Identifier LPAREN expr_list RPAREN SEMI)
+    | Identifier LPAREN expr_list RPAREN SEMI
+    //然后:
+     Identifier value_tail ASSIGN (expr | Identifier LPAREN expr_list RPAREN SEMI)
+     Identifier LPAREN expr_list RPAREN SEMI
+    //然后合并
+     Identifier ((value_tail ASSIGN (expr | Identifier LPAREN expr_list RPAREN SEMI)) | LPAREN expr_list RPAREN SEMI)
+    // 但是（expr | Identifier）这个地方还有问题。。
+    ;
+
+
+
+
+
+stat_expr
+    :  stat_expr_lev3 stat_logic_expr 
+    ;
+
+stat_expr_lev3
+    :  stat_expr_lev2 stat_comparative_expr
+    ;
+
+stat_expr_lev2
+    :   stat_expr_lev1 stat_addtion_expr
+    ;
+
+stat_expr_lev1
+    :   stat_primary_expression stat_mult_expr
+    ;
+
+stat_primary_expression
+    :   const
+    |   Identifier value_tail
+    |   stat_expr
+    ;
+
+stat_mult_expr
+    :   mult_operator stat_primary_expression stat_mult_expr
+    |
+    ;
+
+stat_addtion_expr
+    :   addition_operator stat_expr_lev1 stat_addtion_expr
+    |
+    ;
+
+stat_comparative_expr
+    :   comparative_operator stat_expr_lev2 stat_comparative_expr
+    |
+    ;
+
+stat_logic_expr
+    :   and_or_operator stat_expr_lev3 stat_logic_expr
+    ;
+
