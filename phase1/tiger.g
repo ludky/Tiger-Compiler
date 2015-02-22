@@ -491,7 +491,7 @@ index_oper
 
 
 //本来是 
-stat
+//stat
     //: value ASSIGN expr
     //| (value ASSIGN)? Identifier LPAREN expr_list RPAREN SEMI
     //可以写成:
@@ -502,4 +502,5 @@ stat
     // Identifier LPAREN expr_list RPAREN SEMI
     //然后合并
     // Identifier ((value_tail ASSIGN (expr | Identifier LPAREN expr_list RPAREN SEMI)) | LPAREN expr_list RPAREN SEMI)
+    // 但是（expr | Identifier）这个地方还有问题。。
     ;
