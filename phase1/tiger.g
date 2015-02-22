@@ -153,13 +153,13 @@ ret_type
 */
 
 param_list
-    :   param param_list_tail
-    |
+    :   (param param_list_tail)?
+//    |
     ;
 
 param_list_tail
-    :   COMMA param param_list_tail
-    |
+    :   (COMMA param param_list_tail)?
+//    |
     ;
 
 param
@@ -188,13 +188,13 @@ declaration_segment
     ;
 
 type_declaration_list
-    :   type_declaration type_declaration_list
-    |
+    :   (type_declaration type_declaration_list)?
+//    |
     ;
 
 var_declaration_list
-    :   var_declaration var_declaration_list
-    |
+    :   (var_declaration var_declaration_list)?
+//    |
     ;
 
 type_declaration
@@ -205,7 +205,7 @@ type_declaration
 
 type
     :   base_type
-    |   ARRAY LBRACK arr_brack OF base_type
+    |   ARRAY LBRACK IntegerLiteral RBRACK arr_brack OF base_type
 //    |   ARRAY LBRACK IntegerLiteral RBRACK LBRACK IntegerLiteral RBRACK OF base_type
     ;
 
@@ -236,14 +236,14 @@ id_list
     ;
     
 id_list_tail
-    :	COMMA id_list
-    |
+    :	(COMMA id_list)?
+//    |
     ;
     
 
 optional_init
-    :   ASSIGN const
-    |
+    :   (ASSIGN constant)?
+//    |
     ;
 
 stat_seq
@@ -253,98 +253,84 @@ stat_seq
     ;
 
 stat
-    :	if_else_expr ENDIF SEMI
+    :	Identifier value_or_expr SEMI
+    |	if_else_expr ENDIF SEMI
     |   WHILE expr DO stat_seq ENDDO SEMI
     |   FOR Identifier ASSIGN index_expr TO index_expr DO stat_seq ENDDO SEMI
-    //   :   value ASSIGN expr SEMI
-    //    |   opt_prefix Identifier LPAREN expr_list RPAREN SEMI
-    |	Identifier ((value_tail ASSIGN expr_or_list) | LPAREN expr_list RPAREN) SEMI
+ //   |   value ASSIGN expr SEMI
+  //  |   opt_prefix Identifier LPAREN expr_list RPAREN SEMI
     |   BREAK SEMI
     |   RETURN expr SEMI
     |   block
     ;
 
+
+value_or_expr
+    :	value_tail ASSIGN expr_or_list
+    |	LPAREN expr_list RPAREN
+    ;
+
       
 expr_or_list
-    : const expr_tail
-    | Identifier (value_tail expr_tail | LPAREN expr_list RPAREN)
-    | LPAREN expr RPAREN expr_tail
+    : primary_expr expr_tail
+    | Identifier (value_tail value_expr_tail | LPAREN expr_list RPAREN)
+//    | LPAREN expr RPAREN expr_tail
+    ;
+
+expr_tail
+    :	//primary_expr mult_expr expr addtion_expr expr comparative_expr expr logic_expr expr
+    ;
+
+
+
+
+stat_expr_lev1
+    :	(mult_expr expr)?
+//    |
+    ;
+
+primary_expr
+    :	LPAREN expr RPAREN
+    |	constant
+    ;
+
+
+
+
+value_expr_tail
+    :	//primary_value_expr mult_expr expr addtion_expr expr comparative_expr expr logic_expr expr
     ;
     
+primary_value_expr
+    :	value_tail
+    ;
+
+
+    
+    
+    
+/*    
 expr_tail
 	: mult_expr addtion_expr comparative_expr logic_expr
 	;
 
+*/
 
 
-/*    
-stat_expr
-    :  stat_expr_lev3 stat_logic_expr 
-    ;
-
-stat_expr_lev3
-    :  stat_expr_lev2 stat_comparative_expr
-    ;
-
-stat_expr_lev2
-    :   stat_expr_lev1 stat_addtion_expr
-    ;
-
-stat_expr_lev1
-    :   stat_primary_expression stat_mult_expr
-    ;
-
-stat_primary_expression
-    :   const
-    |   Identifier value_tail
-    |   stat_expr
-    ;
-
-stat_mult_expr
-    :   mult_operator stat_primary_expression stat_mult_expr
-    |
-    ;
-
-stat_addtion_expr
-    :   addition_operator stat_expr_lev1 stat_addtion_expr
-    |
-    ;
-
-stat_comparative_expr
-    :   comparative_operator stat_expr_lev2 stat_comparative_expr
-    |
-    ;
-
-stat_logic_expr
-    :   and_or_operator stat_expr_lev3 stat_logic_expr
-    ;
-    
-    */
-    
-    
-    /*
-single_expr
-    :	expr
-    ;
-
-multi_expr
-    :	LPAREN expr_list RPAREN
-    ;
-*/    
     
 if_else_expr
     :	IF expr THEN stat_seq else_expr ENDIF SEMI
     ;
     
 else_expr    
-    :	ELSE stat_seq
-    |
+    :	(ELSE stat_seq)?
+//    |
     ;	
 
 
 opt_prefix
-    :   value ASSIGN
-    |   
+    :   (value ASSIGN)?
+//    |
     ;
 
 /*
@@ -373,24 +359,24 @@ expr_lev1
     ;
 
 primary_expression
-    :   const
+    :   constant
     |   value
     |   LPAREN expr RPAREN
     ;
 
 mult_expr
-    :   mult_operator primary_expression mult_expr
-    |
+    :   (mult_operator primary_expression mult_expr)?
+//    |
     ;
 
 addtion_expr
-    :   addition_operator expr_lev1 addtion_expr
-    |
+    :   (addition_operator expr_lev1 addtion_expr)?
+//    |
     ;
 
 comparative_expr
-    :   comparative_operator expr_lev2 comparative_expr
-    |
+    :   (comparative_operator expr_lev2 comparative_expr)?
+//    |
     ;
 
 logic_expr
@@ -398,7 +384,7 @@ logic_expr
     ;
 
 
-const
+constant
     :   IntegerLiteral
     |   FixedPointLiteral
     ;
@@ -462,13 +448,13 @@ binary_operator
 
 
 expr_list
-    :   expr expr_list_tail
-    |
+    :   (expr expr_list_tail)?
+//    |
     ;
 
 expr_list_tail
-    :   COMMA expr expr_list_tail
-    |   
+    :   (COMMA expr expr_list_tail)?
+//    |   
     ;
 
 
@@ -479,13 +465,13 @@ value
     ;
 
 value_tail
-    :   '[' index_expr']' value_tail_tail
-    |
+    :   ('[' index_expr']' value_tail_tail)?
+//    |
     ;
     
 value_tail_tail
-    :	'[' index_expr ']'
-    |
+    :	('[' index_expr ']')?
+//    |
     ;
 
 /*
