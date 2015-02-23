@@ -395,7 +395,7 @@ comparative_expr
     ;
 
 logic_expr
-    :   and_or_operator expr_lev3 logic_expr
+    :   (and_or_operator expr_lev3 logic_expr)?
     ;
 
 
@@ -500,11 +500,11 @@ index_expr
 
 
 index_expr
-    :	index_expr2 index_expr_add
+    :	index_expr_lev1 index_add_expr
     ;
     
-index_expr2
-    :	primary_index_expr index_expr_mult
+index_expr_lev1
+    :	primary_index_expr index_mult_expr
     ;       
 
 
@@ -513,19 +513,19 @@ primary_index_expr
     |  	Identifier
     ;
 
-index_expr_mult
-    :	index_mult primary_index_expr index_expr_mult
+index_mult_expr
+    :	(index_mult_opr primary_index_expr index_mult_expr)?
     ;
     
-index_mult
+index_mult_opr
     :	MULT
     ;
     
-index_expr_add
-    :	index_add index_expr2 index_expr_add
+index_add_expr
+    :	(index_add_opr index_expr_lev1 index_add_expr)?
     ;
     
-index_add
+index_add_opr
     :	PLUS
     |   MINUS
     ;
