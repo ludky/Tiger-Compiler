@@ -6,6 +6,19 @@ options {
 }
 
 @members {
+public void printTokenType() {
+		int size_token = input.size();
+		for (int i = 0; i < size_token; i++) {
+			int temp = input.get(i).getType();
+			if (temp < 0) {
+				temp = 1;
+			}
+			if (temp != 55) {
+				String nameOfToken = tokenNames[temp];
+				System.out.print(nameOfToken + " ");
+			}
+		}
+	}
 		    public void displayRecognitionError(String[] tokenNames,
 		                                        RecognitionException e) {
 		        String hdr = getErrorHeader(e);
