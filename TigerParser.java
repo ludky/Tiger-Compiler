@@ -1,4 +1,4 @@
-// $ANTLR 3.5.1 E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g 2015-02-23 19:41:57
+// $ANTLR 3.5.1 E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g 2015-02-23 21:08:43
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -89,6 +89,19 @@ public class TigerParser extends Parser {
 	@Override public String getGrammarFileName() { return "E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g"; }
 
 
+	public void printTokenType() {
+			int size_token = input.size();
+			for (int i = 0; i < size_token; i++) {
+				int temp = input.get(i).getType();
+				if (temp < 0) {
+					temp = 1;
+				}
+				if (temp != 55) {
+					String nameOfToken = tokenNames[temp];
+					System.out.print(nameOfToken + " ");
+				}
+			}
+		}
 			    public void displayRecognitionError(String[] tokenNames,
 			                                        RecognitionException e) {
 			        String hdr = getErrorHeader(e);
@@ -144,11 +157,11 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "program"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:62:1: program : type_declaration_list funct_declaration_list main_function ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:75:1: program : type_declaration_list funct_declaration_list main_function ;
 	public final void program() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:63:5: ( type_declaration_list funct_declaration_list main_function )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:63:7: type_declaration_list funct_declaration_list main_function
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:76:5: ( type_declaration_list funct_declaration_list main_function )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:76:7: type_declaration_list funct_declaration_list main_function
 			{
 			pushFollow(FOLLOW_type_declaration_list_in_program47);
 			type_declaration_list();
@@ -178,10 +191,10 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "funct_declaration_list"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:154:1: funct_declaration_list : ( type_id funct_declaration_tail funct_declaration_list | VOID ( funct_declaration_tail funct_declaration_list )? );
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:167:1: funct_declaration_list : ( type_id funct_declaration_tail funct_declaration_list | VOID ( funct_declaration_tail funct_declaration_list )? );
 	public final void funct_declaration_list() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:155:5: ( type_id funct_declaration_tail funct_declaration_list | VOID ( funct_declaration_tail funct_declaration_list )? )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:168:5: ( type_id funct_declaration_tail funct_declaration_list | VOID ( funct_declaration_tail funct_declaration_list )? )
 			int alt2=2;
 			int LA2_0 = input.LA(1);
 			if ( (LA2_0==FIXEDPT||(LA2_0 >= INT && LA2_0 <= Identifier)) ) {
@@ -199,7 +212,7 @@ public class TigerParser extends Parser {
 
 			switch (alt2) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:155:7: type_id funct_declaration_tail funct_declaration_list
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:168:7: type_id funct_declaration_tail funct_declaration_list
 					{
 					pushFollow(FOLLOW_type_id_in_funct_declaration_list1040);
 					type_id();
@@ -216,10 +229,10 @@ public class TigerParser extends Parser {
 					}
 					break;
 				case 2 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:156:7: VOID ( funct_declaration_tail funct_declaration_list )?
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:169:7: VOID ( funct_declaration_tail funct_declaration_list )?
 					{
 					match(input,VOID,FOLLOW_VOID_in_funct_declaration_list1052); 
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:156:12: ( funct_declaration_tail funct_declaration_list )?
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:169:12: ( funct_declaration_tail funct_declaration_list )?
 					int alt1=2;
 					int LA1_0 = input.LA(1);
 					if ( (LA1_0==FUNCTION) ) {
@@ -227,7 +240,7 @@ public class TigerParser extends Parser {
 					}
 					switch (alt1) {
 						case 1 :
-							// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:156:13: funct_declaration_tail funct_declaration_list
+							// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:169:13: funct_declaration_tail funct_declaration_list
 							{
 							pushFollow(FOLLOW_funct_declaration_tail_in_funct_declaration_list1055);
 							funct_declaration_tail();
@@ -260,11 +273,11 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "funct_declaration_tail"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:159:1: funct_declaration_tail : FUNCTION Identifier LPAREN param_list RPAREN BEGIN block_list END SEMI ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:172:1: funct_declaration_tail : FUNCTION Identifier LPAREN param_list RPAREN BEGIN block_list END SEMI ;
 	public final void funct_declaration_tail() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:160:5: ( FUNCTION Identifier LPAREN param_list RPAREN BEGIN block_list END SEMI )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:160:7: FUNCTION Identifier LPAREN param_list RPAREN BEGIN block_list END SEMI
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:173:5: ( FUNCTION Identifier LPAREN param_list RPAREN BEGIN block_list END SEMI )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:173:7: FUNCTION Identifier LPAREN param_list RPAREN BEGIN block_list END SEMI
 			{
 			match(input,FUNCTION,FOLLOW_FUNCTION_in_funct_declaration_tail1084); 
 			match(input,Identifier,FOLLOW_Identifier_in_funct_declaration_tail1086); 
@@ -297,11 +310,11 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "main_function"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:163:1: main_function : MAIN LPAREN RPAREN BEGIN block_list END SEMI ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:176:1: main_function : MAIN LPAREN RPAREN BEGIN block_list END SEMI ;
 	public final void main_function() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:164:5: ( MAIN LPAREN RPAREN BEGIN block_list END SEMI )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:164:9: MAIN LPAREN RPAREN BEGIN block_list END SEMI
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:177:5: ( MAIN LPAREN RPAREN BEGIN block_list END SEMI )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:177:9: MAIN LPAREN RPAREN BEGIN block_list END SEMI
 			{
 			match(input,MAIN,FOLLOW_MAIN_in_main_function1119); 
 			match(input,LPAREN,FOLLOW_LPAREN_in_main_function1121); 
@@ -329,13 +342,13 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "param_list"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:167:1: param_list : ( param param_list_tail )? ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:180:1: param_list : ( param param_list_tail )? ;
 	public final void param_list() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:168:5: ( ( param param_list_tail )? )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:168:9: ( param param_list_tail )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:181:5: ( ( param param_list_tail )? )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:181:9: ( param param_list_tail )?
 			{
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:168:9: ( param param_list_tail )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:181:9: ( param param_list_tail )?
 			int alt3=2;
 			int LA3_0 = input.LA(1);
 			if ( (LA3_0==Identifier) ) {
@@ -343,7 +356,7 @@ public class TigerParser extends Parser {
 			}
 			switch (alt3) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:168:10: param param_list_tail
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:181:10: param param_list_tail
 					{
 					pushFollow(FOLLOW_param_in_param_list1151);
 					param();
@@ -374,13 +387,13 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "param_list_tail"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:171:1: param_list_tail : ( COMMA param param_list_tail )? ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:184:1: param_list_tail : ( COMMA param param_list_tail )? ;
 	public final void param_list_tail() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:172:5: ( ( COMMA param param_list_tail )? )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:172:9: ( COMMA param param_list_tail )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:185:5: ( ( COMMA param param_list_tail )? )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:185:9: ( COMMA param param_list_tail )?
 			{
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:172:9: ( COMMA param param_list_tail )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:185:9: ( COMMA param param_list_tail )?
 			int alt4=2;
 			int LA4_0 = input.LA(1);
 			if ( (LA4_0==COMMA) ) {
@@ -388,7 +401,7 @@ public class TigerParser extends Parser {
 			}
 			switch (alt4) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:172:10: COMMA param param_list_tail
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:185:10: COMMA param param_list_tail
 					{
 					match(input,COMMA,FOLLOW_COMMA_in_param_list_tail1175); 
 					pushFollow(FOLLOW_param_in_param_list_tail1177);
@@ -420,11 +433,11 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "param"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:175:1: param : Identifier COLON type_id ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:188:1: param : Identifier COLON type_id ;
 	public final void param() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:176:5: ( Identifier COLON type_id )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:176:9: Identifier COLON type_id
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:189:5: ( Identifier COLON type_id )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:189:9: Identifier COLON type_id
 			{
 			match(input,Identifier,FOLLOW_Identifier_in_param1200); 
 			match(input,COLON,FOLLOW_COLON_in_param1202); 
@@ -448,11 +461,11 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "block_list"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:179:1: block_list : block block_tail ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:192:1: block_list : block block_tail ;
 	public final void block_list() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:180:5: ( block block_tail )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:180:9: block block_tail
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:193:5: ( block block_tail )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:193:9: block block_tail
 			{
 			pushFollow(FOLLOW_block_in_block_list1223);
 			block();
@@ -478,13 +491,13 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "block_tail"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:183:1: block_tail : ( block block_tail )? ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:196:1: block_tail : ( block block_tail )? ;
 	public final void block_tail() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:184:5: ( ( block block_tail )? )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:184:9: ( block block_tail )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:197:5: ( ( block block_tail )? )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:197:9: ( block block_tail )?
 			{
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:184:9: ( block block_tail )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:197:9: ( block block_tail )?
 			int alt5=2;
 			int LA5_0 = input.LA(1);
 			if ( (LA5_0==BEGIN) ) {
@@ -492,7 +505,7 @@ public class TigerParser extends Parser {
 			}
 			switch (alt5) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:184:10: block block_tail
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:197:10: block block_tail
 					{
 					pushFollow(FOLLOW_block_in_block_tail1245);
 					block();
@@ -523,11 +536,11 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "block"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:189:1: block : BEGIN declaration_segment stat_seq END SEMI ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:202:1: block : BEGIN declaration_segment stat_seq END SEMI ;
 	public final void block() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:190:5: ( BEGIN declaration_segment stat_seq END SEMI )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:190:9: BEGIN declaration_segment stat_seq END SEMI
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:203:5: ( BEGIN declaration_segment stat_seq END SEMI )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:203:9: BEGIN declaration_segment stat_seq END SEMI
 			{
 			match(input,BEGIN,FOLLOW_BEGIN_in_block1270); 
 			pushFollow(FOLLOW_declaration_segment_in_block1272);
@@ -556,11 +569,11 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "declaration_segment"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:193:1: declaration_segment : type_declaration_list var_declaration_list ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:206:1: declaration_segment : type_declaration_list var_declaration_list ;
 	public final void declaration_segment() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:194:5: ( type_declaration_list var_declaration_list )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:194:9: type_declaration_list var_declaration_list
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:207:5: ( type_declaration_list var_declaration_list )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:207:9: type_declaration_list var_declaration_list
 			{
 			pushFollow(FOLLOW_type_declaration_list_in_declaration_segment1297);
 			type_declaration_list();
@@ -586,13 +599,13 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "type_declaration_list"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:197:1: type_declaration_list : ( type_declaration type_declaration_list )? ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:210:1: type_declaration_list : ( type_declaration type_declaration_list )? ;
 	public final void type_declaration_list() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:198:5: ( ( type_declaration type_declaration_list )? )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:198:9: ( type_declaration type_declaration_list )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:211:5: ( ( type_declaration type_declaration_list )? )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:211:9: ( type_declaration type_declaration_list )?
 			{
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:198:9: ( type_declaration type_declaration_list )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:211:9: ( type_declaration type_declaration_list )?
 			int alt6=2;
 			int LA6_0 = input.LA(1);
 			if ( (LA6_0==TYPE) ) {
@@ -600,7 +613,7 @@ public class TigerParser extends Parser {
 			}
 			switch (alt6) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:198:10: type_declaration type_declaration_list
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:211:10: type_declaration type_declaration_list
 					{
 					pushFollow(FOLLOW_type_declaration_in_type_declaration_list1319);
 					type_declaration();
@@ -631,13 +644,13 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "var_declaration_list"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:201:1: var_declaration_list : ( var_declaration var_declaration_list )? ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:214:1: var_declaration_list : ( var_declaration var_declaration_list )? ;
 	public final void var_declaration_list() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:202:5: ( ( var_declaration var_declaration_list )? )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:202:9: ( var_declaration var_declaration_list )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:215:5: ( ( var_declaration var_declaration_list )? )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:215:9: ( var_declaration var_declaration_list )?
 			{
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:202:9: ( var_declaration var_declaration_list )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:215:9: ( var_declaration var_declaration_list )?
 			int alt7=2;
 			int LA7_0 = input.LA(1);
 			if ( (LA7_0==VAR) ) {
@@ -645,7 +658,7 @@ public class TigerParser extends Parser {
 			}
 			switch (alt7) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:202:10: var_declaration var_declaration_list
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:215:10: var_declaration var_declaration_list
 					{
 					pushFollow(FOLLOW_var_declaration_in_var_declaration_list1343);
 					var_declaration();
@@ -676,11 +689,11 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "type_declaration"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:205:1: type_declaration : TYPE Identifier EQ type SEMI ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:218:1: type_declaration : TYPE Identifier EQ type SEMI ;
 	public final void type_declaration() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:206:5: ( TYPE Identifier EQ type SEMI )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:206:7: TYPE Identifier EQ type SEMI
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:219:5: ( TYPE Identifier EQ type SEMI )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:219:7: TYPE Identifier EQ type SEMI
 			{
 			match(input,TYPE,FOLLOW_TYPE_in_type_declaration1364); 
 			match(input,Identifier,FOLLOW_Identifier_in_type_declaration1366); 
@@ -706,10 +719,10 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "type"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:209:1: type : ( base_type | ARRAY LBRACK IntegerLiteral RBRACK arr_brack OF base_type );
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:222:1: type : ( base_type | ARRAY LBRACK IntegerLiteral RBRACK arr_brack OF base_type );
 	public final void type() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:210:5: ( base_type | ARRAY LBRACK IntegerLiteral RBRACK arr_brack OF base_type )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:223:5: ( base_type | ARRAY LBRACK IntegerLiteral RBRACK arr_brack OF base_type )
 			int alt8=2;
 			int LA8_0 = input.LA(1);
 			if ( (LA8_0==FIXEDPT||LA8_0==INT) ) {
@@ -727,7 +740,7 @@ public class TigerParser extends Parser {
 
 			switch (alt8) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:210:9: base_type
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:223:9: base_type
 					{
 					pushFollow(FOLLOW_base_type_in_type1391);
 					base_type();
@@ -736,7 +749,7 @@ public class TigerParser extends Parser {
 					}
 					break;
 				case 2 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:211:9: ARRAY LBRACK IntegerLiteral RBRACK arr_brack OF base_type
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:224:9: ARRAY LBRACK IntegerLiteral RBRACK arr_brack OF base_type
 					{
 					match(input,ARRAY,FOLLOW_ARRAY_in_type1401); 
 					match(input,LBRACK,FOLLOW_LBRACK_in_type1403); 
@@ -769,13 +782,13 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "arr_brack"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:214:1: arr_brack : ( LBRACK IntegerLiteral RBRACK )? ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:227:1: arr_brack : ( LBRACK IntegerLiteral RBRACK )? ;
 	public final void arr_brack() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:215:5: ( ( LBRACK IntegerLiteral RBRACK )? )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:215:7: ( LBRACK IntegerLiteral RBRACK )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:228:5: ( ( LBRACK IntegerLiteral RBRACK )? )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:228:7: ( LBRACK IntegerLiteral RBRACK )?
 			{
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:215:7: ( LBRACK IntegerLiteral RBRACK )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:228:7: ( LBRACK IntegerLiteral RBRACK )?
 			int alt9=2;
 			int LA9_0 = input.LA(1);
 			if ( (LA9_0==LBRACK) ) {
@@ -783,7 +796,7 @@ public class TigerParser extends Parser {
 			}
 			switch (alt9) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:215:8: LBRACK IntegerLiteral RBRACK
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:228:8: LBRACK IntegerLiteral RBRACK
 					{
 					match(input,LBRACK,FOLLOW_LBRACK_in_arr_brack1431); 
 					match(input,IntegerLiteral,FOLLOW_IntegerLiteral_in_arr_brack1433); 
@@ -809,10 +822,10 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "type_id"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:218:1: type_id : ( base_type | Identifier );
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:231:1: type_id : ( base_type | Identifier );
 	public final void type_id() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:219:5: ( base_type | Identifier )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:232:5: ( base_type | Identifier )
 			int alt10=2;
 			int LA10_0 = input.LA(1);
 			if ( (LA10_0==FIXEDPT||LA10_0==INT) ) {
@@ -830,7 +843,7 @@ public class TigerParser extends Parser {
 
 			switch (alt10) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:219:9: base_type
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:232:9: base_type
 					{
 					pushFollow(FOLLOW_base_type_in_type_id1456);
 					base_type();
@@ -839,7 +852,7 @@ public class TigerParser extends Parser {
 					}
 					break;
 				case 2 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:220:9: Identifier
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:233:9: Identifier
 					{
 					match(input,Identifier,FOLLOW_Identifier_in_type_id1466); 
 					}
@@ -860,10 +873,10 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "base_type"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:223:1: base_type : ( INT | FIXEDPT );
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:236:1: base_type : ( INT | FIXEDPT );
 	public final void base_type() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:224:5: ( INT | FIXEDPT )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:237:5: ( INT | FIXEDPT )
 			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:
 			{
 			if ( input.LA(1)==FIXEDPT||input.LA(1)==INT ) {
@@ -890,11 +903,11 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "var_declaration"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:228:1: var_declaration : VAR id_list COLON type_id optional_init SEMI ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:241:1: var_declaration : VAR id_list COLON type_id optional_init SEMI ;
 	public final void var_declaration() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:229:5: ( VAR id_list COLON type_id optional_init SEMI )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:229:9: VAR id_list COLON type_id optional_init SEMI
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:242:5: ( VAR id_list COLON type_id optional_init SEMI )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:242:9: VAR id_list COLON type_id optional_init SEMI
 			{
 			match(input,VAR,FOLLOW_VAR_in_var_declaration1514); 
 			pushFollow(FOLLOW_id_list_in_var_declaration1516);
@@ -927,11 +940,11 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "id_list"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:232:1: id_list : Identifier id_list_tail ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:245:1: id_list : Identifier id_list_tail ;
 	public final void id_list() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:233:5: ( Identifier id_list_tail )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:233:9: Identifier id_list_tail
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:246:5: ( Identifier id_list_tail )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:246:9: Identifier id_list_tail
 			{
 			match(input,Identifier,FOLLOW_Identifier_in_id_list1543); 
 			pushFollow(FOLLOW_id_list_tail_in_id_list1545);
@@ -954,13 +967,13 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "id_list_tail"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:236:1: id_list_tail : ( COMMA id_list )? ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:249:1: id_list_tail : ( COMMA id_list )? ;
 	public final void id_list_tail() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:237:5: ( ( COMMA id_list )? )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:237:7: ( COMMA id_list )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:250:5: ( ( COMMA id_list )? )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:250:7: ( COMMA id_list )?
 			{
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:237:7: ( COMMA id_list )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:250:7: ( COMMA id_list )?
 			int alt11=2;
 			int LA11_0 = input.LA(1);
 			if ( (LA11_0==COMMA) ) {
@@ -968,7 +981,7 @@ public class TigerParser extends Parser {
 			}
 			switch (alt11) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:237:8: COMMA id_list
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:250:8: COMMA id_list
 					{
 					match(input,COMMA,FOLLOW_COMMA_in_id_list_tail1567); 
 					pushFollow(FOLLOW_id_list_in_id_list_tail1569);
@@ -996,13 +1009,13 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "optional_init"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:241:1: optional_init : ( ASSIGN constant )? ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:254:1: optional_init : ( ASSIGN constant )? ;
 	public final void optional_init() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:242:5: ( ( ASSIGN constant )? )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:242:9: ( ASSIGN constant )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:255:5: ( ( ASSIGN constant )? )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:255:9: ( ASSIGN constant )?
 			{
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:242:9: ( ASSIGN constant )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:255:9: ( ASSIGN constant )?
 			int alt12=2;
 			int LA12_0 = input.LA(1);
 			if ( (LA12_0==ASSIGN) ) {
@@ -1010,7 +1023,7 @@ public class TigerParser extends Parser {
 			}
 			switch (alt12) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:242:10: ASSIGN constant
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:255:10: ASSIGN constant
 					{
 					match(input,ASSIGN,FOLLOW_ASSIGN_in_optional_init1596); 
 					pushFollow(FOLLOW_constant_in_optional_init1598);
@@ -1038,17 +1051,17 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "stat_seq"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:245:1: stat_seq : stat ( stat_seq )? ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:258:1: stat_seq : stat ( stat_seq )? ;
 	public final void stat_seq() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:246:5: ( stat ( stat_seq )? )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:246:7: stat ( stat_seq )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:259:5: ( stat ( stat_seq )? )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:259:7: stat ( stat_seq )?
 			{
 			pushFollow(FOLLOW_stat_in_stat_seq1617);
 			stat();
 			state._fsp--;
 
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:246:12: ( stat_seq )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:259:12: ( stat_seq )?
 			int alt13=2;
 			int LA13_0 = input.LA(1);
 			if ( ((LA13_0 >= BEGIN && LA13_0 <= BREAK)||LA13_0==FOR||LA13_0==IF||LA13_0==Identifier||LA13_0==RETURN||LA13_0==WHILE) ) {
@@ -1056,7 +1069,7 @@ public class TigerParser extends Parser {
 			}
 			switch (alt13) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:246:13: stat_seq
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:259:13: stat_seq
 					{
 					pushFollow(FOLLOW_stat_seq_in_stat_seq1620);
 					stat_seq();
@@ -1083,10 +1096,10 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "stat"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:249:1: stat : ( if_else_expr | WHILE expr DO stat_seq ENDDO SEMI | FOR Identifier ASSIGN index_expr TO index_expr DO stat_seq ENDDO SEMI | Identifier ( value_tail ASSIGN expr_or_list | LPAREN expr_list RPAREN ) SEMI | BREAK SEMI | RETURN expr SEMI | block );
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:262:1: stat : ( if_else_expr | WHILE expr DO stat_seq ENDDO SEMI | FOR Identifier ASSIGN index_expr TO index_expr DO stat_seq ENDDO SEMI | Identifier ( value_tail ASSIGN expr_or_list | LPAREN expr_list RPAREN ) SEMI | BREAK SEMI | RETURN expr SEMI | block );
 	public final void stat() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:250:5: ( if_else_expr | WHILE expr DO stat_seq ENDDO SEMI | FOR Identifier ASSIGN index_expr TO index_expr DO stat_seq ENDDO SEMI | Identifier ( value_tail ASSIGN expr_or_list | LPAREN expr_list RPAREN ) SEMI | BREAK SEMI | RETURN expr SEMI | block )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:263:5: ( if_else_expr | WHILE expr DO stat_seq ENDDO SEMI | FOR Identifier ASSIGN index_expr TO index_expr DO stat_seq ENDDO SEMI | Identifier ( value_tail ASSIGN expr_or_list | LPAREN expr_list RPAREN ) SEMI | BREAK SEMI | RETURN expr SEMI | block )
 			int alt15=7;
 			switch ( input.LA(1) ) {
 			case IF:
@@ -1131,7 +1144,7 @@ public class TigerParser extends Parser {
 			}
 			switch (alt15) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:250:7: if_else_expr
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:263:7: if_else_expr
 					{
 					pushFollow(FOLLOW_if_else_expr_in_stat1639);
 					if_else_expr();
@@ -1140,7 +1153,7 @@ public class TigerParser extends Parser {
 					}
 					break;
 				case 2 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:251:9: WHILE expr DO stat_seq ENDDO SEMI
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:264:9: WHILE expr DO stat_seq ENDDO SEMI
 					{
 					match(input,WHILE,FOLLOW_WHILE_in_stat1649); 
 					pushFollow(FOLLOW_expr_in_stat1651);
@@ -1157,7 +1170,7 @@ public class TigerParser extends Parser {
 					}
 					break;
 				case 3 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:252:9: FOR Identifier ASSIGN index_expr TO index_expr DO stat_seq ENDDO SEMI
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:265:9: FOR Identifier ASSIGN index_expr TO index_expr DO stat_seq ENDDO SEMI
 					{
 					match(input,FOR,FOLLOW_FOR_in_stat1669); 
 					match(input,Identifier,FOLLOW_Identifier_in_stat1671); 
@@ -1181,10 +1194,10 @@ public class TigerParser extends Parser {
 					}
 					break;
 				case 4 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:253:7: Identifier ( value_tail ASSIGN expr_or_list | LPAREN expr_list RPAREN ) SEMI
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:266:7: Identifier ( value_tail ASSIGN expr_or_list | LPAREN expr_list RPAREN ) SEMI
 					{
 					match(input,Identifier,FOLLOW_Identifier_in_stat1695); 
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:253:18: ( value_tail ASSIGN expr_or_list | LPAREN expr_list RPAREN )
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:266:18: ( value_tail ASSIGN expr_or_list | LPAREN expr_list RPAREN )
 					int alt14=2;
 					int LA14_0 = input.LA(1);
 					if ( (LA14_0==AND||LA14_0==ASSIGN||LA14_0==COMMA||(LA14_0 >= DIV && LA14_0 <= DO)||LA14_0==EQ||(LA14_0 >= GREATER && LA14_0 <= GREATEREQ)||(LA14_0 >= LBRACK && LA14_0 <= LESSEREQ)||(LA14_0 >= MINUS && LA14_0 <= NEQ)||(LA14_0 >= OR && LA14_0 <= PLUS)||(LA14_0 >= RPAREN && LA14_0 <= THEN)) ) {
@@ -1202,7 +1215,7 @@ public class TigerParser extends Parser {
 
 					switch (alt14) {
 						case 1 :
-							// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:253:19: value_tail ASSIGN expr_or_list
+							// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:266:19: value_tail ASSIGN expr_or_list
 							{
 							pushFollow(FOLLOW_value_tail_in_stat1698);
 							value_tail();
@@ -1216,7 +1229,7 @@ public class TigerParser extends Parser {
 							}
 							break;
 						case 2 :
-							// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:253:52: LPAREN expr_list RPAREN
+							// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:266:52: LPAREN expr_list RPAREN
 							{
 							match(input,LPAREN,FOLLOW_LPAREN_in_stat1706); 
 							pushFollow(FOLLOW_expr_list_in_stat1708);
@@ -1233,14 +1246,14 @@ public class TigerParser extends Parser {
 					}
 					break;
 				case 5 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:254:9: BREAK SEMI
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:267:9: BREAK SEMI
 					{
 					match(input,BREAK,FOLLOW_BREAK_in_stat1723); 
 					match(input,SEMI,FOLLOW_SEMI_in_stat1725); 
 					}
 					break;
 				case 6 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:255:9: RETURN expr SEMI
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:268:9: RETURN expr SEMI
 					{
 					match(input,RETURN,FOLLOW_RETURN_in_stat1735); 
 					pushFollow(FOLLOW_expr_in_stat1737);
@@ -1251,7 +1264,7 @@ public class TigerParser extends Parser {
 					}
 					break;
 				case 7 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:256:9: block
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:269:9: block
 					{
 					pushFollow(FOLLOW_block_in_stat1749);
 					block();
@@ -1275,10 +1288,10 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "expr_or_list"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:259:1: expr_or_list : ( constant expr_tail | Identifier ( value_tail expr_tail | LPAREN expr_list RPAREN ) | LPAREN expr RPAREN expr_tail );
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:272:1: expr_or_list : ( constant expr_tail | Identifier ( value_tail expr_tail | LPAREN expr_list RPAREN ) | LPAREN expr RPAREN expr_tail );
 	public final void expr_or_list() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:260:5: ( constant expr_tail | Identifier ( value_tail expr_tail | LPAREN expr_list RPAREN ) | LPAREN expr RPAREN expr_tail )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:273:5: ( constant expr_tail | Identifier ( value_tail expr_tail | LPAREN expr_list RPAREN ) | LPAREN expr RPAREN expr_tail )
 			int alt17=3;
 			switch ( input.LA(1) ) {
 			case FixedPointLiteral:
@@ -1304,7 +1317,7 @@ public class TigerParser extends Parser {
 			}
 			switch (alt17) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:260:7: constant expr_tail
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:273:7: constant expr_tail
 					{
 					pushFollow(FOLLOW_constant_in_expr_or_list1772);
 					constant();
@@ -1317,10 +1330,10 @@ public class TigerParser extends Parser {
 					}
 					break;
 				case 2 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:261:7: Identifier ( value_tail expr_tail | LPAREN expr_list RPAREN )
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:274:7: Identifier ( value_tail expr_tail | LPAREN expr_list RPAREN )
 					{
 					match(input,Identifier,FOLLOW_Identifier_in_expr_or_list1782); 
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:261:18: ( value_tail expr_tail | LPAREN expr_list RPAREN )
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:274:18: ( value_tail expr_tail | LPAREN expr_list RPAREN )
 					int alt16=2;
 					int LA16_0 = input.LA(1);
 					if ( (LA16_0==AND||LA16_0==ASSIGN||LA16_0==COMMA||(LA16_0 >= DIV && LA16_0 <= DO)||LA16_0==EQ||(LA16_0 >= GREATER && LA16_0 <= GREATEREQ)||(LA16_0 >= LBRACK && LA16_0 <= LESSEREQ)||(LA16_0 >= MINUS && LA16_0 <= NEQ)||(LA16_0 >= OR && LA16_0 <= PLUS)||(LA16_0 >= RPAREN && LA16_0 <= THEN)) ) {
@@ -1338,7 +1351,7 @@ public class TigerParser extends Parser {
 
 					switch (alt16) {
 						case 1 :
-							// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:261:19: value_tail expr_tail
+							// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:274:19: value_tail expr_tail
 							{
 							pushFollow(FOLLOW_value_tail_in_expr_or_list1785);
 							value_tail();
@@ -1351,7 +1364,7 @@ public class TigerParser extends Parser {
 							}
 							break;
 						case 2 :
-							// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:261:42: LPAREN expr_list RPAREN
+							// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:274:42: LPAREN expr_list RPAREN
 							{
 							match(input,LPAREN,FOLLOW_LPAREN_in_expr_or_list1791); 
 							pushFollow(FOLLOW_expr_list_in_expr_or_list1793);
@@ -1367,7 +1380,7 @@ public class TigerParser extends Parser {
 					}
 					break;
 				case 3 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:262:7: LPAREN expr RPAREN expr_tail
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:275:7: LPAREN expr RPAREN expr_tail
 					{
 					match(input,LPAREN,FOLLOW_LPAREN_in_expr_or_list1804); 
 					pushFollow(FOLLOW_expr_in_expr_or_list1806);
@@ -1397,11 +1410,11 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "expr_tail"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:265:1: expr_tail : mult_expr addtion_expr comparative_expr logic_expr ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:278:1: expr_tail : mult_expr addtion_expr comparative_expr logic_expr ;
 	public final void expr_tail() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:266:2: ( mult_expr addtion_expr comparative_expr logic_expr )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:266:4: mult_expr addtion_expr comparative_expr logic_expr
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:279:2: ( mult_expr addtion_expr comparative_expr logic_expr )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:279:4: mult_expr addtion_expr comparative_expr logic_expr
 			{
 			pushFollow(FOLLOW_mult_expr_in_expr_tail1828);
 			mult_expr();
@@ -1435,11 +1448,11 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "if_else_expr"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:269:1: if_else_expr : IF expr THEN stat_seq else_expr ENDIF SEMI ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:282:1: if_else_expr : IF expr THEN stat_seq else_expr ENDIF SEMI ;
 	public final void if_else_expr() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:270:5: ( IF expr THEN stat_seq else_expr ENDIF SEMI )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:270:7: IF expr THEN stat_seq else_expr ENDIF SEMI
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:283:5: ( IF expr THEN stat_seq else_expr ENDIF SEMI )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:283:7: IF expr THEN stat_seq else_expr ENDIF SEMI
 			{
 			match(input,IF,FOLLOW_IF_in_if_else_expr1852); 
 			pushFollow(FOLLOW_expr_in_if_else_expr1854);
@@ -1473,13 +1486,13 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "else_expr"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:273:1: else_expr : ( ELSE stat_seq )? ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:286:1: else_expr : ( ELSE stat_seq )? ;
 	public final void else_expr() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:274:5: ( ( ELSE stat_seq )? )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:274:7: ( ELSE stat_seq )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:287:5: ( ( ELSE stat_seq )? )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:287:7: ( ELSE stat_seq )?
 			{
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:274:7: ( ELSE stat_seq )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:287:7: ( ELSE stat_seq )?
 			int alt18=2;
 			int LA18_0 = input.LA(1);
 			if ( (LA18_0==ELSE) ) {
@@ -1487,7 +1500,7 @@ public class TigerParser extends Parser {
 			}
 			switch (alt18) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:274:8: ELSE stat_seq
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:287:8: ELSE stat_seq
 					{
 					match(input,ELSE,FOLLOW_ELSE_in_else_expr1890); 
 					pushFollow(FOLLOW_stat_seq_in_else_expr1892);
@@ -1515,13 +1528,13 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "opt_prefix"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:277:1: opt_prefix : ( value ASSIGN )? ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:290:1: opt_prefix : ( value ASSIGN )? ;
 	public final void opt_prefix() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:278:5: ( ( value ASSIGN )? )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:278:9: ( value ASSIGN )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:291:5: ( ( value ASSIGN )? )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:291:9: ( value ASSIGN )?
 			{
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:278:9: ( value ASSIGN )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:291:9: ( value ASSIGN )?
 			int alt19=2;
 			int LA19_0 = input.LA(1);
 			if ( (LA19_0==Identifier) ) {
@@ -1529,7 +1542,7 @@ public class TigerParser extends Parser {
 			}
 			switch (alt19) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:278:10: value ASSIGN
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:291:10: value ASSIGN
 					{
 					pushFollow(FOLLOW_value_in_opt_prefix1915);
 					value();
@@ -1557,11 +1570,11 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "expr"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:281:1: expr : expr_lev3 logic_expr ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:294:1: expr : expr_lev3 logic_expr ;
 	public final void expr() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:282:5: ( expr_lev3 logic_expr )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:282:9: expr_lev3 logic_expr
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:295:5: ( expr_lev3 logic_expr )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:295:9: expr_lev3 logic_expr
 			{
 			pushFollow(FOLLOW_expr_lev3_in_expr1938);
 			expr_lev3();
@@ -1587,11 +1600,11 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "expr_lev3"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:285:1: expr_lev3 : expr_lev2 comparative_expr ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:298:1: expr_lev3 : expr_lev2 comparative_expr ;
 	public final void expr_lev3() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:286:5: ( expr_lev2 comparative_expr )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:286:9: expr_lev2 comparative_expr
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:299:5: ( expr_lev2 comparative_expr )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:299:9: expr_lev2 comparative_expr
 			{
 			pushFollow(FOLLOW_expr_lev2_in_expr_lev31960);
 			expr_lev2();
@@ -1617,11 +1630,11 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "expr_lev2"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:289:1: expr_lev2 : expr_lev1 addtion_expr ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:302:1: expr_lev2 : expr_lev1 addtion_expr ;
 	public final void expr_lev2() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:290:5: ( expr_lev1 addtion_expr )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:290:9: expr_lev1 addtion_expr
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:303:5: ( expr_lev1 addtion_expr )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:303:9: expr_lev1 addtion_expr
 			{
 			pushFollow(FOLLOW_expr_lev1_in_expr_lev21981);
 			expr_lev1();
@@ -1647,11 +1660,11 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "expr_lev1"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:293:1: expr_lev1 : primary_expression mult_expr ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:306:1: expr_lev1 : primary_expression mult_expr ;
 	public final void expr_lev1() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:294:5: ( primary_expression mult_expr )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:294:9: primary_expression mult_expr
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:307:5: ( primary_expression mult_expr )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:307:9: primary_expression mult_expr
 			{
 			pushFollow(FOLLOW_primary_expression_in_expr_lev12002);
 			primary_expression();
@@ -1677,10 +1690,10 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "primary_expression"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:297:1: primary_expression : ( constant | value | LPAREN expr RPAREN );
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:310:1: primary_expression : ( constant | value | LPAREN expr RPAREN );
 	public final void primary_expression() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:298:5: ( constant | value | LPAREN expr RPAREN )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:311:5: ( constant | value | LPAREN expr RPAREN )
 			int alt20=3;
 			switch ( input.LA(1) ) {
 			case FixedPointLiteral:
@@ -1706,7 +1719,7 @@ public class TigerParser extends Parser {
 			}
 			switch (alt20) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:298:9: constant
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:311:9: constant
 					{
 					pushFollow(FOLLOW_constant_in_primary_expression2023);
 					constant();
@@ -1715,7 +1728,7 @@ public class TigerParser extends Parser {
 					}
 					break;
 				case 2 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:299:9: value
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:312:9: value
 					{
 					pushFollow(FOLLOW_value_in_primary_expression2033);
 					value();
@@ -1724,7 +1737,7 @@ public class TigerParser extends Parser {
 					}
 					break;
 				case 3 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:300:9: LPAREN expr RPAREN
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:313:9: LPAREN expr RPAREN
 					{
 					match(input,LPAREN,FOLLOW_LPAREN_in_primary_expression2043); 
 					pushFollow(FOLLOW_expr_in_primary_expression2045);
@@ -1750,13 +1763,13 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "mult_expr"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:303:1: mult_expr : ( mult_operator primary_expression mult_expr )? ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:316:1: mult_expr : ( mult_operator primary_expression mult_expr )? ;
 	public final void mult_expr() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:304:5: ( ( mult_operator primary_expression mult_expr )? )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:304:9: ( mult_operator primary_expression mult_expr )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:317:5: ( ( mult_operator primary_expression mult_expr )? )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:317:9: ( mult_operator primary_expression mult_expr )?
 			{
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:304:9: ( mult_operator primary_expression mult_expr )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:317:9: ( mult_operator primary_expression mult_expr )?
 			int alt21=2;
 			int LA21_0 = input.LA(1);
 			if ( (LA21_0==DIV||LA21_0==MULT) ) {
@@ -1764,7 +1777,7 @@ public class TigerParser extends Parser {
 			}
 			switch (alt21) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:304:10: mult_operator primary_expression mult_expr
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:317:10: mult_operator primary_expression mult_expr
 					{
 					pushFollow(FOLLOW_mult_operator_in_mult_expr2067);
 					mult_operator();
@@ -1799,13 +1812,13 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "addtion_expr"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:307:1: addtion_expr : ( addition_operator expr_lev1 addtion_expr )? ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:320:1: addtion_expr : ( addition_operator expr_lev1 addtion_expr )? ;
 	public final void addtion_expr() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:308:5: ( ( addition_operator expr_lev1 addtion_expr )? )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:308:9: ( addition_operator expr_lev1 addtion_expr )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:321:5: ( ( addition_operator expr_lev1 addtion_expr )? )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:321:9: ( addition_operator expr_lev1 addtion_expr )?
 			{
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:308:9: ( addition_operator expr_lev1 addtion_expr )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:321:9: ( addition_operator expr_lev1 addtion_expr )?
 			int alt22=2;
 			int LA22_0 = input.LA(1);
 			if ( (LA22_0==MINUS||LA22_0==PLUS) ) {
@@ -1813,7 +1826,7 @@ public class TigerParser extends Parser {
 			}
 			switch (alt22) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:308:10: addition_operator expr_lev1 addtion_expr
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:321:10: addition_operator expr_lev1 addtion_expr
 					{
 					pushFollow(FOLLOW_addition_operator_in_addtion_expr2093);
 					addition_operator();
@@ -1848,13 +1861,13 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "comparative_expr"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:311:1: comparative_expr : ( comparative_operator expr_lev2 comparative_expr )? ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:324:1: comparative_expr : ( comparative_operator expr_lev2 comparative_expr )? ;
 	public final void comparative_expr() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:312:5: ( ( comparative_operator expr_lev2 comparative_expr )? )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:312:9: ( comparative_operator expr_lev2 comparative_expr )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:325:5: ( ( comparative_operator expr_lev2 comparative_expr )? )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:325:9: ( comparative_operator expr_lev2 comparative_expr )?
 			{
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:312:9: ( comparative_operator expr_lev2 comparative_expr )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:325:9: ( comparative_operator expr_lev2 comparative_expr )?
 			int alt23=2;
 			int LA23_0 = input.LA(1);
 			if ( (LA23_0==EQ||(LA23_0 >= GREATER && LA23_0 <= GREATEREQ)||(LA23_0 >= LESSER && LA23_0 <= LESSEREQ)||LA23_0==NEQ) ) {
@@ -1862,7 +1875,7 @@ public class TigerParser extends Parser {
 			}
 			switch (alt23) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:312:10: comparative_operator expr_lev2 comparative_expr
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:325:10: comparative_operator expr_lev2 comparative_expr
 					{
 					pushFollow(FOLLOW_comparative_operator_in_comparative_expr2119);
 					comparative_operator();
@@ -1897,13 +1910,13 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "logic_expr"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:315:1: logic_expr : ( and_or_operator expr_lev3 logic_expr )? ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:328:1: logic_expr : ( and_or_operator expr_lev3 logic_expr )? ;
 	public final void logic_expr() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:316:5: ( ( and_or_operator expr_lev3 logic_expr )? )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:316:9: ( and_or_operator expr_lev3 logic_expr )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:329:5: ( ( and_or_operator expr_lev3 logic_expr )? )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:329:9: ( and_or_operator expr_lev3 logic_expr )?
 			{
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:316:9: ( and_or_operator expr_lev3 logic_expr )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:329:9: ( and_or_operator expr_lev3 logic_expr )?
 			int alt24=2;
 			int LA24_0 = input.LA(1);
 			if ( (LA24_0==AND||LA24_0==OR) ) {
@@ -1911,7 +1924,7 @@ public class TigerParser extends Parser {
 			}
 			switch (alt24) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:316:10: and_or_operator expr_lev3 logic_expr
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:329:10: and_or_operator expr_lev3 logic_expr
 					{
 					pushFollow(FOLLOW_and_or_operator_in_logic_expr2145);
 					and_or_operator();
@@ -1946,10 +1959,10 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "constant"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:319:1: constant : ( IntegerLiteral | FixedPointLiteral );
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:332:1: constant : ( IntegerLiteral | FixedPointLiteral );
 	public final void constant() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:320:5: ( IntegerLiteral | FixedPointLiteral )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:333:5: ( IntegerLiteral | FixedPointLiteral )
 			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:
 			{
 			if ( input.LA(1)==FixedPointLiteral||input.LA(1)==IntegerLiteral ) {
@@ -1976,10 +1989,10 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "logical_operator"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:326:1: logical_operator : ( paren_operator | and_or_operator );
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:339:1: logical_operator : ( paren_operator | and_or_operator );
 	public final void logical_operator() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:327:5: ( paren_operator | and_or_operator )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:340:5: ( paren_operator | and_or_operator )
 			int alt25=2;
 			int LA25_0 = input.LA(1);
 			if ( (LA25_0==LPAREN||LA25_0==RPAREN) ) {
@@ -1997,7 +2010,7 @@ public class TigerParser extends Parser {
 
 			switch (alt25) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:327:9: paren_operator
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:340:9: paren_operator
 					{
 					pushFollow(FOLLOW_paren_operator_in_logical_operator2202);
 					paren_operator();
@@ -2006,7 +2019,7 @@ public class TigerParser extends Parser {
 					}
 					break;
 				case 2 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:328:9: and_or_operator
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:341:9: and_or_operator
 					{
 					pushFollow(FOLLOW_and_or_operator_in_logical_operator2212);
 					and_or_operator();
@@ -2030,10 +2043,10 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "paren_operator"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:332:1: paren_operator : ( LPAREN | RPAREN );
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:345:1: paren_operator : ( LPAREN | RPAREN );
 	public final void paren_operator() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:333:5: ( LPAREN | RPAREN )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:346:5: ( LPAREN | RPAREN )
 			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:
 			{
 			if ( input.LA(1)==LPAREN||input.LA(1)==RPAREN ) {
@@ -2060,10 +2073,10 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "mult_operator"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:338:1: mult_operator : ( MULT | DIV );
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:351:1: mult_operator : ( MULT | DIV );
 	public final void mult_operator() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:339:5: ( MULT | DIV )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:352:5: ( MULT | DIV )
 			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:
 			{
 			if ( input.LA(1)==DIV||input.LA(1)==MULT ) {
@@ -2090,10 +2103,10 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "addition_operator"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:344:1: addition_operator : ( PLUS | MINUS );
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:357:1: addition_operator : ( PLUS | MINUS );
 	public final void addition_operator() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:345:5: ( PLUS | MINUS )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:358:5: ( PLUS | MINUS )
 			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:
 			{
 			if ( input.LA(1)==MINUS||input.LA(1)==PLUS ) {
@@ -2120,10 +2133,10 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "comparative_operator"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:350:1: comparative_operator : ( EQ | NEQ | LESSER | LESSEREQ | GREATER | GREATEREQ );
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:363:1: comparative_operator : ( EQ | NEQ | LESSER | LESSEREQ | GREATER | GREATEREQ );
 	public final void comparative_operator() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:351:5: ( EQ | NEQ | LESSER | LESSEREQ | GREATER | GREATEREQ )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:364:5: ( EQ | NEQ | LESSER | LESSEREQ | GREATER | GREATEREQ )
 			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:
 			{
 			if ( input.LA(1)==EQ||(input.LA(1) >= GREATER && input.LA(1) <= GREATEREQ)||(input.LA(1) >= LESSER && input.LA(1) <= LESSEREQ)||input.LA(1)==NEQ ) {
@@ -2150,10 +2163,10 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "and_or_operator"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:360:1: and_or_operator : ( AND | OR );
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:373:1: and_or_operator : ( AND | OR );
 	public final void and_or_operator() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:361:5: ( AND | OR )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:374:5: ( AND | OR )
 			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:
 			{
 			if ( input.LA(1)==AND||input.LA(1)==OR ) {
@@ -2180,10 +2193,10 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "binary_operator"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:365:1: binary_operator : ( addition_operator | mult_operator | comparative_operator | and_or_operator );
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:378:1: binary_operator : ( addition_operator | mult_operator | comparative_operator | and_or_operator );
 	public final void binary_operator() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:366:5: ( addition_operator | mult_operator | comparative_operator | and_or_operator )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:379:5: ( addition_operator | mult_operator | comparative_operator | and_or_operator )
 			int alt26=4;
 			switch ( input.LA(1) ) {
 			case MINUS:
@@ -2221,7 +2234,7 @@ public class TigerParser extends Parser {
 			}
 			switch (alt26) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:366:9: addition_operator
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:379:9: addition_operator
 					{
 					pushFollow(FOLLOW_addition_operator_in_binary_operator2421);
 					addition_operator();
@@ -2230,7 +2243,7 @@ public class TigerParser extends Parser {
 					}
 					break;
 				case 2 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:367:9: mult_operator
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:380:9: mult_operator
 					{
 					pushFollow(FOLLOW_mult_operator_in_binary_operator2431);
 					mult_operator();
@@ -2239,7 +2252,7 @@ public class TigerParser extends Parser {
 					}
 					break;
 				case 3 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:368:9: comparative_operator
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:381:9: comparative_operator
 					{
 					pushFollow(FOLLOW_comparative_operator_in_binary_operator2441);
 					comparative_operator();
@@ -2248,7 +2261,7 @@ public class TigerParser extends Parser {
 					}
 					break;
 				case 4 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:369:9: and_or_operator
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:382:9: and_or_operator
 					{
 					pushFollow(FOLLOW_and_or_operator_in_binary_operator2451);
 					and_or_operator();
@@ -2272,13 +2285,13 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "expr_list"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:372:1: expr_list : ( expr expr_list_tail )? ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:385:1: expr_list : ( expr expr_list_tail )? ;
 	public final void expr_list() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:373:5: ( ( expr expr_list_tail )? )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:373:9: ( expr expr_list_tail )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:386:5: ( ( expr expr_list_tail )? )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:386:9: ( expr expr_list_tail )?
 			{
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:373:9: ( expr expr_list_tail )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:386:9: ( expr expr_list_tail )?
 			int alt27=2;
 			int LA27_0 = input.LA(1);
 			if ( (LA27_0==FixedPointLiteral||(LA27_0 >= Identifier && LA27_0 <= IntegerLiteral)||LA27_0==LPAREN) ) {
@@ -2286,7 +2299,7 @@ public class TigerParser extends Parser {
 			}
 			switch (alt27) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:373:10: expr expr_list_tail
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:386:10: expr expr_list_tail
 					{
 					pushFollow(FOLLOW_expr_in_expr_list2471);
 					expr();
@@ -2317,13 +2330,13 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "expr_list_tail"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:376:1: expr_list_tail : ( COMMA expr expr_list_tail )? ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:389:1: expr_list_tail : ( COMMA expr expr_list_tail )? ;
 	public final void expr_list_tail() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:377:5: ( ( COMMA expr expr_list_tail )? )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:377:9: ( COMMA expr expr_list_tail )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:390:5: ( ( COMMA expr expr_list_tail )? )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:390:9: ( COMMA expr expr_list_tail )?
 			{
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:377:9: ( COMMA expr expr_list_tail )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:390:9: ( COMMA expr expr_list_tail )?
 			int alt28=2;
 			int LA28_0 = input.LA(1);
 			if ( (LA28_0==COMMA) ) {
@@ -2331,7 +2344,7 @@ public class TigerParser extends Parser {
 			}
 			switch (alt28) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:377:10: COMMA expr expr_list_tail
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:390:10: COMMA expr expr_list_tail
 					{
 					match(input,COMMA,FOLLOW_COMMA_in_expr_list_tail2495); 
 					pushFollow(FOLLOW_expr_in_expr_list_tail2497);
@@ -2363,11 +2376,11 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "value"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:380:1: value : Identifier value_tail ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:393:1: value : Identifier value_tail ;
 	public final void value() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:381:5: ( Identifier value_tail )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:381:9: Identifier value_tail
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:394:5: ( Identifier value_tail )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:394:9: Identifier value_tail
 			{
 			match(input,Identifier,FOLLOW_Identifier_in_value2520); 
 			pushFollow(FOLLOW_value_tail_in_value2522);
@@ -2390,13 +2403,13 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "value_tail"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:384:1: value_tail : ( LBRACK index_expr RBRACK value_tail_tail )? ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:397:1: value_tail : ( LBRACK index_expr RBRACK value_tail_tail )? ;
 	public final void value_tail() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:385:5: ( ( LBRACK index_expr RBRACK value_tail_tail )? )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:385:9: ( LBRACK index_expr RBRACK value_tail_tail )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:398:5: ( ( LBRACK index_expr RBRACK value_tail_tail )? )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:398:9: ( LBRACK index_expr RBRACK value_tail_tail )?
 			{
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:385:9: ( LBRACK index_expr RBRACK value_tail_tail )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:398:9: ( LBRACK index_expr RBRACK value_tail_tail )?
 			int alt29=2;
 			int LA29_0 = input.LA(1);
 			if ( (LA29_0==LBRACK) ) {
@@ -2404,7 +2417,7 @@ public class TigerParser extends Parser {
 			}
 			switch (alt29) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:385:10: LBRACK index_expr RBRACK value_tail_tail
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:398:10: LBRACK index_expr RBRACK value_tail_tail
 					{
 					match(input,LBRACK,FOLLOW_LBRACK_in_value_tail2542); 
 					pushFollow(FOLLOW_index_expr_in_value_tail2544);
@@ -2437,13 +2450,13 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "value_tail_tail"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:388:1: value_tail_tail : ( LBRACK index_expr RBRACK )? ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:401:1: value_tail_tail : ( LBRACK index_expr RBRACK )? ;
 	public final void value_tail_tail() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:389:5: ( ( LBRACK index_expr RBRACK )? )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:389:7: ( LBRACK index_expr RBRACK )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:402:5: ( ( LBRACK index_expr RBRACK )? )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:402:7: ( LBRACK index_expr RBRACK )?
 			{
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:389:7: ( LBRACK index_expr RBRACK )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:402:7: ( LBRACK index_expr RBRACK )?
 			int alt30=2;
 			int LA30_0 = input.LA(1);
 			if ( (LA30_0==LBRACK) ) {
@@ -2451,7 +2464,7 @@ public class TigerParser extends Parser {
 			}
 			switch (alt30) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:389:8: LBRACK index_expr RBRACK
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:402:8: LBRACK index_expr RBRACK
 					{
 					match(input,LBRACK,FOLLOW_LBRACK_in_value_tail_tail2572); 
 					pushFollow(FOLLOW_index_expr_in_value_tail_tail2574);
@@ -2480,11 +2493,11 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "index_expr"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:392:1: index_expr : index_expr_lev1 index_add_expr ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:405:1: index_expr : index_expr_lev1 index_add_expr ;
 	public final void index_expr() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:393:5: ( index_expr_lev1 index_add_expr )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:393:7: index_expr_lev1 index_add_expr
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:406:5: ( index_expr_lev1 index_add_expr )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:406:7: index_expr_lev1 index_add_expr
 			{
 			pushFollow(FOLLOW_index_expr_lev1_in_index_expr2595);
 			index_expr_lev1();
@@ -2510,11 +2523,11 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "index_expr_lev1"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:396:1: index_expr_lev1 : primary_index_expr index_mult_expr ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:409:1: index_expr_lev1 : primary_index_expr index_mult_expr ;
 	public final void index_expr_lev1() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:397:5: ( primary_index_expr index_mult_expr )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:397:7: primary_index_expr index_mult_expr
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:410:5: ( primary_index_expr index_mult_expr )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:410:7: primary_index_expr index_mult_expr
 			{
 			pushFollow(FOLLOW_primary_index_expr_in_index_expr_lev12618);
 			primary_index_expr();
@@ -2540,10 +2553,10 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "primary_index_expr"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:400:1: primary_index_expr : ( IntegerLiteral | Identifier );
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:413:1: primary_index_expr : ( IntegerLiteral | Identifier );
 	public final void primary_index_expr() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:401:5: ( IntegerLiteral | Identifier )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:414:5: ( IntegerLiteral | Identifier )
 			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:
 			{
 			if ( (input.LA(1) >= Identifier && input.LA(1) <= IntegerLiteral) ) {
@@ -2570,13 +2583,13 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "index_mult_expr"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:405:1: index_mult_expr : ( index_mult_opr primary_index_expr index_mult_expr )? ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:418:1: index_mult_expr : ( index_mult_opr primary_index_expr index_mult_expr )? ;
 	public final void index_mult_expr() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:406:5: ( ( index_mult_opr primary_index_expr index_mult_expr )? )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:406:7: ( index_mult_opr primary_index_expr index_mult_expr )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:419:5: ( ( index_mult_opr primary_index_expr index_mult_expr )? )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:419:7: ( index_mult_opr primary_index_expr index_mult_expr )?
 			{
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:406:7: ( index_mult_opr primary_index_expr index_mult_expr )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:419:7: ( index_mult_opr primary_index_expr index_mult_expr )?
 			int alt31=2;
 			int LA31_0 = input.LA(1);
 			if ( (LA31_0==MULT) ) {
@@ -2584,7 +2597,7 @@ public class TigerParser extends Parser {
 			}
 			switch (alt31) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:406:8: index_mult_opr primary_index_expr index_mult_expr
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:419:8: index_mult_opr primary_index_expr index_mult_expr
 					{
 					pushFollow(FOLLOW_index_mult_opr_in_index_mult_expr2672);
 					index_mult_opr();
@@ -2619,11 +2632,11 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "index_mult_opr"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:409:1: index_mult_opr : MULT ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:422:1: index_mult_opr : MULT ;
 	public final void index_mult_opr() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:410:5: ( MULT )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:410:7: MULT
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:423:5: ( MULT )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:423:7: MULT
 			{
 			match(input,MULT,FOLLOW_MULT_in_index_mult_opr2699); 
 			}
@@ -2642,13 +2655,13 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "index_add_expr"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:413:1: index_add_expr : ( index_add_opr index_expr_lev1 index_add_expr )? ;
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:426:1: index_add_expr : ( index_add_opr index_expr_lev1 index_add_expr )? ;
 	public final void index_add_expr() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:414:5: ( ( index_add_opr index_expr_lev1 index_add_expr )? )
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:414:7: ( index_add_opr index_expr_lev1 index_add_expr )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:427:5: ( ( index_add_opr index_expr_lev1 index_add_expr )? )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:427:7: ( index_add_opr index_expr_lev1 index_add_expr )?
 			{
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:414:7: ( index_add_opr index_expr_lev1 index_add_expr )?
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:427:7: ( index_add_opr index_expr_lev1 index_add_expr )?
 			int alt32=2;
 			int LA32_0 = input.LA(1);
 			if ( (LA32_0==MINUS||LA32_0==PLUS) ) {
@@ -2656,7 +2669,7 @@ public class TigerParser extends Parser {
 			}
 			switch (alt32) {
 				case 1 :
-					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:414:8: index_add_opr index_expr_lev1 index_add_expr
+					// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:427:8: index_add_opr index_expr_lev1 index_add_expr
 					{
 					pushFollow(FOLLOW_index_add_opr_in_index_add_expr2721);
 					index_add_opr();
@@ -2691,10 +2704,10 @@ public class TigerParser extends Parser {
 
 
 	// $ANTLR start "index_add_opr"
-	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:417:1: index_add_opr : ( PLUS | MINUS );
+	// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:430:1: index_add_opr : ( PLUS | MINUS );
 	public final void index_add_opr() throws RecognitionException {
 		try {
-			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:418:5: ( PLUS | MINUS )
+			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:431:5: ( PLUS | MINUS )
 			// E:\\CS4240_SPR15-master\\CS4240_SPR15-master\\Tiger.g:
 			{
 			if ( input.LA(1)==MINUS||input.LA(1)==PLUS ) {
