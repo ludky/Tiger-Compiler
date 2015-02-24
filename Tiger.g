@@ -5,6 +5,59 @@ options {
     language = Java;
 }
 
+@members {
+		    public void displayRecognitionError(String[] tokenNames,
+		                                        RecognitionException e) {
+		        String hdr = getErrorHeader(e);
+		        String[] input = e.input.toString().split("\n");
+		        String[] errmsg = hdr.split(":");
+		        String msg = getErrorMessage(e, tokenNames);
+		        String temp = "";
+		        String temp2 = "";
+		        int i = errmsg[0].length() - 1;
+		        int j = 0;
+		        while ((errmsg[0].substring(i, i + 1).equals("0"))
+		        		|| (errmsg[0].substring(i, i + 1).equals("1"))
+		        		|| (errmsg[0].substring(i, i + 1).equals("2"))
+		        		|| (errmsg[0].substring(i, i + 1).equals("3"))
+		        		|| (errmsg[0].substring(i, i + 1).equals("4"))
+		        		|| (errmsg[0].substring(i, i + 1).equals("5"))
+		        		|| (errmsg[0].substring(i, i + 1).equals("6"))
+		        		|| (errmsg[0].substring(i, i + 1).equals("7"))
+		        		|| (errmsg[0].substring(i, i + 1).equals("8"))
+		        		|| (errmsg[0].substring(i, i + 1).equals("9"))) {
+		        	temp = errmsg[0].substring(i, i + 1) + temp;
+		        	i--;
+		        }
+		        while (j < errmsg[1].length() && (errmsg[1].substring(j, j + 1).equals("0")
+		        				||errmsg[1].substring(j, j + 1).equals("0")
+		        				||errmsg[1].substring(j, j + 1).equals("1")
+		        				||errmsg[1].substring(j, j + 1).equals("2")
+		        				||errmsg[1].substring(j, j + 1).equals("3")
+								||errmsg[1].substring(j, j + 1).equals("4")
+								||errmsg[1].substring(j, j + 1).equals("5")
+								||errmsg[1].substring(j, j + 1).equals("6")
+								||errmsg[1].substring(j, j + 1).equals("7")
+								||errmsg[1].substring(j, j + 1).equals("8")
+								||errmsg[1].substring(j, j + 1).equals("9"))) {
+		        	temp2 = temp2 + errmsg[1].substring(j, j + 1);
+		        	j++;
+		        }
+		        int linenum = Integer.parseInt(temp);
+		        int num = Integer.parseInt(temp2);
+		        String line;
+		        String finalmessage;
+		        if (num == 0) {
+		        	line = input[linenum - 2];
+		        	finalmessage = line;
+		        } else {
+		            line = input[linenum - 1];
+		            finalmessage = line.substring(0, num + 1);
+		        }
+		        
+		        System.out.println(hdr + " " + msg + ". prefix of error : " + finalmessage);
+		    }
+}
 
 program
     :	type_declaration_list funct_declaration_list main_function
