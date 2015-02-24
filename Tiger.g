@@ -5,6 +5,7 @@ options {
     language = Java;
 }
 
+
 program
     :	type_declaration_list funct_declaration_list main_function
     ;
