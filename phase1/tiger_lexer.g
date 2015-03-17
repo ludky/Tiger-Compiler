@@ -121,3 +121,46 @@ AND         :   '&';
 OR          :   '|';
 ASSIGN      :   ':=';
 
+<<<<<<< HEAD
+=======
+
+//Lexical rules
+
+Identifier
+    :   letter (letter | digit | '_')*
+    ;
+
+fragment
+Letter
+    :   ('A'..'Z')
+    |   ('a'..'z')
+    ;
+fragment
+Digit
+    :   ('0'..'9')
+    ;
+fragment
+Digits
+    :   ('0'..'9')+
+    ;
+
+IntegerLiteral
+    :   0 | natural_number digit*
+    ;
+
+fragment
+NatrualNumber
+    :   ('1'..'9')
+    ;
+
+FixedPointLiteral
+    :   (IntergerLiteral '.' digit?digit?digit)
+    ;
+
+
+
+
+// Paser
+
+
+>>>>>>> 5656e0fa53b0684e5d6ad28b41a8001dc66bf44a
