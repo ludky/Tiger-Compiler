@@ -100,7 +100,3 @@ public class SymbolTable {
 		}
 	}
 }
-
-public class SymbolTable {
-
-}
