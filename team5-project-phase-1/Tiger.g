@@ -177,7 +177,7 @@ IntegerLiteral
     ;
 
 FixedPointLiteral
-    :   (IntegerLiteral '.' Digit | Digit Digit | Digit Digit Digit)
+    :   IntegerLiteral '.' Digit (Digit (Digit)?)?
     ;
 
 COMMENT
@@ -283,7 +283,7 @@ optional_init
     ;
 
 stat_seq
-    : stat* -> ^(STAT_SEQ stat*)
+    : stat+ -> ^(STAT_SEQ stat+)
     ;
 
 stat
