@@ -325,15 +325,44 @@ base_type returns [String txt]
     ;
 
 var_declaration
-    :   id_list COLON type_id optional_init SEMI -> ^(VAR_DECL id_list type_id optional_init?)
+    :   id_list COLON type_id
+        {
+            Type curr = null;
+            if ($type_id.txt.equals("int")) {
+                curr = new Type("int");
+            } else if ($type_id.txt.equals("fixedpt")) {
+                curr = new Type("fixedpt");
+            } else {
+                if (st.lookup($type_id.txt) != null) {
+                    if (st.lookup($type_id.txt).getTypeName().equals("definedtype")) {
+                        curr = st.lookup($type_id.txt);
+                    } else {
+
+                    }
+                } else {
+
+                }
+            }
+            for (String s : $id_list.idlist) {
+                if (st.lookupCurrentScope(s) == null) {
+                    curr.setIdentifier(s);
+                    st.insert(s, curr);
+                } else {
+
+                }
+            }
+        }
+        optional_init SEMI -> ^(VAR_DECL id_list type_id optional_init?)
     ;
 
-id_list
-    :   VAR Identifier (COMMA Identifier)* -> ^(VAR Identifier+)
+id_list returns [ArrayList<String> idlist]
+    :   {idlist = new ArrayList<>();}
+        VAR (id1 = Identifier {$idlist.add($id1);}) (COMMA (id2 = Identifier{$idlist.add($id2);}))* -> ^(VAR Identifier+)
     ;
 
 optional_init
-    :   (ASSIGN^ constant)?
+    :   ASSIGN^ constant
+    |
     ;
 
 stat_seq
