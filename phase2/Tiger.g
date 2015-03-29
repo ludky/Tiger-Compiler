@@ -210,7 +210,7 @@ funct_declaration_list
     ;    
 
 funct_ret_type returns [String retType]
-	:	(alltype {$retType = $alltype.retType}) -> ^(RET_TYPE alltype)
+	:	(alltype {$retType = $alltype.retType;}) -> ^(RET_TYPE alltype)
 	;
 
 alltype returns [String retType]
@@ -220,7 +220,7 @@ funct_declaration_tail
     :	FUNCTION Identifier LPAREN! param_list RPAREN!
     {
     	Type rt = new Type("void");
-    	st.insert($Identifier.text, new Function(rt, $param_list.pl));
+    	st.insert($Identifier.text, new Function(rt.getTypeName(), $param_list.pl));
     	st.initializeScope();
     	for (int i = 0; i < $param_list.pl.size(); i++) {
     		st.insert($param_list.pl.get(i).getIdentifier(), new Type($param_list.pl.get(i).getTypeName()));
@@ -228,7 +228,7 @@ funct_declaration_tail
     }
     BEGIN! block_list END!
     {
-    	st.exitScope();
+    	st.finalizeScope();
     }
     SEMI!
     ;
@@ -236,11 +236,12 @@ funct_declaration_tail
 funct_declaration
 	:	funct_ret_type FUNCTION Identifier LPAREN param_list RPAREN
 	{
+		Type rt = null;
 	    if ($funct_ret_type.retType == "int" || $funct_ret_type.retType == "fixedpt") {
-	        Type rt = new Type($funct_ret_type.retType);
+	        rt = new Type($funct_ret_type.retType);
 	    } else {
 	    }
-	    st.insert($Identifier.text, new Function(rt, $param_list.pl));
+	    st.insert($Identifier.text, new Function(rt.getTypeName(), $param_list.pl));
 	    st.initializeScope();
 	    for (int i = 0; i < $param_list.pl.size(); i++) {
 	    	st.insert($param_list.pl.get(i).getIdentifier(), new Type($param_list.pl.get(i).getTypeName()));
@@ -248,7 +249,7 @@ funct_declaration
 	} 
 	BEGIN block_list END 
 	{
-		st.exitScope();
+		st.finalizeScope();
 	}
 	SEMI
 		-> ^(Identifier funct_ret_type param_list? block_list)
@@ -262,12 +263,12 @@ main_function
     block_list 
     END! 
     {
-    	st.exitScope();
+    	st.finalizeScope();
     }
     SEMI!
     ;
 
-param_list returns [Arraylist<Type> pl]
+param_list returns [ArrayList<Type> pl]
     :   
     {$pl = new ArrayList<Type>();}
     (pr1 = param {$pl.add($pr1.paramType);}(COMMA pr2 = param {$pl.add($pr2.paramType);})*)? -> ^(PARAM_LIST param*)
