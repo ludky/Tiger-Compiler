@@ -401,7 +401,7 @@ var_declaration
     ;
 
 id_list returns [ArrayList<String> idlist]
-    :   {idlist = new ArrayList<>();}
+    :   {$idlist = new ArrayList<>();}
         VAR (id1 = Identifier {$idlist.add($id1);}) (COMMA (id2 = Identifier{$idlist.add($id2);}))* -> ^(VAR Identifier+)
     ;
 
