@@ -3,8 +3,8 @@ public class DefinedType extends Type{
 
 	private Type baseType;
 	
-	public DefinedType(String tn, Type bt) {
-		super(tn);
+	public DefinedType(Type bt) {
+		super("definedtype");
 		baseType = bt;
 	}
 	
@@ -13,6 +13,7 @@ public class DefinedType extends Type{
 	}
 	
 	public String toString() {
-		return "Type Name: " + typeName + "; Base Type: (" + baseType + ")";
+		return "Type Identifier: " + identifier + ";Type Name: " + typeName
+			   +"; Base Type: (" + baseType + ")";
 	}
 }
