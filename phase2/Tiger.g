@@ -245,7 +245,7 @@ funct_declaration
                 if (rt.getTypeName().equals("array")) {
                   //  rt = new Array("array", $funct_ret_type.retType, /* size */);
                 } else {
-                    rt = new DefinedType("defined_type", rt);
+                    rt = new DefinedType(rt);
                 }
             } else {
                 throw new IllegalArgumentException("Undefined funtion type.");
@@ -311,25 +311,32 @@ var_declaration_list
     ;
     
 type_declaration
-    : TYPE Identifier EQ type SEMI -> ^(TYPE_DECL Identifier EQ type)
+    : TYPE Identifier EQ type SEMI
     {
+    	Type dt = null;
     	if ($type.isBase == 1) {
-    		Type dt = new DefinedType7($type.txt);
-    	} else {
     		if ($type.txt.equals("int")) {
-    			Type bt = new Type("int");
+    			dt = new DefinedType(new Type("int"));
     		} else {
-    			Type bt = new Type("fixedpt");
+    			dt = new DefinedType(new Type("fixedpt"));
+    		}
+    	} else {
+    		Type bt = null;
+    		if ($type.txt.equals("int")) {
+    			bt = new Type("int");
+    		} else {
+    			bt = new Type("fixedpt");
     		}
     		if ($type.is2D == 0) {
-    			Type dt = new Array("oneDarray", bt, $type.w);
+    			dt = new Array("oneDarray", bt, $type.w);
     		} else {
-    			Type dt = new Array("twoDarray", bt, $type.w, $type.h);
+    			dt = new Array("twoDarray", bt, $type.w, $type.h, true);
     		}
     	}
     	dt.setIdentifier($Identifier.text);
     	st.insert($Identifier.text, dt);
     }
+     -> ^(TYPE_DECL Identifier EQ type)
     ;
 
 type returns[int isBase, String txt, int w, int h, int is2D]
