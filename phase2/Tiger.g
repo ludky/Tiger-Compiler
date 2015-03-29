@@ -225,11 +225,9 @@ funct_declaration_tail
     	for (int i = 0; i < $param_list.pl.size(); i++) {
     		st.insert($param_list.pl.get(i).getIdentifier(), new Type($param_list.pl.get(i).getTypeName()));
     	}
-    }
-    BEGIN! block_list END!
-    {
     	st.finalizeScope();
     }
+    BEGIN! block_list END!
     SEMI!
     ;
 
@@ -237,14 +235,14 @@ funct_declaration
 	:	funct_ret_type FUNCTION Identifier LPAREN param_list RPAREN
 	{
 		Type rt = null; //
-	    if ($funct_ret_type.retType == "int" || $funct_ret_type.retType == "fixedpt") {
+	    if ($funct_ret_type.retType.equals("int") || $funct_ret_type.retType.equals("fixedpt")) {
             
 	        rt = new Type($funct_ret_type.retType);
 	    } else {
             String typeName = $funct_ret_type.retType;
             rt =  st.lookup($Identifier.text);
             if (rt != null) {
-                if (rt.getTypeName() == "array") {
+                if (rt.getTypeName().equals("array")) {
                   //  rt = new Array("array", $funct_ret_type.retType, /* size */);
                 } else {
                     rt = new DefinedType("defined_type", rt);
@@ -259,11 +257,9 @@ funct_declaration
 	    for (int i = 0; i < $param_list.pl.size(); i++) {
 	    	st.insert($param_list.pl.get(i).getIdentifier(), new Type($param_list.pl.get(i).getTypeName()));
 	    }
+	    st.finalizeScope();
 	} 
 	BEGIN block_list END 
-	{
-		st.finalizeScope();
-	}
 	SEMI
 		-> ^(Identifier funct_ret_type param_list? block_list)
 	;
@@ -302,7 +298,7 @@ block_list
 /* The body of the function is sequence of clocks, each starts a new scope with
 declarations local to that scope followed by sequence of statement. */
 block
-    :   BEGIN type_declaration_list var_declaration_list stat_seq END SEMI
+    :   BEGIN{st.initializeScope();} type_declaration_list var_declaration_list stat_seq END{st.finalizeScope();} SEMI
     	-> ^(BLOCK type_declaration_list var_declaration_list stat_seq)
     ;
 
@@ -316,15 +312,50 @@ var_declaration_list
     
 type_declaration
     : TYPE Identifier EQ type SEMI -> ^(TYPE_DECL Identifier EQ type)
+    {
+    	if ($type.isBase == 1) {
+    		Type dt = new DefinedType7($type.txt);
+    	} else {
+    		if ($type.txt.equals("int")) {
+    			Type bt = new Type("int");
+    		} else {
+    			Type bt = new Type("fixedpt");
+    		}
+    		if ($type.is2D == 0) {
+    			Type dt = new Array("oneDarray", bt, $type.w);
+    		} else {
+    			Type dt = new Array("twoDarray", bt, $type.w, $type.h);
+    		}
+    	}
+    	dt.setIdentifier($Identifier.text);
+    }
     ;
 
-type
-    :   base_type
-    |   ARRAY^ LBRACK! IntegerLiteral RBRACK! arr_brack OF base_type
+type returns[int isBase, String txt, int w, int h, int is2D]
+    :   {$w = -1; $h = -1; $txt = ""; $is2D = -1;}
+    t1 = base_type {$isBase = 1; $txt = $t1.txt;}
+    |   ARRAY^ LBRACK! IntegerLiteral RBRACK! arr_brack OF t2 = base_type
+    {
+    	$is2D = $arr_brack.is2D;
+    	$isBase = 0;
+    	$txt = $t2.txt;
+    	if ($arr_brack.is2D == 0) {
+    		$w = Integer.parseInt($IntegerLiteral.text);
+    	} else {
+    		$w = Integer.parseInt($IntegerLiteral.text);
+    		$h = $arr_brack.h;
+    	}
+    }
     ;
 
-arr_brack
-    :	(LBRACK! IntegerLiteral RBRACK!)?
+arr_brack returns[int is2D, int h]
+    :{$h = -1;}	
+    (LBRACK! IntegerLiteral RBRACK!)
+    {
+    	$is2D = 1;
+    	$h = Integer.parseInt($IntegerLiteral.text);
+    }
+    | {$is2D = 0;}
     ;
 
 type_id returns [String txt]
