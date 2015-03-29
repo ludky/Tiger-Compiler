@@ -225,9 +225,11 @@ funct_declaration_tail
     	for (int i = 0; i < $param_list.pl.size(); i++) {
     		st.insert($param_list.pl.get(i).getIdentifier(), new Type($param_list.pl.get(i).getTypeName()));
     	}
-    	st.finalizeScope();
     }
     BEGIN! block_list END!
+    {
+    	st.finalizeScope();
+    }
     SEMI!
     ;
 
@@ -257,9 +259,9 @@ funct_declaration
 	    for (int i = 0; i < $param_list.pl.size(); i++) {
 	    	st.insert($param_list.pl.get(i).getIdentifier(), new Type($param_list.pl.get(i).getTypeName()));
 	    }
-	    st.finalizeScope();
 	} 
-	BEGIN block_list END 
+	BEGIN block_list END
+	{st.finalizeScope();}
 	SEMI
 		-> ^(Identifier funct_ret_type param_list? block_list)
 	;
@@ -298,7 +300,7 @@ block_list
 /* The body of the function is sequence of clocks, each starts a new scope with
 declarations local to that scope followed by sequence of statement. */
 block
-    :   BEGIN{st.initializeScope();} type_declaration_list var_declaration_list stat_seq END{st.finalizeScope();} SEMI
+    :   BEGIN type_declaration_list var_declaration_list stat_seq END SEMI
     	-> ^(BLOCK type_declaration_list var_declaration_list stat_seq)
     ;
 
