@@ -26,8 +26,7 @@ tokens {
 }
 
 @members {
-private SymbolTable st = new SymbolTable();
-protected int hasError = 0;
+public int hasError = 0;
 public void printTokenType() {
 		int size_token = input.size();
 		for (int i = 0; i < size_token; i++) {
@@ -102,15 +101,7 @@ public void printTokenType() {
 }
 
 program
-    :	
-    {
-    	st.initializeScope();
-    }
-    type_declaration_list funct_list main_function
-    {
-    	st.finalizeScope();
-    	System.out.println(st.toString());
-    }
+    :	type_declaration_list funct_list main_function
     ;
 
 FUNCTION    :   'function';
@@ -186,7 +177,7 @@ IntegerLiteral
     ;
 
 FixedPointLiteral
-    :   (IntegerLiteral '.' Digit | Digit Digit | Digit Digit Digit)
+    :   IntegerLiteral '.' Digit (Digit (Digit)?)?
     ;
 
 COMMENT
@@ -209,86 +200,32 @@ funct_declaration_list
     | VOID! (funct_declaration_tail funct_declaration_list)?
     ;    
 
-funct_ret_type returns [String retType]
-	:	(alltype {$retType = $alltype.retType; System.out.println($retType);}) -> ^(RET_TYPE alltype)
+funct_ret_type
+	:	alltype -> ^(RET_TYPE alltype)
 	;
 
-alltype returns [String retType]
-	:	Identifier {$retType = $Identifier.text;}| INT {$retType = "int";}| FIXEDPT {$retType = "fixedpt";}
+alltype
+	:	Identifier | INT | FIXEDPT
 	;
 funct_declaration_tail
-    :	FUNCTION Identifier LPAREN! param_list RPAREN!
-    {
-    	Type rt = new Type("void");
-    	st.insert($Identifier.text, new Function(rt, $param_list.pl));
-    	st.initializeScope();
-    	for (int i = 0; i < $param_list.pl.size(); i++) {
-    		st.insert($param_list.pl.get(i).getIdentifier(), new Type($param_list.pl.get(i).getTypeName()));
-    	}
-    	st.finalizeScope();
-    }
-    BEGIN! block_list END!
-    SEMI!
+    :	FUNCTION Identifier LPAREN! param_list RPAREN! BEGIN! block_list END! SEMI!
     ;
 
 funct_declaration
-	:	funct_ret_type FUNCTION Identifier LPAREN param_list RPAREN
-	{
-		Type rt = null; //
-	    if ($funct_ret_type.retType.equals("int") || $funct_ret_type.retType.equals("fixedpt")) {
-            
-	        rt = new Type($funct_ret_type.retType);
-	    } else {
-            String typeName = $funct_ret_type.retType;
-            rt =  st.lookup($Identifier.text);
-            if (rt != null) {
-                if (rt.getTypeName().equals("array")) {
-                  //  rt = new Array("array", $funct_ret_type.retType, /* size */);
-                } else {
-                    rt = new DefinedType("defined_type", rt);
-                }
-            } else {
-                throw new IllegalArgumentException("Undefined funtion type.");
-               // throw new Exception("are you sure you've defined a right type? really? really? really? I am so sorry but I cannot recognize it. *SAD FACE*");
-            }
-	    }
-	    st.insert($Identifier.text, new Function(rt, $param_list.pl));
-	    st.initializeScope();
-	    for (int i = 0; i < $param_list.pl.size(); i++) {
-	    	st.insert($param_list.pl.get(i).getIdentifier(), new Type($param_list.pl.get(i).getTypeName()));
-	    }
-	    st.finalizeScope();
-	} 
-	BEGIN block_list END 
-	SEMI
+	:	funct_ret_type FUNCTION Identifier LPAREN param_list RPAREN BEGIN block_list END SEMI
 		-> ^(Identifier funct_ret_type param_list? block_list)
 	;
 	
 main_function
-    :   MAIN^ LPAREN! RPAREN! BEGIN!
-    {
-    	st.initializeScope();
-    } 
-    block_list 
-    END! 
-    {
-    	st.finalizeScope();
-    }
-    SEMI!
+    :   MAIN^ LPAREN! RPAREN! BEGIN! block_list END! SEMI!
     ;
 
-param_list returns [ArrayList<Type> pl]
-    :   
-    {$pl = new ArrayList<Type>();}
-    (pr1 = param {$pl.add($pr1.paramType);}(COMMA pr2 = param {$pl.add($pr2.paramType);})*)? -> ^(PARAM_LIST param*)
+param_list
+    :   (param (COMMA param)*)? -> ^(PARAM_LIST param*)
     ;
 
-param returns [Type paramType]
+param
     :   Identifier COLON^ type_id
-    {
-    	$paramType = new Type($type_id.txt);
-    	$paramType.setIdentifier($Identifier.text);
-    }
     ;
 
 block_list
@@ -298,7 +235,7 @@ block_list
 /* The body of the function is sequence of clocks, each starts a new scope with
 declarations local to that scope followed by sequence of statement. */
 block
-    :   BEGIN{st.initializeScope();} type_declaration_list var_declaration_list stat_seq END{st.finalizeScope();} SEMI
+    :   BEGIN type_declaration_list var_declaration_list stat_seq END SEMI
     	-> ^(BLOCK type_declaration_list var_declaration_list stat_seq)
     ;
 
@@ -312,106 +249,41 @@ var_declaration_list
     
 type_declaration
     : TYPE Identifier EQ type SEMI -> ^(TYPE_DECL Identifier EQ type)
-    {
-    	if ($type.isBase == 1) {
-    		Type dt = new DefinedType7($type.txt);
-    	} else {
-    		if ($type.txt.equals("int")) {
-    			Type bt = new Type("int");
-    		} else {
-    			Type bt = new Type("fixedpt");
-    		}
-    		if ($type.is2D == 0) {
-    			Type dt = new Array("oneDarray", bt, $type.w);
-    		} else {
-    			Type dt = new Array("twoDarray", bt, $type.w, $type.h);
-    		}
-    	}
-    	dt.setIdentifier($Identifier.text);
-    	st.insert($Identifier.text, dt);
-    }
     ;
 
-type returns[int isBase, String txt, int w, int h, int is2D]
-    :   {$w = -1; $h = -1; $txt = ""; $is2D = -1;}
-    t1 = base_type {$isBase = 1; $txt = $t1.txt;}
-    |   ARRAY^ LBRACK! IntegerLiteral RBRACK! arr_brack OF t2 = base_type
-    {
-    	$is2D = $arr_brack.is2D;
-    	$isBase = 0;
-    	$txt = $t2.txt;
-    	if ($arr_brack.is2D == 0) {
-    		$w = Integer.parseInt($IntegerLiteral.text);
-    	} else {
-    		$w = Integer.parseInt($IntegerLiteral.text);
-    		$h = $arr_brack.h;
-    	}
-    }
+type
+    :   base_type
+    |   ARRAY^ LBRACK! IntegerLiteral RBRACK! arr_brack OF base_type
     ;
 
-arr_brack returns[int is2D, int h]
-    :{$h = -1;}	
-    (LBRACK! IntegerLiteral RBRACK!)
-    {
-    	$is2D = 1;
-    	$h = Integer.parseInt($IntegerLiteral.text);
-    }
-    | {$is2D = 0;}
+arr_brack
+    :	(LBRACK! IntegerLiteral RBRACK!)?
     ;
 
-type_id returns [String txt]
-    :   base_type {$txt = $base_type.txt;}
-    |   Identifier {$txt = $Identifier.text;}
+type_id
+    :   base_type
+    |   Identifier
     ;
 
-base_type returns [String txt]
-    :   INT {$txt = "int";}
-    |   FIXEDPT {$txt = "fixedpt";}
+base_type
+    :   INT
+    |   FIXEDPT
     ;
 
 var_declaration
-    :   id_list COLON type_id
-        {
-            Type curr = null;
-            if ($type_id.txt.equals("int")) {
-                curr = new Type("int");
-            } else if ($type_id.txt.equals("fixedpt")) {
-                curr = new Type("fixedpt");
-            } else {
-                if (st.lookup($type_id.txt) != null) {
-                    if (st.lookup($type_id.txt).getTypeName().equals("definedtype")) {
-                        curr = st.lookup($type_id.txt);
-                    } else {
-
-                    }
-                } else {
-
-                }
-            }
-            for (String s : $id_list.idlist) {
-                if (st.lookupCurrentScope(s) == null) {
-                    curr.setIdentifier(s);
-                    st.insert(s, curr);
-                } else {
-
-                }
-            }
-        }
-        optional_init SEMI -> ^(VAR_DECL id_list type_id optional_init?)
+    :   id_list COLON type_id optional_init SEMI -> ^(VAR_DECL id_list type_id optional_init?)
     ;
 
-id_list returns [ArrayList<String> idlist]
-    :   {$idlist = new ArrayList<>();}
-        VAR (id1 = Identifier {$idlist.add($id1);}) (COMMA (id2 = Identifier{$idlist.add($id2);}))* -> ^(VAR Identifier+)
+id_list
+    :   VAR Identifier (COMMA Identifier)* -> ^(VAR Identifier+)
     ;
 
 optional_init
-    :   ASSIGN^ constant
-    |
+    :   (ASSIGN^ constant)?
     ;
 
 stat_seq
-    : stat* -> ^(STAT_SEQ stat*)
+    : stat+ -> ^(STAT_SEQ stat+)
     ;
 
 stat
