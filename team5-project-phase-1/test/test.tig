@@ -55,21 +55,51 @@ end;
 void main()
 begin
 	begin
+	type intcopy = int;
+	type twodarr = array[10][10] of int;
 	var input : arr;
-	var size : int := 13;
+	var size : int := 18;
+	var a, b, c, temp, temp2 : int;
+	var d : fixedpt := 6;
+	var ppp : twodarr;
+	a := 3 * 6 + 4 / 2;
+	b := a * a * 2 + 4 * a / 5;
+	c := a * b + d + 5;
+	ppp[1][d] := 10;
+	temp := 0;
 	input[1] := 23;
 	input[2] := 18;
 	input[3] := 3;
 	input[4] := 2876;
 	input[5] := 25;
 	input[6] := 9;
+	begin
+		var temp : int := 0;
+		var temp2 : fixedpt;
+		temp2 := 3;
+	end;
 	input[7] := 56;
 	input[8] := 196;
 	input[9] := 0;
-	input[10] := 9120;
-	input[11] := 773;
+	input[10] := 9120 * 2;
+	input[11] := (6 + 8) * 3 / 2 ;
 	input[12] := 861;
 	input[13] := 67;
+	input[14] := a;
+	input[15] := b;
+	input[16] := c;
+	input[17] := a + b - c;
+	if ((a > b) & (b > c)) | (c > 100) then
+		input[17] := 0;
+	endif;
+	input[18] := input[17] - input[16];
 	mergesort(input, size);
+	while temp < 20 do
+		temp := temp + 1;
+		if temp > 10 then
+			break;
+		endif;
+	enddo;
+
 	end;
 end;
