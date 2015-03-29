@@ -220,7 +220,7 @@ funct_declaration_tail
     :	FUNCTION Identifier LPAREN! param_list RPAREN!
     {
     	Type rt = new Type("void");
-    	st.insert($Identifier.text, new Function(rt.getTypeName(), $param_list.pl));
+    	st.insert($Identifier.text, new Function(rt, $param_list.pl));
     	st.initializeScope();
     	for (int i = 0; i < $param_list.pl.size(); i++) {
     		st.insert($param_list.pl.get(i).getIdentifier(), new Type($param_list.pl.get(i).getTypeName()));
@@ -241,7 +241,7 @@ funct_declaration
 	        rt = new Type($funct_ret_type.retType);
 	    } else {
 	    }
-	    st.insert($Identifier.text, new Function(rt.getTypeName(), $param_list.pl));
+	    st.insert($Identifier.text, new Function(rt, $param_list.pl));
 	    st.initializeScope();
 	    for (int i = 0; i < $param_list.pl.size(); i++) {
 	    	st.insert($param_list.pl.get(i).getIdentifier(), new Type($param_list.pl.get(i).getTypeName()));
