@@ -210,11 +210,11 @@ funct_declaration_list
     ;    
 
 funct_ret_type returns [String retType]
-	:	(alltype {$retType = $alltype.retType;}) -> ^(RET_TYPE alltype)
+	:	(alltype {$retType = $alltype.retType; System.out.println($retType);}) -> ^(RET_TYPE alltype)
 	;
 
 alltype returns [String retType]
-	:	(Identifier {$retType = $Identifier.text;})| (INT {$retType = "int";})| (FIXEDPT {$retType = "fixedpt";})
+	:	Identifier {$retType = $Identifier.text;}| INT {$retType = "int";}| FIXEDPT {$retType = "fixedpt";}
 	;
 funct_declaration_tail
     :	FUNCTION Identifier LPAREN! param_list RPAREN!
@@ -241,16 +241,16 @@ funct_declaration
             
 	        rt = new Type($funct_ret_type.retType);
 	    } else {
-            String typeName = $funct_ret_type.retType.getTypeName();
-            rt =  st.lookup(typeName);
+            String typeName = $funct_ret_type.retType;
+            rt =  st.lookup($Identifier.text);
             if (rt != null) {
                 if (rt.getTypeName() == "array") {
                   //  rt = new Array("array", $funct_ret_type.retType, /* size */);
                 } else {
-                    rt = new DefinedType("defined_type", $funct_ret_type.retType);
+                    rt = new DefinedType("defined_type", rt);
                 }
             } else {
-                throw new Exception("Undefined funtion type.");
+                throw new IllegalArgumentException("Undefined funtion type.");
                // throw new Exception("are you sure you've defined a right type? really? really? really? I am so sorry but I cannot recognize it. *SAD FACE*");
             }
 	    }
