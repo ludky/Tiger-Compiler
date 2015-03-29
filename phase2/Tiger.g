@@ -236,10 +236,23 @@ funct_declaration_tail
 funct_declaration
 	:	funct_ret_type FUNCTION Identifier LPAREN param_list RPAREN
 	{
-		Type rt = null;
+		Type rt = null; //
 	    if ($funct_ret_type.retType == "int" || $funct_ret_type.retType == "fixedpt") {
+            
 	        rt = new Type($funct_ret_type.retType);
 	    } else {
+            String typeName = $funct_ret_type.retType.getTypeName();
+            rt =  st.lookup(typeName);
+            if (rt != null) {
+                if (rt.getTypeName() == "array") {
+                  //  rt = new Array("array", $funct_ret_type.retType, /* size */);
+                } else {
+                    rt = new DefinedType("defined_type", $funct_ret_type.retType);
+                }
+            } else {
+                throw new Exception("Undefined funtion type.");
+               // throw new Exception("are you sure you've defined a right type? really? really? really? I am so sorry but I cannot recognize it. *SAD FACE*");
+            }
 	    }
 	    st.insert($Identifier.text, new Function(rt, $param_list.pl));
 	    st.initializeScope();
