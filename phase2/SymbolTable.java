@@ -76,7 +76,11 @@ public class SymbolTable {
 			}
 			r += es + "\n";
 			for (String st : s.getMap().keySet()) {
-				r += "Symbol Name: " + st + "; " + s.getMap().get(st) + "\n";
+				if (s.getMap().get(st).getTypeName() != "definedtype") {
+					r += "Symbol Name: " + st + "; " + s.getMap().get(st) + "\n";
+				} else {
+					r += s.getMap().get(st) + "\n";
+				}
 			}
 		}
 		return r;

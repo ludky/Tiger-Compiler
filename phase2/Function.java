@@ -6,7 +6,7 @@ public class Function extends Type {
 	private ArrayList<Type> paramList;
 	
 	public Function(Type rt, ArrayList<Type> pl) {
-		super("Function");
+		super("function");
 		returnType = rt;
 		paramList = pl;
 	}
