@@ -328,6 +328,7 @@ type_declaration
     		}
     	}
     	dt.setIdentifier($Identifier.text);
+    	st.insert($Identifier.text, dt);
     }
     ;
 
