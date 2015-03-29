@@ -32,6 +32,10 @@ public class SymbolTable {
 		return null;
 	}
 	
+	public Type lookupCurrentScope(String s) {
+		return getCurrentScope().lookup(s);
+	}
+	
 	public void insert(String s, Type y) {
 		scopes.get(pointer).insert(s, y);
 	}
@@ -55,6 +59,10 @@ public class SymbolTable {
 		scopelevel--;
 	}
 	
+	public Scope getCurrentScope() {
+		return scopes.get(pointer);
+	}
+	
 	public String toString() {
 		String r = "";
 		for (Scope s : allscopes) {
@@ -67,6 +75,9 @@ public class SymbolTable {
 				es += s.getEnclosingScope().getId();
 			}
 			r += es + "\n";
+			for (String st : s.getMap().keySet()) {
+				r += "Symbol Name: " + st + "; " + s.getMap().get(st) + "\n";
+			}
 		}
 		return r;
 	}
@@ -85,6 +96,10 @@ public class SymbolTable {
 			this.level = level;
 			this.id = id;
 			this.type = type;
+		}
+		
+		public Map<String, Type> getMap() {
+			return st;
 		}
 		
 		public Type lookup(String s) {

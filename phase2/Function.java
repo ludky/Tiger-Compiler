@@ -5,8 +5,8 @@ public class Function extends Type {
 	private Type returnType;
 	private ArrayList<Type> paramList;
 	
-	public Function(String tn, Type rt, ArrayList<Type> pl) {
-		super(tn);
+	public Function(Type rt, ArrayList<Type> pl) {
+		super("Function");
 		returnType = rt;
 		paramList = pl;
 	}
@@ -17,5 +17,15 @@ public class Function extends Type {
 	
 	public ArrayList<Type> getParamList() {
 		return paramList;
+	}
+	
+	public String toString() {
+		String s = "Type Name: " + typeName + "; Return Type: " + returnType
+				   + "; Parameter List: {";
+		for (Type t : paramList) {
+			s += "(" + t + ")";
+		}
+		s += "}";
+		return s;
 	}
 }

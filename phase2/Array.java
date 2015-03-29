@@ -1,4 +1,3 @@
-
 public class Array extends Type {
 
 	private Type baseType;
@@ -13,8 +12,8 @@ public class Array extends Type {
 	public Array(String tn, Type bt, int size1, int size2, boolean is2D) {
 		super(tn);
 		baseType = bt;
-		size1 = size1;
-		size2 = size2;
+		this.size1 = size1;
+		this.size2 = size2;
 		this.is2D = is2D;
 	}
 	
@@ -32,5 +31,12 @@ public class Array extends Type {
 	
 	public boolean getIs2D() {
 		return is2D;
+	}
+	
+	public String toString() {
+		String s = "Type Name: " + typeName + "; Size1: " + size1;
+		s += is2D ? "; Size2: " + size2 : "";
+		s += "; Base Type: " + baseType;
+		return s;
 	}
 }
