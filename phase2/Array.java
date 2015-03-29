@@ -36,7 +36,7 @@ public class Array extends Type {
 	public String toString() {
 		String s = "Type Name: " + typeName + "; Size1: " + size1;
 		s += is2D ? "; Size2: " + size2 : "";
-		s += "; Base Type: " + baseType;
+		s += "; Base Type: (" + baseType + ")";
 		return s;
 	}
 }

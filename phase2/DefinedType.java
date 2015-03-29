@@ -11,4 +11,8 @@ public class DefinedType extends Type{
 	public Type getBaseType() {
 		return baseType;
 	}
+	
+	public String toString() {
+		return "Type Name: " + typeName + "; Base Type: (" + baseType + ")";
+	}
 }

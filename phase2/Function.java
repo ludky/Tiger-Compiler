@@ -20,8 +20,8 @@ public class Function extends Type {
 	}
 	
 	public String toString() {
-		String s = "Type Name: " + typeName + "; Return Type: " + returnType
-				   + "; Parameter List: {";
+		String s = "Type Name: " + typeName + "; Return Type: (" + returnType
+				   + "); Parameter List: {";
 		for (Type t : paramList) {
 			s += "(" + t + ")";
 		}
