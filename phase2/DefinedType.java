@@ -13,7 +13,7 @@ public class DefinedType extends Type{
 	}
 	
 	public String toString() {
-		return "Type Identifier: " + identifier + ";Type Name: " + typeName
+		return "Type Identifier: " + identifier + "; Type Name: " + typeName
 			   +"; Base Type: (" + baseType + ")";
 	}
 }

@@ -1,4 +1,4 @@
-// $ANTLR 3.5.2 Tiger.g 2015-03-29 17:34:43
+// $ANTLR 3.5.2 Tiger.g 2015-03-29 22:29:31
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -97,8 +97,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = FUNCTION;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:116:13: ( 'function' )
-			// Tiger.g:116:17: 'function'
+			// Tiger.g:118:13: ( 'function' )
+			// Tiger.g:118:17: 'function'
 			{
 			match("function"); 
 
@@ -118,8 +118,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = BEGIN;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:117:13: ( 'begin' )
-			// Tiger.g:117:17: 'begin'
+			// Tiger.g:119:13: ( 'begin' )
+			// Tiger.g:119:17: 'begin'
 			{
 			match("begin"); 
 
@@ -139,8 +139,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = END;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:118:13: ( 'end' )
-			// Tiger.g:118:17: 'end'
+			// Tiger.g:120:13: ( 'end' )
+			// Tiger.g:120:17: 'end'
 			{
 			match("end"); 
 
@@ -160,8 +160,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = VOID;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:119:13: ( 'void' )
-			// Tiger.g:119:17: 'void'
+			// Tiger.g:121:13: ( 'void' )
+			// Tiger.g:121:17: 'void'
 			{
 			match("void"); 
 
@@ -181,8 +181,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = MAIN;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:120:13: ( 'main' )
-			// Tiger.g:120:17: 'main'
+			// Tiger.g:122:13: ( 'main' )
+			// Tiger.g:122:17: 'main'
 			{
 			match("main"); 
 
@@ -202,8 +202,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = TYPE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:121:13: ( 'type' )
-			// Tiger.g:121:17: 'type'
+			// Tiger.g:123:13: ( 'type' )
+			// Tiger.g:123:17: 'type'
 			{
 			match("type"); 
 
@@ -223,8 +223,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = ARRAY;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:122:13: ( 'array' )
-			// Tiger.g:122:17: 'array'
+			// Tiger.g:124:13: ( 'array' )
+			// Tiger.g:124:17: 'array'
 			{
 			match("array"); 
 
@@ -244,8 +244,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = OF;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:123:13: ( 'of' )
-			// Tiger.g:123:17: 'of'
+			// Tiger.g:125:13: ( 'of' )
+			// Tiger.g:125:17: 'of'
 			{
 			match("of"); 
 
@@ -265,8 +265,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = INT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:124:13: ( 'int' )
-			// Tiger.g:124:17: 'int'
+			// Tiger.g:126:13: ( 'int' )
+			// Tiger.g:126:17: 'int'
 			{
 			match("int"); 
 
@@ -286,8 +286,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = FIXEDPT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:125:13: ( 'fixedpt' )
-			// Tiger.g:125:17: 'fixedpt'
+			// Tiger.g:127:13: ( 'fixedpt' )
+			// Tiger.g:127:17: 'fixedpt'
 			{
 			match("fixedpt"); 
 
@@ -307,8 +307,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = VAR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:126:13: ( 'var' )
-			// Tiger.g:126:17: 'var'
+			// Tiger.g:128:13: ( 'var' )
+			// Tiger.g:128:17: 'var'
 			{
 			match("var"); 
 
@@ -328,8 +328,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = IF;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:127:13: ( 'if' )
-			// Tiger.g:127:17: 'if'
+			// Tiger.g:129:13: ( 'if' )
+			// Tiger.g:129:17: 'if'
 			{
 			match("if"); 
 
@@ -349,8 +349,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = THEN;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:128:13: ( 'then' )
-			// Tiger.g:128:17: 'then'
+			// Tiger.g:130:13: ( 'then' )
+			// Tiger.g:130:17: 'then'
 			{
 			match("then"); 
 
@@ -370,8 +370,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = ENDIF;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:129:13: ( 'endif' )
-			// Tiger.g:129:17: 'endif'
+			// Tiger.g:131:13: ( 'endif' )
+			// Tiger.g:131:17: 'endif'
 			{
 			match("endif"); 
 
@@ -391,8 +391,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = ELSE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:130:13: ( 'else' )
-			// Tiger.g:130:17: 'else'
+			// Tiger.g:132:13: ( 'else' )
+			// Tiger.g:132:17: 'else'
 			{
 			match("else"); 
 
@@ -412,8 +412,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = WHILE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:131:13: ( 'while' )
-			// Tiger.g:131:17: 'while'
+			// Tiger.g:133:13: ( 'while' )
+			// Tiger.g:133:17: 'while'
 			{
 			match("while"); 
 
@@ -433,8 +433,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = DO;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:132:13: ( 'do' )
-			// Tiger.g:132:17: 'do'
+			// Tiger.g:134:13: ( 'do' )
+			// Tiger.g:134:17: 'do'
 			{
 			match("do"); 
 
@@ -454,8 +454,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = ENDDO;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:133:13: ( 'enddo' )
-			// Tiger.g:133:17: 'enddo'
+			// Tiger.g:135:13: ( 'enddo' )
+			// Tiger.g:135:17: 'enddo'
 			{
 			match("enddo"); 
 
@@ -475,8 +475,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = FOR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:134:13: ( 'for' )
-			// Tiger.g:134:17: 'for'
+			// Tiger.g:136:13: ( 'for' )
+			// Tiger.g:136:17: 'for'
 			{
 			match("for"); 
 
@@ -496,8 +496,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = TO;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:135:13: ( 'to' )
-			// Tiger.g:135:17: 'to'
+			// Tiger.g:137:13: ( 'to' )
+			// Tiger.g:137:17: 'to'
 			{
 			match("to"); 
 
@@ -517,8 +517,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = BREAK;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:136:13: ( 'break' )
-			// Tiger.g:136:17: 'break'
+			// Tiger.g:138:13: ( 'break' )
+			// Tiger.g:138:17: 'break'
 			{
 			match("break"); 
 
@@ -538,8 +538,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = RETURN;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:137:13: ( 'return' )
-			// Tiger.g:137:17: 'return'
+			// Tiger.g:139:13: ( 'return' )
+			// Tiger.g:139:17: 'return'
 			{
 			match("return"); 
 
@@ -559,8 +559,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = COMMA;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:140:13: ( ',' )
-			// Tiger.g:140:17: ','
+			// Tiger.g:142:13: ( ',' )
+			// Tiger.g:142:17: ','
 			{
 			match(','); 
 			}
@@ -579,8 +579,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = COLON;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:141:13: ( ':' )
-			// Tiger.g:141:17: ':'
+			// Tiger.g:143:13: ( ':' )
+			// Tiger.g:143:17: ':'
 			{
 			match(':'); 
 			}
@@ -599,8 +599,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = SEMI;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:142:13: ( ';' )
-			// Tiger.g:142:17: ';'
+			// Tiger.g:144:13: ( ';' )
+			// Tiger.g:144:17: ';'
 			{
 			match(';'); 
 			}
@@ -619,8 +619,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = LPAREN;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:143:13: ( '(' )
-			// Tiger.g:143:17: '('
+			// Tiger.g:145:13: ( '(' )
+			// Tiger.g:145:17: '('
 			{
 			match('('); 
 			}
@@ -639,8 +639,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = RPAREN;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:144:13: ( ')' )
-			// Tiger.g:144:17: ')'
+			// Tiger.g:146:13: ( ')' )
+			// Tiger.g:146:17: ')'
 			{
 			match(')'); 
 			}
@@ -659,8 +659,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = LBRACK;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:145:13: ( '[' )
-			// Tiger.g:145:17: '['
+			// Tiger.g:147:13: ( '[' )
+			// Tiger.g:147:17: '['
 			{
 			match('['); 
 			}
@@ -679,8 +679,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = RBRACK;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:146:13: ( ']' )
-			// Tiger.g:146:17: ']'
+			// Tiger.g:148:13: ( ']' )
+			// Tiger.g:148:17: ']'
 			{
 			match(']'); 
 			}
@@ -699,8 +699,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = PLUS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:147:13: ( '+' )
-			// Tiger.g:147:17: '+'
+			// Tiger.g:149:13: ( '+' )
+			// Tiger.g:149:17: '+'
 			{
 			match('+'); 
 			}
@@ -719,8 +719,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = MINUS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:148:13: ( '-' )
-			// Tiger.g:148:17: '-'
+			// Tiger.g:150:13: ( '-' )
+			// Tiger.g:150:17: '-'
 			{
 			match('-'); 
 			}
@@ -739,8 +739,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = MULT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:149:13: ( '*' )
-			// Tiger.g:149:17: '*'
+			// Tiger.g:151:13: ( '*' )
+			// Tiger.g:151:17: '*'
 			{
 			match('*'); 
 			}
@@ -759,8 +759,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = DIV;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:150:13: ( '/' )
-			// Tiger.g:150:17: '/'
+			// Tiger.g:152:13: ( '/' )
+			// Tiger.g:152:17: '/'
 			{
 			match('/'); 
 			}
@@ -779,8 +779,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = EQ;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:151:13: ( '=' )
-			// Tiger.g:151:17: '='
+			// Tiger.g:153:13: ( '=' )
+			// Tiger.g:153:17: '='
 			{
 			match('='); 
 			}
@@ -799,8 +799,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = NEQ;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:152:13: ( '<>' )
-			// Tiger.g:152:17: '<>'
+			// Tiger.g:154:13: ( '<>' )
+			// Tiger.g:154:17: '<>'
 			{
 			match("<>"); 
 
@@ -820,8 +820,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = LESSER;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:153:13: ( '<' )
-			// Tiger.g:153:17: '<'
+			// Tiger.g:155:13: ( '<' )
+			// Tiger.g:155:17: '<'
 			{
 			match('<'); 
 			}
@@ -840,8 +840,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = LESSEREQ;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:154:13: ( '<=' )
-			// Tiger.g:154:17: '<='
+			// Tiger.g:156:13: ( '<=' )
+			// Tiger.g:156:17: '<='
 			{
 			match("<="); 
 
@@ -861,8 +861,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = GREATER;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:155:13: ( '>' )
-			// Tiger.g:155:17: '>'
+			// Tiger.g:157:13: ( '>' )
+			// Tiger.g:157:17: '>'
 			{
 			match('>'); 
 			}
@@ -881,8 +881,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = GREATEREQ;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:156:14: ( '>=' )
-			// Tiger.g:156:18: '>='
+			// Tiger.g:158:14: ( '>=' )
+			// Tiger.g:158:18: '>='
 			{
 			match(">="); 
 
@@ -902,8 +902,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = AND;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:157:13: ( '&' )
-			// Tiger.g:157:17: '&'
+			// Tiger.g:159:13: ( '&' )
+			// Tiger.g:159:17: '&'
 			{
 			match('&'); 
 			}
@@ -922,8 +922,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = OR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:158:13: ( '|' )
-			// Tiger.g:158:17: '|'
+			// Tiger.g:160:13: ( '|' )
+			// Tiger.g:160:17: '|'
 			{
 			match('|'); 
 			}
@@ -942,8 +942,8 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = ASSIGN;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:159:13: ( ':=' )
-			// Tiger.g:159:17: ':='
+			// Tiger.g:161:13: ( ':=' )
+			// Tiger.g:161:17: ':='
 			{
 			match(":="); 
 
@@ -961,7 +961,7 @@ public class TigerLexer extends Lexer {
 	// $ANTLR start "Letter"
 	public final void mLetter() throws RecognitionException {
 		try {
-			// Tiger.g:165:5: ( ( 'A' .. 'Z' ) | ( 'a' .. 'z' ) )
+			// Tiger.g:167:5: ( ( 'A' .. 'Z' ) | ( 'a' .. 'z' ) )
 			// Tiger.g:
 			{
 			if ( (input.LA(1) >= 'A' && input.LA(1) <= 'Z')||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
@@ -984,7 +984,7 @@ public class TigerLexer extends Lexer {
 	// $ANTLR start "Digit"
 	public final void mDigit() throws RecognitionException {
 		try {
-			// Tiger.g:170:5: ( ( '0' .. '9' ) )
+			// Tiger.g:172:5: ( ( '0' .. '9' ) )
 			// Tiger.g:
 			{
 			if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
@@ -1007,10 +1007,10 @@ public class TigerLexer extends Lexer {
 	// $ANTLR start "Digits"
 	public final void mDigits() throws RecognitionException {
 		try {
-			// Tiger.g:174:5: ( ( '0' .. '9' )+ )
-			// Tiger.g:174:9: ( '0' .. '9' )+
+			// Tiger.g:176:5: ( ( '0' .. '9' )+ )
+			// Tiger.g:176:9: ( '0' .. '9' )+
 			{
-			// Tiger.g:174:9: ( '0' .. '9' )+
+			// Tiger.g:176:9: ( '0' .. '9' )+
 			int cnt1=0;
 			loop1:
 			while (true) {
@@ -1055,7 +1055,7 @@ public class TigerLexer extends Lexer {
 	// $ANTLR start "NaturalNumber"
 	public final void mNaturalNumber() throws RecognitionException {
 		try {
-			// Tiger.g:178:5: ( ( '1' .. '9' ) )
+			// Tiger.g:180:5: ( ( '1' .. '9' ) )
 			// Tiger.g:
 			{
 			if ( (input.LA(1) >= '1' && input.LA(1) <= '9') ) {
@@ -1080,12 +1080,12 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = Identifier;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:181:5: ( Letter ( Letter | Digit | '_' )* )
-			// Tiger.g:181:9: Letter ( Letter | Digit | '_' )*
+			// Tiger.g:183:5: ( Letter ( Letter | Digit | '_' )* )
+			// Tiger.g:183:9: Letter ( Letter | Digit | '_' )*
 			{
 			mLetter(); 
 
-			// Tiger.g:181:16: ( Letter | Digit | '_' )*
+			// Tiger.g:183:16: ( Letter | Digit | '_' )*
 			loop2:
 			while (true) {
 				int alt2=2;
@@ -1130,7 +1130,7 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = IntegerLiteral;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:185:5: ( '0' | NaturalNumber ( Digit )* )
+			// Tiger.g:187:5: ( '0' | NaturalNumber ( Digit )* )
 			int alt4=2;
 			int LA4_0 = input.LA(1);
 			if ( (LA4_0=='0') ) {
@@ -1148,17 +1148,17 @@ public class TigerLexer extends Lexer {
 
 			switch (alt4) {
 				case 1 :
-					// Tiger.g:185:9: '0'
+					// Tiger.g:187:9: '0'
 					{
 					match('0'); 
 					}
 					break;
 				case 2 :
-					// Tiger.g:185:15: NaturalNumber ( Digit )*
+					// Tiger.g:187:15: NaturalNumber ( Digit )*
 					{
 					mNaturalNumber(); 
 
-					// Tiger.g:185:29: ( Digit )*
+					// Tiger.g:187:29: ( Digit )*
 					loop3:
 					while (true) {
 						int alt3=2;
@@ -1205,10 +1205,10 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = FixedPointLiteral;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:189:5: ( ( IntegerLiteral '.' Digit | Digit Digit | Digit Digit Digit ) )
-			// Tiger.g:189:9: ( IntegerLiteral '.' Digit | Digit Digit | Digit Digit Digit )
+			// Tiger.g:191:5: ( ( IntegerLiteral '.' Digit | Digit Digit | Digit Digit Digit ) )
+			// Tiger.g:191:9: ( IntegerLiteral '.' Digit | Digit Digit | Digit Digit Digit )
 			{
-			// Tiger.g:189:9: ( IntegerLiteral '.' Digit | Digit Digit | Digit Digit Digit )
+			// Tiger.g:191:9: ( IntegerLiteral '.' Digit | Digit Digit | Digit Digit Digit )
 			int alt5=3;
 			int LA5_0 = input.LA(1);
 			if ( (LA5_0=='0') ) {
@@ -1302,7 +1302,7 @@ public class TigerLexer extends Lexer {
 
 			switch (alt5) {
 				case 1 :
-					// Tiger.g:189:10: IntegerLiteral '.' Digit
+					// Tiger.g:191:10: IntegerLiteral '.' Digit
 					{
 					mIntegerLiteral(); 
 
@@ -1312,7 +1312,7 @@ public class TigerLexer extends Lexer {
 					}
 					break;
 				case 2 :
-					// Tiger.g:189:37: Digit Digit
+					// Tiger.g:191:37: Digit Digit
 					{
 					mDigit(); 
 
@@ -1321,7 +1321,7 @@ public class TigerLexer extends Lexer {
 					}
 					break;
 				case 3 :
-					// Tiger.g:189:51: Digit Digit Digit
+					// Tiger.g:191:51: Digit Digit Digit
 					{
 					mDigit(); 
 
@@ -1350,12 +1350,12 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = COMMENT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:193:5: ( '/*' ( options {greedy=false; } : . )* '*/' )
-			// Tiger.g:193:9: '/*' ( options {greedy=false; } : . )* '*/'
+			// Tiger.g:195:5: ( '/*' ( options {greedy=false; } : . )* '*/' )
+			// Tiger.g:195:9: '/*' ( options {greedy=false; } : . )* '*/'
 			{
 			match("/*"); 
 
-			// Tiger.g:193:14: ( options {greedy=false; } : . )*
+			// Tiger.g:195:14: ( options {greedy=false; } : . )*
 			loop6:
 			while (true) {
 				int alt6=2;
@@ -1376,7 +1376,7 @@ public class TigerLexer extends Lexer {
 
 				switch (alt6) {
 				case 1 :
-					// Tiger.g:193:42: .
+					// Tiger.g:195:42: .
 					{
 					matchAny(); 
 					}
@@ -1406,12 +1406,12 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = LINE_COMMENT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:197:5: ( '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n' )
-			// Tiger.g:197:7: '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n'
+			// Tiger.g:199:5: ( '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n' )
+			// Tiger.g:199:7: '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n'
 			{
 			match("//"); 
 
-			// Tiger.g:197:12: (~ ( '\\n' | '\\r' ) )*
+			// Tiger.g:199:12: (~ ( '\\n' | '\\r' ) )*
 			loop7:
 			while (true) {
 				int alt7=2;
@@ -1440,7 +1440,7 @@ public class TigerLexer extends Lexer {
 				}
 			}
 
-			// Tiger.g:197:26: ( '\\r' )?
+			// Tiger.g:199:26: ( '\\r' )?
 			int alt8=2;
 			int LA8_0 = input.LA(1);
 			if ( (LA8_0=='\r') ) {
@@ -1448,7 +1448,7 @@ public class TigerLexer extends Lexer {
 			}
 			switch (alt8) {
 				case 1 :
-					// Tiger.g:197:26: '\\r'
+					// Tiger.g:199:26: '\\r'
 					{
 					match('\r'); 
 					}
@@ -1474,10 +1474,10 @@ public class TigerLexer extends Lexer {
 		try {
 			int _type = WS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Tiger.g:201:5: ( ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' )+ )
-			// Tiger.g:201:8: ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' )+
+			// Tiger.g:203:5: ( ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' )+ )
+			// Tiger.g:203:8: ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' )+
 			{
-			// Tiger.g:201:8: ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' )+
+			// Tiger.g:203:8: ( ' ' | '\\r' | '\\t' | '\\u000C' | '\\n' )+
 			int cnt9=0;
 			loop9:
 			while (true) {

@@ -529,7 +529,11 @@ expr_lev2
     ;
 
 expr_lev1
+<<<<<<< HEAD
     :   primary_expression/*get type1 and operators1*/  (/*check type1 and operators 1*/(MULT^|DIV^) primary_expression)*
+=======
+    :   primary_expression/*get type1 and operators1*/  (/*check type1 and operators 1*/(MULT^|DIV^) primary_expression /*get type2 and allowed operand2, check == mult | div*/)*
+>>>>>>> c67cdaf461b705352089c09f7038f5452f72981f
     ;
 
 primary_expression// return expr type, and return allow operator sets.
