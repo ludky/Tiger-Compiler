@@ -522,7 +522,7 @@ expr_lev2
     ;
 
 expr_lev1
-    :   primary_expression/*get type1 and operators1*/  (/*check type1 and operators 1*/(MULT^|DIV^) primary_expression//get base type set allow operators to all)*
+    :   primary_expression/*get type1 and operators1*/  (/*check type1 and operators 1*/(MULT^|DIV^) primary_expression /*get type2 and allowed operand2, check == mult | div*/)*
     ;
 
 primary_expression// return expr type, and return allow operator sets.
