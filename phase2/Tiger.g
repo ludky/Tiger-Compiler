@@ -85,7 +85,9 @@ public void printTokenType() {
 		        String finalmessage;
 		        boolean lastline = true;
 		        for (int k = 0; k < num; k++) {
-		        	if (input[linenum - 1].substring(k, k + 1)!= null && !(input[linenum - 1].substring(k, k + 1).equals(" ")) && !(input[linenum - 1].substring(k, k + 1).equals("\t"))) {
+		        	if (input[linenum - 1].substring(k, k + 1)!= null 
+		        	&& !(input[linenum - 1].substring(k, k + 1).equals(" ")) 
+		        	&& !(input[linenum - 1].substring(k, k + 1).equals("\t"))) {
 		        		lastline = false;
 		        	}
 		        }
@@ -221,14 +223,19 @@ funct_declaration_tail
     :	FUNCTION Identifier LPAREN! param_list RPAREN!
     {
     	Type rt = new Type("void");
-    	System.out.println("void");
-    	st.insert($Identifier.text, new Function(rt, $param_list.pl));
-    	st.initializeScope();
-    	for (int i = 0; i < $param_list.pl.size(); i++) {
-    		st.insert($param_list.pl.get(i).getIdentifier(), new Type($param_list.pl.get(i).getTypeName()));
+    	if (st.lookupCurrentScope($Identifier.text) == null) {
+    		st.insert($Identifier.text, new Function(rt, $param_list.pl));
+    	} else {
+    	
     	}
     }
     BEGIN!
+    {
+		st.initializeScope();
+	    for (Type t : $param_list.pl) {
+	    	st.insert(t.getIdentifier(), t);
+	    }
+	}
     	block_list
     	//forc to do not contain return in block
     	//ELSE throw error
@@ -243,54 +250,39 @@ funct_declaration
 	:	funct_ret_type FUNCTION Identifier LPAREN param_list RPAREN
 	{
 		Type rt = null; //
-	    if ($funct_ret_type.retType.equals("int") || $funct_ret_type.retType.equals("fixedpt")) {
-            
+	    if ($funct_ret_type.retType.equals("int") ||
+	    	$funct_ret_type.retType.equals("fixedpt")) {
 	        rt = new Type($funct_ret_type.retType);
 	    } else {
-            String typeName = $funct_ret_type.retType;
-            rt =  st.lookup($Identifier.text);
-            if (rt != null) {
-                if (rt.getTypeName().equals("array")) {
-                  //  rt = new Array("array", $funct_ret_type.retType, /* size */);
-                } else {
-                    rt = new DefinedType(rt);
-                }
+            if (st.lookup($funct_ret_type.retType) != null) {
+            	if (st.lookup($funct_ret_type.retType).getTypeName().equals("definedtype")) {
+            		rt = st.lookup($funct_ret_type.retType);
+            	} else {
+            	
+            	}
             } else {
-                throw new IllegalArgumentException("Undefined funtion type.");
-               // throw new Exception("are you sure you've defined a right type? really? really? really? I am so sorry but I cannot recognize it. *SAD FACE*");
+                
             }
 	    }
-	    st.insert($Identifier.text, new Function(rt, $param_list.pl));
-	    st.initializeScope();
-	    for (int i = 0; i < $param_list.pl.size(); i++) {
-	    	if ($param_list.pl.get(i).getTypeName().equals("int") || $param_list.pl.get(i).getTypeName().equals("fixedpt")) {
-	    		st.insert($param_list.pl.get(i).getIdentifier(), new Type($param_list.pl.get(i).getTypeName()));
-	    	} else {
-	    		Type temp = st.lookup($param_list.pl.get(i).getTypeName());
-	    		if (temp)
-	    	}
-	    }
+	    if (st.lookupCurrentScope($Identifier.text) == null) {
+	   		st.insert($Identifier.text, new Function(rt, $param_list.pl));
+	   	} else {
+	   	
+	   	}
 	} 
 	BEGIN 
-		block_list // get a return type or nothing if null
-		//for to check funct_ret_type == return value
-	END
-	{st.finalizeScope();}
-	SEMI
-		-> ^(Identifier funct_ret_type param_list? block_list)
+	{
+		st.initializeScope();
+	    for (Type t : $param_list.pl) {
+	    	st.insert(t.getIdentifier(), t);
+	    }
+	}
+	block_list END {st.finalizeScope();} SEMI
+	-> ^(Identifier funct_ret_type param_list? block_list)
 	;
 	
 main_function
-    :   MAIN^ LPAREN! RPAREN! BEGIN!
-    {
-    	st.initializeScope();
-    } 
-    block_list 
-    END! 
-    {
-    	st.finalizeScope();
-    }
-    SEMI!
+    :   MAIN^ LPAREN! RPAREN! BEGIN! block_list END! SEMI!
     ;
 
 param_list returns [ArrayList<Type> pl]
@@ -302,7 +294,19 @@ param_list returns [ArrayList<Type> pl]
 param returns [Type paramType]
     :   Identifier COLON^ type_id
     {
-    	$paramType = new Type($type_id.txt);
+    	if (!($type_id.txt.equals("int")) && !($type_id.txt.equals("fixedpt"))) {
+    		if (st.lookup($type_id.txt) != null) {
+    			if (st.lookup($type_id.txt).getTypeName().equals("definedtype")) {
+    				$paramType = st.lookup($type_id.txt);
+    			} else {
+    			
+    			}
+    		} else {
+    			
+    		}
+    	} else {
+    		$paramType = new Type($type_id.txt);
+    	}
     	$paramType.setIdentifier($Identifier.text);
     }
     ;
@@ -314,7 +318,7 @@ block_list
 /* The body of the function is sequence of clocks, each starts a new scope with
 declarations local to that scope followed by sequence of statement. */
 block
-    :   BEGIN type_declaration_list var_declaration_list stat_seq END SEMI
+    :   BEGIN {st.initializeScope();} type_declaration_list var_declaration_list stat_seq END {st.finalizeScope();}SEMI
     	-> ^(BLOCK type_declaration_list var_declaration_list stat_seq)
     ;
 
@@ -329,28 +333,32 @@ var_declaration_list
 type_declaration
     : TYPE Identifier EQ type SEMI
     {
-    	Type dt = null;
-    	if ($type.isBase == 1) {
-    		if ($type.txt.equals("int")) {
-    			dt = new DefinedType(new Type("int"));
+    	if (st.lookupCurrentScope($Identifier.text) == null) {
+    		Type dt = null;
+    		if ($type.isBase == 1) {
+    			if ($type.txt.equals("int")) {
+    				dt = new DefinedType(new Type("int"));
+    			} else {
+    				dt = new DefinedType(new Type("fixedpt"));
+    			}
     		} else {
-    			dt = new DefinedType(new Type("fixedpt"));
+    			Type bt = null;
+    			if ($type.txt.equals("int")) {
+    				bt = new Type("int");
+    			} else {
+    				bt = new Type("fixedpt");
+    			}
+    			if ($type.is2D == 0) {
+    				dt = new DefinedType(new Array("oneDarray", bt, $type.w));
+    			} else {
+    				dt = new DefinedType(new Array("twoDarray", bt, $type.w, $type.h, true));
+    			}
     		}
+    		dt.setIdentifier($Identifier.text);
+    		st.insert($Identifier.text, dt);
     	} else {
-    		Type bt = null;
-    		if ($type.txt.equals("int")) {
-    			bt = new Type("int");
-    		} else {
-    			bt = new Type("fixedpt");
-    		}
-    		if ($type.is2D == 0) {
-    			dt = new DefinedType(new Array("oneDarray", bt, $type.w));
-    		} else {
-    			dt = new DefinedType(new Array("twoDarray", bt, $type.w, $type.h, true));
-    		}
+    	
     	}
-    	dt.setIdentifier($Identifier.text);
-    	st.insert($Identifier.text, dt);
     }
      -> ^(TYPE_DECL Identifier EQ type)
     ;
@@ -406,11 +414,10 @@ var_declaration
                     if (st.lookup($type_id.txt).getTypeName().equals("definedtype")) {
                         curr = st.lookup($type_id.txt);
                     } else {
-                    	System.out.println(st.lookup($type_id.txt).getTypeName());
-						System.out.println("b");
+                    
                     }
                 } else {
-					System.out.println("a");
+                
                 }
             }
             for (String s : $id_list.idlist) {
@@ -522,7 +529,7 @@ expr_lev2
     ;
 
 expr_lev1
-    :   primary_expression/*get type1 and operators1*/  (/*check type1 and operators 1*/(MULT^|DIV^) primary_expression//get base type set allow operators to all)*
+    :   primary_expression/*get type1 and operators1*/  (/*check type1 and operators 1*/(MULT^|DIV^) primary_expression)*
     ;
 
 primary_expression// return expr type, and return allow operator sets.
