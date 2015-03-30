@@ -220,6 +220,7 @@ funct_declaration_tail
     :	FUNCTION Identifier LPAREN! param_list RPAREN!
     {
     	Type rt = new Type("void");
+    	System.out.println("void");
     	st.insert($Identifier.text, new Function(rt, $param_list.pl));
     	st.initializeScope();
     	for (int i = 0; i < $param_list.pl.size(); i++) {
@@ -257,7 +258,12 @@ funct_declaration
 	    st.insert($Identifier.text, new Function(rt, $param_list.pl));
 	    st.initializeScope();
 	    for (int i = 0; i < $param_list.pl.size(); i++) {
-	    	st.insert($param_list.pl.get(i).getIdentifier(), new Type($param_list.pl.get(i).getTypeName()));
+	    	if ($param_list.pl.get(i).getTypeName().equals("int") || $param_list.pl.get(i).getTypeName().equals("fixedpt")) {
+	    		st.insert($param_list.pl.get(i).getIdentifier(), new Type($param_list.pl.get(i).getTypeName()));
+	    	} else {
+	    		Type temp = st.lookup($param_list.pl.get(i).getTypeName());
+	    		if (temp)
+	    	}
 	    }
 	} 
 	BEGIN block_list END
@@ -330,9 +336,9 @@ type_declaration
     			bt = new Type("fixedpt");
     		}
     		if ($type.is2D == 0) {
-    			dt = new Array("oneDarray", bt, $type.w);
+    			dt = new DefinedType(new Array("oneDarray", bt, $type.w));
     		} else {
-    			dt = new Array("twoDarray", bt, $type.w, $type.h, true);
+    			dt = new DefinedType(new Array("twoDarray", bt, $type.w, $type.h, true));
     		}
     	}
     	dt.setIdentifier($Identifier.text);
@@ -381,6 +387,7 @@ base_type returns [String txt]
 var_declaration
     :   id_list COLON type_id
         {
+			System.out.println("TYPE" + $type_id.txt);        
             Type curr = null;
             if ($type_id.txt.equals("int")) {
                 curr = new Type("int");
@@ -391,10 +398,11 @@ var_declaration
                     if (st.lookup($type_id.txt).getTypeName().equals("definedtype")) {
                         curr = st.lookup($type_id.txt);
                     } else {
-
+                    	System.out.println(st.lookup($type_id.txt).getTypeName());
+						System.out.println("b");
                     }
                 } else {
-
+					System.out.println("a");
                 }
             }
             for (String s : $id_list.idlist) {
