@@ -216,6 +216,7 @@ funct_ret_type returns [String retType]
 alltype returns [String retType]
 	:	Identifier {$retType = $Identifier.text;}| INT {$retType = "int";}| FIXEDPT {$retType = "fixedpt";}
 	;
+//only void comes here, check NO return
 funct_declaration_tail
     :	FUNCTION Identifier LPAREN! param_list RPAREN!
     {
@@ -227,7 +228,11 @@ funct_declaration_tail
     		st.insert($param_list.pl.get(i).getIdentifier(), new Type($param_list.pl.get(i).getTypeName()));
     	}
     }
-    BEGIN! block_list END!
+    BEGIN!
+    	block_list
+    	//forc to do not contain return in block
+    	//ELSE throw error
+    END!
     {
     	st.finalizeScope();
     }
@@ -266,7 +271,10 @@ funct_declaration
 	    	}
 	    }
 	} 
-	BEGIN block_list END
+	BEGIN 
+		block_list // get a return type or nothing if null
+		//for to check funct_ret_type == return value
+	END
 	{st.finalizeScope();}
 	SEMI
 		-> ^(Identifier funct_ret_type param_list? block_list)
@@ -441,8 +449,8 @@ stat
     |   block
     ;
 
-argument_list
-	: LPAREN expr_list RPAREN -> ^(FUNCT_ARGUMENT_LIST expr_list?)
+argument_list //take in param_list, match with returnExpr[]
+	: LPAREN expr_list/*returnExpr[]*/ RPAREN -> ^(FUNCT_ARGUMENT_LIST expr_list?)
 	;
 	
 assign_stmt
@@ -485,7 +493,8 @@ if_else_expr
     ;
     
 if_stat
-	: IF^ expr
+	: IF^ expr/*get expr etype*/
+		//Do checking, expr has to be a boolean
 	;
 	
 then_stat
@@ -500,7 +509,7 @@ opt_prefix
     :   (value ASSIGN)?
     ;
 
-expr
+expr /*to return the expr type*/
     :   expr_lev3 ((AND^ | OR^) expr_lev3)*
     ;
 
@@ -513,13 +522,13 @@ expr_lev2
     ;
 
 expr_lev1
-    :   primary_expression ((MULT^|DIV^) primary_expression)*
+    :   primary_expression/*get type1 and operators1*/  (/*check type1 and operators 1*/(MULT^|DIV^) primary_expression//get base type set allow operators to all)*
     ;
 
-primary_expression
-    :   constant
-    |   value
-    |   LPAREN! expr RPAREN!
+primary_expression// return expr type, and return allow operator sets.
+    :   constant//get base type set allow operators to all
+    |   value//get base type set allow operators to all
+    |   LPAREN! expr RPAREN!//get base type set allow operators to all
     ;
 
 mult_expr
@@ -592,14 +601,14 @@ binary_operator
     ;
 
 expr_list
-    :   (expr expr_list_tail)?
+    :   (expr/*returnExpr[] += expr*/ /*(pass returnExpr[] to list)*/ expr_list_tail/*return expr*/)?
     ;
   
-expr_list_tail
-    :   (COMMA expr expr_list_tail)?
+expr_list_tail /*return expr*/
+    :   (COMMA expr/*return expr*/ expr_list_tail)?
     ;
 
-value
+value /*return expr*/
     :   Identifier value_tail
     ;
 
