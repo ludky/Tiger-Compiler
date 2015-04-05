@@ -1,3 +1,12 @@
+/*
+
+Not yet finished!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+*/
+
+
 grammar Tiger;
 
 options {
@@ -446,26 +455,39 @@ stat_seq
     : stat* -> ^(STAT_SEQ stat*)
     ;
 
+/* Here has been modified -- assign_stmt and argument_list*/
 stat
     :	if_else_expr
     |   WHILE^ while_condition DO! stat_seq ENDDO! SEMI!
     |   FOR^ for_expr DO! stat_seq ENDDO! SEMI!
-    |	Identifier^ (assign_stmt | argument_list) SEMI!
+
+/*    |	Identifier^ (assign_stmt | argument_list) SEMI! */
+
+    id = Identifier^
+     //   {ArrayList<Type> pl1 = ((Function) st.lookup($id.text)).getParamList();}
+        (assign_stmt
+            {
+                if($assign_stmt.astmt == st.lookup($id.text)) {/* no error*/}
+                else {/*return undecleared assignment error*/}
+            }
+        | argument_list
+            {
+                Type arglist = st.lookup($id.text);
+                if ( arglist != null && $argument_list.paramlist == arglist.getParamList()) {/*spaced reserved for furture action if necessary*/}
+                else { /* throw error  undecleared function*/}
+            })
+        SEMI!
     |   BREAK SEMI!
     |   RETURN^ expr SEMI!
     |   block
     ;
 
-argument_list //take in param_list, match with returnExpr[]
-	: LPAREN expr_list/*returnExpr[]*/ RPAREN -> ^(FUNCT_ARGUMENT_LIST expr_list?)
+argument_list returns [ArrayList<Type> paramlist]//take in param_list, match with returnExpr[]
+	: LPAREN expr_list {paramlist = $expr_list.paramlist} RPAREN -> ^(FUNCT_ARGUMENT_LIST expr_list?)
 	;
 	
-assign_stmt
+assign_stmt returns [Type astmt]
 	: value_tail assign_stmt_tail -> ^(ASSIGN_STMT value_tail? assign_stmt_tail)
-	;
-
-assign_stmt_tail
-	: ASSIGN expr_or_list
 	;
 
 for_expr
@@ -529,11 +551,8 @@ expr_lev2
     ;
 
 expr_lev1
-<<<<<<< HEAD
     :   primary_expression/*get type1 and operators1*/  (/*check type1 and operators 1*/(MULT^|DIV^) primary_expression)*
-=======
-    :   primary_expression/*get type1 and operators1*/  (/*check type1 and operators 1*/(MULT^|DIV^) primary_expression /*get type2 and allowed operand2, check == mult | div*/)*
->>>>>>> c67cdaf461b705352089c09f7038f5452f72981f
+
     ;
 
 primary_expression// return expr type, and return allow operator sets.
