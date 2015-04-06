@@ -318,23 +318,45 @@ while_condition
 	;
 	
 expr_or_list
-    : constant expr_tail1 ((AND^ | OR^) expr_lev3)*
-    | Identifier (value_tail expr_tail1 ((AND^ | OR^) expr_lev3)* | argument_list)
-    | LPAREN expr RPAREN expr_tail1 ((AND^ | OR^) expr_lev3)*
+    : myid = Identifier! exprtest[$myid, true]
+    | (myid = IntegerLiteral! | myid = FixedPointLiteral!) expr_tail1[$myid, false] ((AND^ | OR^) expr_lev3)*
+    | extail ((AND^ | OR^) expr_lev3)*
     ;
 	
-expr_tail1
-	: expr_tail2 ((EQ^|NEQ^|LESSER^|LESSEREQ^|GREATER^|GREATEREQ^) expr_lev2)*
+exprtest [Token myid, boolean isarray]
+	: expr_tail1[$myid, $isarray] ((AND^ | OR^) expr_lev3)*
+	| argument_list -> ^({$myid} argument_list)
 	;
 	
-expr_tail2
-	: expr_tail3 ((PLUS^|MINUS^) expr_lev1)*
+expr_tail1 [Token myid, boolean isarray]
+	: expr_tail2[$myid, $isarray] ((EQ^|NEQ^|LESSER^|LESSEREQ^|GREATER^|GREATEREQ^) expr_lev2)*
+	;
+	
+expr_tail2 [Token myid, boolean isarray]
+	: expr_tail3[$myid, $isarray] ((PLUS^|MINUS^) expr_lev1)*
 	;
 
-expr_tail3
-	: ((MULT^|DIV^) primary_expression)*
+expr_tail3 [Token myid, boolean isarray]
+	: maderule[$myid] (({$isarray}? value_tail) ((MULT^|DIV^) primary_expression)* | ((MULT^|DIV^) primary_expression)*)
+	
 	;
-    
+	
+maderule [Token myid]
+	:  -> ^({$myid})
+	;
+
+extail
+	: extail1 ((EQ^|NEQ^|LESSER^|LESSEREQ^|GREATER^|GREATEREQ^) expr_lev2)*
+	;
+
+extail1
+	: extail2 ((PLUS^|MINUS^) expr_lev1)*
+	;
+
+extail2
+	: LPAREN! expr RPAREN! ((MULT^|DIV^) primary_expression)*
+	;
+
 if_else_expr
     :	if_stat then_stat else_expr ENDIF SEMI-> ^(IF_ELSE_EXPR if_stat then_stat else_expr?)
     ;
@@ -455,7 +477,7 @@ expr_list_tail
     ;
 
 value
-    :   Identifier value_tail
+    :   Identifier^ value_tail
     ;
 
 value_tail
