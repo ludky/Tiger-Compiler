@@ -1,12 +1,3 @@
-/*
-
-Not yet finished!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-*/
-
-
 grammar Tiger;
 
 options {
@@ -35,7 +26,7 @@ tokens {
 }
 
 @members {
-private SymbolTable st = new SymbolTable();
+private static SymbolTable st = new SymbolTable();
 protected int hasError = 0;
 public void printTokenType() {
 		int size_token = input.size();
@@ -197,7 +188,7 @@ IntegerLiteral
     ;
 
 FixedPointLiteral
-    :   (IntegerLiteral '.' Digit | Digit Digit | Digit Digit Digit)
+    :   IntegerLiteral '.' Digit (Digit (Digit)?)?
     ;
 
 COMMENT
@@ -221,7 +212,7 @@ funct_declaration_list
     ;    
 
 funct_ret_type returns [String retType]
-	:	(alltype {$retType = $alltype.retType; System.out.println($retType);}) -> ^(RET_TYPE alltype)
+	:	(alltype {$retType = $alltype.retType;}) -> ^(RET_TYPE alltype)
 	;
 
 alltype returns [String retType]
@@ -235,14 +226,18 @@ funct_declaration_tail
     	if (st.lookupCurrentScope($Identifier.text) == null) {
     		st.insert($Identifier.text, new Function(rt, $param_list.pl));
     	} else {
-    	
+    		throw new IllegalArgumentException("Function name has already been defined.");
     	}
     }
     BEGIN!
     {
 		st.initializeScope();
 	    for (Type t : $param_list.pl) {
-	    	st.insert(t.getIdentifier(), t);
+	    	if (st.lookupCurrentScope(t.getIdentifier() == null) {
+	    		st.insert(t.getIdentifier(), t);
+	    	} else {
+	    		throw new IllegalArgumentException("Parameter name has already been defined.");
+	    	}
 	    }
 	}
     	block_list
@@ -267,23 +262,27 @@ funct_declaration
             	if (st.lookup($funct_ret_type.retType).getTypeName().equals("definedtype")) {
             		rt = st.lookup($funct_ret_type.retType);
             	} else {
-            	
+            		throw new IllegalArgumentException("Illegal function return type.");
             	}
             } else {
-                
+                throw new IllegalArgumentException("Illegal function return type.");
             }
 	    }
 	    if (st.lookupCurrentScope($Identifier.text) == null) {
 	   		st.insert($Identifier.text, new Function(rt, $param_list.pl));
 	   	} else {
-	   	
+	   		throw new IllegalArgumentException("Function name has already been defined.");
 	   	}
 	} 
 	BEGIN 
 	{
 		st.initializeScope();
 	    for (Type t : $param_list.pl) {
-	    	st.insert(t.getIdentifier(), t);
+	    	if (st.lookupCurrentScope(t.getIdentifier() == null) {
+	    		st.insert(t.getIdentifier(), t);
+	    	} else {
+	    		throw new IllegalArgumentException("Parameter name has already been defined.");
+	    	}
 	    }
 	}
 	block_list END {st.finalizeScope();} SEMI
@@ -308,15 +307,16 @@ param returns [Type paramType]
     			if (st.lookup($type_id.txt).getTypeName().equals("definedtype")) {
     				$paramType = st.lookup($type_id.txt);
     			} else {
-    			
+    				throw new IllegalArgumentException("Illegal parameter type.");
     			}
     		} else {
-    			
+    			throw new IllegalArgumentException("Illegal parameter type.");
     		}
     	} else {
     		$paramType = new Type($type_id.txt);
     	}
     	$paramType.setIdentifier($Identifier.text);
+    	$paramType.setIsVar(true);
     }
     ;
 
@@ -366,7 +366,7 @@ type_declaration
     		dt.setIdentifier($Identifier.text);
     		st.insert($Identifier.text, dt);
     	} else {
-    	
+    		throw new IllegalArgumentException("Type name has already been defined.");
     	}
     }
      -> ^(TYPE_DECL Identifier EQ type)
@@ -411,8 +411,7 @@ base_type returns [String txt]
 
 var_declaration
     :   id_list COLON type_id
-        {
-			System.out.println("TYPE" + $type_id.txt);        
+        {   
             Type curr = null;
             if ($type_id.txt.equals("int")) {
                 curr = new Type("int");
@@ -420,21 +419,23 @@ var_declaration
                 curr = new Type("fixedpt");
             } else {
                 if (st.lookup($type_id.txt) != null) {
-                    if (st.lookup($type_id.txt).getTypeName().equals("definedtype")) {
+                    if (st.lookup($type_id.txt).getTypeName().equals("definedtype")
+                    	&& st.lookup($type_id.txt).getIsVar() == false) {
                         curr = st.lookup($type_id.txt);
                     } else {
-                    
+                    	throw new IllegalArgumentException("Illegal variable type.");
                     }
                 } else {
-                
+                	throw new IllegalArgumentException("Illegal variable type.");
                 }
             }
+            curr.setIsVar(true);
             for (String s : $id_list.idlist) {
                 if (st.lookupCurrentScope(s) == null) {
                     curr.setIdentifier(s);
                     st.insert(s, curr);
                 } else {
-
+					throw new IllegalArgumentException("Variable name has already been defined.");
                 }
             }
         }
@@ -446,84 +447,130 @@ id_list returns [ArrayList<String> idlist]
         VAR (id1 = Identifier {$idlist.add($id1.text);}) (COMMA (id2 = Identifier{$idlist.add($id2.text);}))* -> ^(VAR Identifier+)
     ;
 
-optional_init
-    :   ASSIGN^ constant
+optional_init returns [boolean isInt]
+    :   ASSIGN^ constant {$isInt = constant.isInt;}
     |
     ;
 
 stat_seq
-    : stat* -> ^(STAT_SEQ stat*)
+    : stat+ -> ^(STAT_SEQ stat+)
     ;
 
-/* Here has been modified -- assign_stmt and argument_list*/
 stat
     :	if_else_expr
     |   WHILE^ while_condition DO! stat_seq ENDDO! SEMI!
     |   FOR^ for_expr DO! stat_seq ENDDO! SEMI!
-
-/*    |	Identifier^ (assign_stmt | argument_list) SEMI! */
-
-    id = Identifier^
-     //   {ArrayList<Type> pl1 = ((Function) st.lookup($id.text)).getParamList();}
-        (assign_stmt
-            {
-                if($assign_stmt.astmt == st.lookup($id.text)) {/* no error*/}
-                else {/*return undecleared assignment error*/}
-            }
-        | argument_list
-            {
-                Type arglist = st.lookup($id.text);
-                if ( arglist != null && $argument_list.paramlist == arglist.getParamList()) {/*spaced reserved for furture action if necessary*/}
-                else { /* throw error  undecleared function*/}
-            })
-        SEMI!
+    |	Identifier^ (assign_stmt
+    {
+    	
+    }| argument_list
+    {
+    	if (st.lookup($Identifier.txt) == null) {
+    		throw new IllegalArgumentException("Undefined function.");
+    	} else {
+    		if (!st.lookup($Identifier.txt).getTypeName().equals("function")) {
+    			throw new IllegalArgumentException("Undefined function.");
+    		} else {
+    			if ($argument_list.pm.size() != st.lookup($Identifier.txt).getParamList().size()) {
+    				throw new IllegalArgumentException("Number of parameters doesn't match.");
+    			} else {
+    				for (int i = 0; i < $argument_list.pm.size(); i++) {
+    					if (!st.lookup($Identifier.txt).getParamList().get(i).equals($argument_list.pm.get(i))) {
+    						throw new IllgalArgumentException("Type conflict.");
+    					}
+    				}
+    			}
+    		}
+    	}
+    }) SEMI!
     |   BREAK SEMI!
     |   RETURN^ expr SEMI!
     |   block
     ;
 
-argument_list returns [ArrayList<Type> paramlist]//take in param_list, match with returnExpr[]
-	: LPAREN expr_list {paramlist = $expr_list.paramlist} RPAREN -> ^(FUNCT_ARGUMENT_LIST expr_list?)
+argument_list returns [ArrayList<Type> pm]
+	: LPAREN expr_list {$pm = $expr_list.pm;} RPAREN -> ^(FUNCT_ARGUMENT_LIST expr_list?)
 	;
 	
-assign_stmt returns [Type astmt]
+assign_stmt
 	: value_tail assign_stmt_tail -> ^(ASSIGN_STMT value_tail? assign_stmt_tail)
 	;
 
+assign_stmt_tail
+	: ASSIGN expr_or_list
+	;
+
 for_expr
-    	:	   Identifier ASSIGN index_expr TO index_expr
-    		   -> ^(Identifier index_expr TO index_expr)
+    	:	Identifier ASSIGN index_expr TO index_expr
+    		-> ^(Identifier index_expr TO index_expr)
+    		{
+    			if (st.lookup($Identifier.txt) != null) {
+    				if (!st.lookup($Identifier.txt).getTypeName().equals("int")) {
+    					throw new IllegalArgumentException("Illegal variable type.");
+    				}
+    			} else {
+    				throw new IllegalArgumentException("Undefined variable.");
+    			}
+    		}
     	;
     	
 while_condition
 	: expr -> ^(W_CONDITION expr)
+		{
+			if (!$expr.iscomp) {
+				throw new IllegalArgumentException("The expression does not return a boolean.");
+			}
+		}
 	;
 	
 expr_or_list
-    : constant expr_tail1 ((AND^ | OR^) expr_lev3)*
-    | Identifier (value_tail expr_tail1 ((AND^ | OR^) expr_lev3)* | argument_list)
-    | LPAREN expr RPAREN expr_tail1 ((AND^ | OR^) expr_lev3)*
+    : (myid = IntegerLiteral! | myid = FixedPointLiteral!) expr_tail1[$myid, false] ((AND^ | OR^) expr_lev3)*
+    | myid = Identifier! exprtest[$myid, true]
+    | extail ((AND^ | OR^) expr_lev3)*
     ;
-	
-expr_tail1
-	: expr_tail2 ((EQ^|NEQ^|LESSER^|LESSEREQ^|GREATER^|GREATEREQ^) expr_lev2)*
+
+exprtest [Token myid, boolean isarray]
+	: expr_tail1[$myid, $isarray] ((AND^ | OR^) expr_lev3)*
+	| argument_list -> ^({$myid} argument_list)
+
+expr_tail1 [Token myid, boolean isarray]
+	: expr_tail2[$myid, $isarray] ((EQ^|NEQ^|LESSER^|LESSEREQ^|GREATER^|GREATEREQ^) expr_lev2)*
 	;
 	
-expr_tail2
-	: expr_tail3 ((PLUS^|MINUS^) expr_lev1)*
+expr_tail2 [Token myid, boolean isarray]
+	: expr_tail3[$myid, $isarray] ((PLUS^|MINUS^) expr_lev1)*
+
+expr_tail3 [Token myid, boolean isarray]
+	: maderule[$myid] (({$isarray}? value_tail) ((MULT^|DIV^) primary_expression)* | ((MULT^|DIV^) primary_expression)*)
+	;
+	
+maderule [Token myid]
+	:  -> ^({$myid})
 	;
 
-expr_tail3
-	: ((MULT^|DIV^) primary_expression)*
+extail
+	: extail1 ((EQ^|NEQ^|LESSER^|LESSEREQ^|GREATER^|GREATEREQ^) expr_lev2)*
 	;
-    
+
+extail1
+	: extail2 ((PLUS^|MINUS^) expr_lev1)*
+	;
+
+extail2
+	: LPAREN! expr RPAREN! ((MULT^|DIV^) primary_expression)*
+	;
+
 if_else_expr
     :	if_stat then_stat else_expr ENDIF SEMI-> ^(IF_ELSE_EXPR if_stat then_stat else_expr?)
     ;
     
 if_stat
-	: IF^ expr/*get expr etype*/
-		//Do checking, expr has to be a boolean
+	: IF^ expr
+		{
+			if (!$expr.iscomp) {
+				throw new IllegalArgumentException("The expression does not return a boolean.");
+			}
+		}
 	;
 	
 then_stat
@@ -538,27 +585,100 @@ opt_prefix
     :   (value ASSIGN)?
     ;
 
-expr /*to return the expr type*/
-    :   expr_lev3 ((AND^ | OR^) expr_lev3)*
+expr returns [Type atype, boolean iscomp]
+    :   {$atype = null;}
+    	(com1 = expr_lev3
+    	{
+    		if($com1.numofcom > 1) {
+    			throw new IllegalArgumentException("Illegal expression.");
+    		} else if ($com1.numofcom == 0) {
+    			$iscomp = false;
+    		} else {
+    			$iscomp = true;
+    		}
+    		$atype = $com1.atype;
+    	})
+    	((AND^ | OR^) (com2 = expr_lev3
+    	{
+    		if($com2.numofcom > 1 || $com2.numofcom == 0 || $com1.numofcom == 0) {
+    			$iscomp = false;
+    			throw new IllegalArgumentException("Illegal expression.");
+    		} else {
+    			$iscomp = true;
+    		}
+    	}))* 
     ;
 
-expr_lev3
-    :   expr_lev2 ((EQ^|NEQ^|LESSER^|LESSEREQ^|GREATER^|GREATEREQ^) expr_lev2)*
+expr_lev3 returns [Type atype, int numofcom]
+    :   el1 = expr_lev2 {$numofcom = 0;} ((EQ^|NEQ^|LESSER^|LESSEREQ^|GREATER^|GREATEREQ^) el2 = expr_lev2
+    {
+    	$numofcom++;
+    	if ($el1.atype.getTypeName().equals("int") || $el1.atype.getTypeName().equals("fixedpt")) {
+    		if ($el2.atype.getTypeName().equals("definedtype")) {
+    			throw new IllegalArgumentException("Type conflict.");
+    		}
+    	} else {
+    		if (!($el2.atype.getIdentifier().equals($el1.atype.getIdentifier()))) {
+    			throw new IllegalArgumentException("Type conflict.");
+    		}
+    	}
+    })*
+    {$atype = $el1.atype; }
     ;
 
-expr_lev2
-    :   expr_lev1 ((PLUS^|MINUS^) expr_lev1)*
+expr_lev2 returns [Type atype]
+    :   el1 = expr_lev1
+    ((PLUS^|MINUS^) el2 = expr_lev1
+    {
+    	if ($el1.atype.getTypeName().equals("int") || $el1.atype.getTypeName().equals("fixedpt")) {
+    		if ($el2.atype.getTypeName().equals("definedtype")) {
+    			throw new IllegalArgumentException("Type conflict.");
+    		}
+    	} else {
+    		if (!($el2.atype.getIdentifier().equals($el1.atype.getIdentifier()))) {
+    			throw new IllegalArgumentException("Type conflict.");
+    		}
+    	}
+    })*
+    {$atype = $el1.atype; }
     ;
 
-expr_lev1
-    :   primary_expression/*get type1 and operators1*/  (/*check type1 and operators 1*/(MULT^|DIV^) primary_expression)*
-
+expr_lev1  returns [Type atype]
+    :   pe1 = primary_expression
+    ((MULT^|DIV^) pe2 = primary_expression
+    {
+    	if ($pe1.atype.getTypeName().equals("int") || $pe1.atype.getTypeName().equals("fixedpt")) {
+    		if ($pe2.atype.getTypeName().equals("definedtype")) {
+    			throw new IllegalArgumentException("Type conflict.");
+    		}
+    	} else {
+    		if (!($pe2.atype.getIdentifier().equals($pe1.atype.getIdentifier()))) {
+    			throw new IllegalArgumentException("Type conflict.");
+    		}
+    	}
+    })*
+    {$atype = $pe1.atype; }
     ;
 
-primary_expression// return expr type, and return allow operator sets.
-    :   constant//get base type set allow operators to all
-    |   value//get base type set allow operators to all
-    |   LPAREN! expr RPAREN!//get base type set allow operators to all
+primary_expression returns [Type atype]
+    :
+    constant
+    {
+    	if ($constant.isInt) {
+    		$atype = new Type("int");
+    	} else {
+    		$atype = new Type("fixedpt");
+    	}
+    }
+    |   value { $atype = $value.atype; }
+    |   LPAREN! expr RPAREN!
+    {
+    	if ($expr.iscomp) {
+    		throw new IllegalArgumentException("Illegal expression.");
+    	} else {
+    		$atype = $expr.atype;
+    	}
+    }
     ;
 
 mult_expr
@@ -577,9 +697,9 @@ logic_expr
     :   ((AND^ | OR^) expr_lev3 logic_expr)?
     ;
 
-constant
-    :   IntegerLiteral
-    |   FixedPointLiteral
+constant returns [boolean isInt]
+    :   IntegerLiteral {$isInt = true;}
+    |   FixedPointLiteral {$isInt = false;}
     ;
 
 /* arithmetic, comparative and logical and & and or | operators*/
@@ -630,24 +750,104 @@ binary_operator
     |   and_or_operator
     ;
 
-expr_list
-    :   (expr/*returnExpr[] += expr*/ /*(pass returnExpr[] to list)*/ expr_list_tail/*return expr*/)?
+expr_list returns [ArrayList<Type> pm]
+    :	{$pm = new ArrayList<>();}
+    (expr expr_list_tail
+    {
+    	if ($expr.iscomp) {
+    		throw new IllegalArgumentException("Illegal expression for passing in values.");
+    	}
+    	$pm.add($expr.atype);
+    	$pm.addAll($expr_list_tail.pm);
+    })?
     ;
   
-expr_list_tail /*return expr*/
-    :   (COMMA expr/*return expr*/ expr_list_tail)?
+expr_list_tail returns [ArrayList<Type> pm]
+    :   {$pm = new ArrayList<>();}
+    	(COMMA expr
+    	{
+    		if ($expr.iscomp) {
+    			throw new IllegalArgumentException("Illegal expression for passing in values.");
+    		}
+    		$pm.add($expr.atype);
+    	})*
     ;
 
-value /*return expr*/
-    :   Identifier value_tail
+value returns {Type atype}
+    :   Identifier^ value_tail
+    	{
+    		$atype = null;
+    		if (st.lookup($Identifier.txt) == null) {
+    			throw new IllegalArgumentException("Undefined variable.");
+    		} else {
+    			if ($value_tail.is1D && $value_tail.is2D) {
+    				if (!(st.lookup($Identifier.txt).getTypeName().equals("definedtype")
+    					&& st.lookup($Identifier.txt).getBaseType().getTypeName().equals("twoDarray")
+    					&& st.lookup($Identifier.txt).getIsVar() == true)) {
+    					throw new IllegalArgumentException("Illegal variable type.");
+    				} else {
+    					$atype = st.lookup($Identifier.txt).getBaseType().getBaseType();
+    				}
+    			} else if ($value_tail.is1D) {
+    				if (!(st.lookup($Identifier.txt).getTypeName().equals("definedtype")
+    					&& st.lookup($Identifier.txt).getBaseType().getTypeName().equals("oneDarray")
+    					&& st.lookup($Identifier.txt).getIsVar() == true)) {
+    					throw new IllegalArgumentException("Illegal variable type.");
+    				} else {
+    					$atype = st.lookup($Identifier.txt).getBaseType().getBaseType();
+    				}
+    			} else {
+    				if (!(st.lookup($Identifier.txt).getTypeName().equals("int")
+    					|| st.lookup($Identifier.txt).getTypeName().equals("fixedpt")
+    					|| (st.lookup($Identifier.txt).getTypeName().equals("definedtype")
+    					&& st.lookup($Identifier.txt).getBaseType().getTypeName().equals("int")
+    					&& st.lookup($Identifier.txt).getIsVar() == true)
+    					|| (st.lookup($Identifier.txt).getTypeName().equals("definedtype")
+    					&& st.lookup($Identifier.txt).getBaseType().getTypeName().equals("fixedpt")
+    					&& st.lookup($Identifier.txt).getIsVar() == true)
+    					|| (st.lookup($Identifier.txt).getTypeName().equals("definedtype")
+    					&& st.lookup($Identifier.txt).getBaseType().getTypeName().equals("twoDarray")
+    					&& st.lookup($Identifier.txt).getIsVar() == true)
+    					|| (st.lookup($Identifier.txt).getTypeName().equals("definedtype")
+    					&& st.lookup($Identifier.txt).getBaseType().getTypeName().equals("oneDarray")
+    					&& st.lookup($Identifier.txt).getIsVar() == true))) {
+    					throw new IllegalArgumentException("Illegal variable type."); 
+    				} else if ((st.lookup($Identifier.txt).getTypeName().equals("definedtype")
+    					&& st.lookup($Identifier.txt).getBaseType().getTypeName().equals("int")
+    					&& st.lookup($Identifier.txt).getIsVar() == true)
+    					|| (st.lookup($Identifier.txt).getTypeName().equals("definedtype")
+    					&& st.lookup($Identifier.txt).getBaseType().getTypeName().equals("fixedpt")
+    					&& st.lookup($Identifier.txt).getIsVar() == true)) {
+    					$atype = st.lookup($Identifier.txt);
+    				} else if (st.lookup($Identifier.txt).getTypeName().equals("int")) {
+    					$atype = new Type("int");
+    				} else if (st.lookup($Identifier.txt).getTypeName().equals("fixedpt")) {
+    					$atype = new Type("fixedpt");
+    				} else {
+    					$atype = st.lookup($Identifier.txt);
+    				}
+    			}
+    		}
+    	}
     ;
 
-value_tail
-    :   (LBRACK index_expr RBRACK value_tail_tail)? -> ^(INDEX1 index_expr value_tail_tail?)?
+value_tail returns [boolean is1D, boolean is2D]
+    :   {$is1D = false;
+    	 $is2D = false;}
+    	(LBRACK index_expr RBRACK value_tail_tail
+    	{
+    		$is1D = true;
+    		$is2D = $value_tail_tail.is2D;
+    	}
+    	)? -> ^(INDEX1 index_expr value_tail_tail?)?
     ;
     
-value_tail_tail
-    :	(LBRACK index_expr RBRACK)? -> ^(INDEX2 index_expr)?
+value_tail_tail returns [boolean is2D]
+    :	{ $is2D = false; }
+    	(LBRACK index_expr RBRACK
+    	{
+    		$is2D = true;
+    	})? -> ^(INDEX2 index_expr)?
     ;
 
 index_expr
@@ -660,22 +860,14 @@ index_expr_lev1
 
 primary_index_expr
     :	IntegerLiteral
-    |  	Identifier
-    ;
-
-index_mult_expr
-    :	(MULT^ primary_index_expr index_mult_expr)?
-    ;
-    
-index_mult_opr
-    :	MULT
-    ;
-    
-index_add_expr
-    :	((PLUS^ | MINUS^) index_expr_lev1 index_add_expr)?
-    ;
-    
-index_add_opr
-    :	PLUS
-    |   MINUS
+    |  	(Identifier 
+    {
+    	if (st.lookup($Identifier.txt) != null) {
+    		if (!st.lookup($Identifier.txt).getTypeName().equals("int")) {
+    			throw new IllegalArgumentException("Illegal variable type.");
+    		}
+    	} else {
+    		throw new IllegalArgumentException("Undefined variable.");
+    	}
+    })
     ;
