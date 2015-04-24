@@ -1,7 +1,7 @@
 
 
 
-public class IRSET {
+public class IRSet {
 
     
     /*  assign(op, x, y) */
