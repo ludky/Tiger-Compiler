@@ -1,0 +1,11 @@
+import java.util.*;
+
+/*
+  this class is the mininum unit(one instruction) with the in and out variable.
+*/
+
+public class streamInOut {
+    private String instruction;
+    private List<Var> in;
+    private List<Var> out;
+}
