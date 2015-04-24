@@ -3,24 +3,34 @@ import java.util.*;
 public class BasicBlock{
 
     private int id;
+    private String label;
     private List<String> block;
-    private List<BasicBlock> nextBlock;
-    //private BasicBlock prevBlock;
+    private List<int> nextBlock;
+    private int prevBlock;
     private List<streamInOut> instructions;
     private List<String> in_var;
     private List<String> out_var;
 
-    public BasicBlock(LinkedList<String> block) {
+    public BasicBlock() {
+	this(null, 0)
+    }
+
+    public BasicBlock(ArrayList<String> block) {
 	this(block, 0);
     }
 
-    public BasicBlock(LinkedList<String> block, int id) {
+    public BasicBlock(ArrayList<String> block, int id) {
+	this(block, id, "null");
+    }
+
+    public BasicBlock(ArrayList<String> block, int id, String label) {
 	this.block = block;
 	this.id = id;
+	this.label = label;
 	nextBlock = new LinkedList<BasicBlock>();
     }
 
-    public LinkedList<BasicBlock> getNext() {
+    public ArrayList<BasicBlock> getNext() {
 	return nextBlock;
     } 
 
@@ -28,6 +38,12 @@ public class BasicBlock{
 	this.id = id;
     }
 
-    public 
+    public void setNextBlock(int next){
+	nextBlock.add(next);
+    }
+
+    public void getNext(){
+	return nextBlock;
+    }
 
 }
