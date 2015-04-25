@@ -49,6 +49,17 @@ public class CFG {
     }
 
     public void generateCFG() {
+
+	for(BasicBlock b: blocks) {
+	    List<String> block = b.getBlockList();
+	    String lastLine = block.get(block.size()-1);
+	    int id = b.getBlockId();
+	    if(!lastLine.contains("goto,") || !lastLine.contains("return,") && id < blocks.size() - 1) { //check if last is not goto nore return nor last blocks
+		b.setNextBlock(id + 1);
+		blocks.get(id+1).setPrevBlock(id);
+	    }
+	}
+
 	for(BasicBlock b: blocks) {
 	    List<String> block = b.getBlockList();
 	    String lastLine = block.get(block.size()-1);
@@ -71,7 +82,14 @@ public class CFG {
 
 
     private String getLabel(String ins) {
-	
+	String[] insA = ins.split("\\s*,\\s*");
+	String label = "";
+	if(insA[0].equals("return") || insA[0].equals("goto")) {
+	    label = insA[1];
+	} else {
+	    label = insA[3];
+	}
+	return (label+":");
     }
 
 
