@@ -24,7 +24,7 @@ public class CFG {
 	//leader.add(ir_code.get(0)) ;
 	List<String> block = new ArrayList<String>();
 	int blockId = 0;	//blockId should match the idx of block in the arraylist
-       //	block.add(ir_code.get(0));
+        block.add(ir_code.get(0)); // add label main:
 	boolean newBlock = false;
 	String label = "null";
 	String prev = "";
@@ -32,8 +32,33 @@ public class CFG {
 	//int forward = 0;
 
 	//int curIdx
-        for(String ins: ir_code) {
+        for(int i = 1; i < ir_code.size(); i++) {
+		String ins = ir_code.get(i);
+		if(isBranchReturn(ins)) {
+		//	block.add(ins);
+			newBlock = true;
+		} else if(containLabel(ins)) {
+			if(!isBranchReturn(ir_code.get(i-1))) {
+				blocks.add(new BasicBlock(block, blockId));
+				block = new ArrayList<String>();
+				blockId++;
+			}
+		}
+		block.add(ins);
+
+		if(newBlock) {
+			blocks.add(new BasicBlock(block, blockId));
+			block = new ArrayList<String>();
+			blockId++;
+			//noDupAdd(ins, block);
+			//block.add(ins);
+			newBlock = false;
+		}
 	
+	}
+
+/*
+	{
 	if(containLabel(ins)) {
 		//noDupAdd(ins, block);
 		//block.add(ins);
@@ -63,7 +88,7 @@ public class CFG {
 		//noDupAdd(ins, block);
 	  	//block.add(ins); //entry may be a label
 	}
-	
+	*/
     }
 
 	public void noDupAdd(String ins, List<String> block) {
