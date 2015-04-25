@@ -3,7 +3,7 @@ import java.util.*;
 public class BasicBlock{
 
     private int id;
-    private String label;
+    // private String label;
     private List<String> block;
     private List<int> nextBlock;
     private int prevBlock;
@@ -19,15 +19,13 @@ public class BasicBlock{
 	this(block, 0);
     }
 
-    public BasicBlock(ArrayList<String> block, int id) {
-	this(block, id, "null");
-    }
 
-    public BasicBlock(ArrayList<String> block, int id, String label) {
+    public BasicBlock(ArrayList<String> block, int id) {
 	this.block = block;
 	this.id = id;
-	this.label = label;
-	nextBlock = new LinkedList<BasicBlock>();
+	//	this.label = label;
+	nextBlock = new LinkedList<int>();
+	prevBlock = -1;
     }
 
     public ArrayList<BasicBlock> getNext() {
@@ -38,12 +36,28 @@ public class BasicBlock{
 	this.id = id;
     }
 
+    public int getBlockId() {
+	return id;
+    }
+
     public void setNextBlock(int next){
 	nextBlock.add(next);
     }
 
     public void getNext(){
 	return nextBlock;
+    }
+
+    public void setPrevBlock(int prev) {
+	prevBlock = prev;
+    } 
+
+    public int getPrevBlock() {
+	return prevBlock;
+    }
+
+    public List<String> getBlockList() {
+	return block;
     }
 
 }
