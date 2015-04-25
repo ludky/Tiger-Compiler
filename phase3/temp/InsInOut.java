@@ -89,7 +89,7 @@ public class InsInOut {
     public Set<Variable> getOut() {
 	return out;
     }
-
+/*
     public void addToIn(Variable v) {
 	if(!in.contains(v))
 	    in.add(v);
@@ -111,12 +111,12 @@ public class InsInOut {
 	    out.remove(v);
 	}
     }
-
-    public void replaceIn(List<Variable> in) {
+*/
+    public void replaceIn(Set<Variable> in) {
 	this.in = in;
     }
 
-    public void replaceOut(List<Variable> out) {
+    public void replaceOut(Set<Variable> out) {
 	this.out = out;
     }
 
