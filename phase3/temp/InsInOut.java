@@ -112,12 +112,36 @@ public class InsInOut {
 	}
     }
 */
-    public void replaceIn(Set<Variable> in) {
-	this.in = in;
+    public boolean replaceIn(Set<Variable> in) {
+        boolean isChanged = false;
+        for(Variable v: in) {
+            if(!this.in.contains(v)) {
+                isChanged = true;
+            }
+        }
+        for(Variable v: this.in) {
+            if(!in.contains(v)) {
+                isChanged = true;
+            }
+        }
+	   this.in = in;
+       return isChanged;
     }
 
-    public void replaceOut(Set<Variable> out) {
-	this.out = out;
+    public boolean replaceOut(Set<Variable> out) {
+        boolean isChanged = false;
+        for(Variable v: out) {
+            if(!this.out.contains(v)) {
+                isChanged = true;
+            }
+        }
+        for(Variable v: this.out) {
+            if(!out.contains(v)) {
+                isChanged = true;
+            }
+        }
+	   this.out = out;
+       return out;
     }
 
 }
