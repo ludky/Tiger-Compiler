@@ -1,3 +1,5 @@
+package p3;
+
 import java.util.*;
 
 /*
@@ -48,11 +50,13 @@ public class streamInOut {
     public void remFromIn(Var v) {
 	if(in.contains(v)) {
 	    in.remove(v);
+	}
     }
 
     public void remFromOut(Var v) {
 	if(out.contains(v)) {
 	    out.remove(v);
+	}
     }
 
     public void replaceIn(List<Var> in) {

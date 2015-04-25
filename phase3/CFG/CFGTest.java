@@ -1,13 +1,13 @@
-import java.util.*;
-import java.nio.file.*;
-import java.nio.*;
-import java.nio.charset.Charset;
+package p3;
+
+import java.util.ArrayList;
+
 public class CFGTest {
     public static void main(String[] args) {
 
 	//content = new Scanner(new File("ifElseIR"));
 	//Path path = FileSystems.getDefault().getPath("text", "test.text");
-	try {
+	/*try {
 	List<String> content = Files.readAllLines(Paths.get("/home/lu/Desktop/CFG/test.text"), Charset.defaultCharset());
 
 
@@ -52,9 +52,38 @@ public class CFGTest {
 	}
 	catch (Exception e) {
 		System.out.println(e.getMessage());
-	}
-	
+	}*/
+    	Label l1 = new Label();
+    	Label l2 = new Label();
+    	Label l3 = new Label();
+    	Label l4 = new Label();
+    	ArrayList<Instruction> ins = new ArrayList<>();
+    	ins.add(new Binary("add", new Temp(), new Temp(), new Temp()));
+    	ins.add(new Binary("add", new Temp(), new Temp(), new Temp()));
+    	ins.add(new Binary("add", new Temp(), new Temp(), new Temp()));
+    	ins.add(new Branch("brlt", new Temp(), new Temp(), l1));
+    	ins.add(new Assignment(new Temp(), new Temp()));
+    	ins.add(new InsLabel(l1));
+    	ins.add(new Binary("add", new Temp(), new Temp(), new Temp()));
+    	ins.add(new Binary("add", new Temp(), new Temp(), new Temp()));
+    	ins.add(new Binary("add", new Temp(), new Temp(), new Temp()));
+    	ins.add(new Goto(l3));
+    	ins.add(new InsLabel(l2));
+    	ins.add(new Binary("add", new Temp(), new Temp(), new Temp()));
+    	ins.add(new InsLabel(l3));
+    	ins.add(new Binary("add", new Temp(), new Temp(), new Temp()));
+    	ins.add(new Binary("add", new Temp(), new Temp(), new Temp()));
+    	ins.add(new Branch("brlt", new Temp(), new Temp(), l4));
+    	ins.add(new Binary("add", new Temp(), new Temp(), new Temp()));
+    	ins.add(new InsLabel(l4));
+    	ins.add(new Binary("add", new Temp(), new Temp(), new Temp()));
+    	for (Instruction s : ins) {
+    		System.out.println(s);
+    	}
+    	System.out.println();
+    	CFG temp = new CFG(ins);
+    	temp.generateBasicBlock();
+    	temp.generateCFG();
+    	System.out.println(temp);
     }
-
-
 }

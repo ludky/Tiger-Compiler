@@ -1,146 +1,98 @@
-import java.util.*;
-import java.lang.*;
-import java.util.regex.*;
+package p3;
+
+import java.util.List;
+import java.util.ArrayList;
 
 public class CFG {
 
-    private List<String> ir_code;
-    //  private BasicBlock head;
+    private List<Instruction> ir_code;
     private List<String> leader;
     private ArrayList<BasicBlock> blocks;
 
-    public CFG(ArrayList<String> ir_code) {
-	this.ir_code = ir_code;
-	//head = new BasicBlock();
-	blocks = new ArrayList<BasicBlock>();
-	leader = new ArrayList<String>();
-	//generateBasicBlock();
-	//generateCFG();
+    public CFG(ArrayList<Instruction> ir_code) {
+    	this.ir_code = ir_code;
+    	blocks = new ArrayList<BasicBlock>();
+    	leader = new ArrayList<String>();
     }
 
     public void generateBasicBlock() {
-
-	//first is natually one of the entry point of a basic block
-	//leader.add(ir_code.get(0)) ;
-	List<String> block = new ArrayList<String>();
-	int blockId = 0;	//blockId should match the idx of block in the arraylist
-        block.add(ir_code.get(0)); // add label main:
-	boolean newBlock = false;
-	String label = "null";
-	String prev = "";
-	boolean isLabel = false;
-	//int forward = 0;
-
-	//int curIdx
+    	List<Instruction> block = new ArrayList<>();
+    	int blockId = 0;
+        block.add(ir_code.get(0));
+        boolean newBlock = false;
         for(int i = 1; i < ir_code.size(); i++) {
-		String ins = ir_code.get(i);
-		if(isBranchReturn(ins)) {
-			newBlock = true;
-		} else if(containLabel(ins)) {
-			if(!isBranchReturn(ir_code.get(i-1))) {
-				blocks.add(new BasicBlock(block, blockId));
-				block = new ArrayList<String>();
-				blockId++;
-			}
-		}
-		block.add(ins);
-
-		if(newBlock) {
-			blocks.add(new BasicBlock(block, blockId));
-			block = new ArrayList<String>();
-			blockId++;
-			newBlock = false;
-		}
-	
-	}
-
+        	Instruction ins = ir_code.get(i);
+        	if (ins instanceof Branch || ins instanceof Return) {
+        		newBlock = true;
+        	} else if (ins instanceof InsLabel) {
+        		if(!(ir_code.get(i-1) instanceof Branch || ir_code.get(i-1) instanceof Return)) {
+        			blocks.add(new BasicBlock(block, blockId));
+        			block = new ArrayList<Instruction>();
+        			blockId++;
+        		}
+        	}
+        	block.add(ins);
+        	if(newBlock) {
+        		blocks.add(new BasicBlock(block, blockId));
+        		block = new ArrayList<Instruction>();
+        		blockId++;
+        		newBlock = false;
+        	}
+        }
+        blocks.add(new BasicBlock(block, blockId));
     }
-/*
-	public void noDupAdd(String ins, List<String> block) {
-		if (block.size()==0)
-			block.add(ins);
-		if(!block.get(block.size()-1).equals(ins))
-			block.add(ins);
-	}
-*/
+    
     public void generateCFG() {
+    	for(BasicBlock b: blocks) {
+    		List<Instruction> block = b.getBlockList();
+    		Instruction lastLine = block.get(block.size() - 1);
+    		int id = b.getBlockId();
+    		if(!(lastLine instanceof Goto) && !(lastLine instanceof Return)
+    			&& id < blocks.size() - 1) {
+    			b.addNextBlock(id + 1);
+    			blocks.get(id+1).addPrevBlock(id);
+    		}
+    	}
 
-	for(BasicBlock b: blocks) {
-	    List<String> block = b.getBlockList();
-	    String lastLine = block.get(block.size()-1);
-		System.out.println("lastline of " + b.getBlockId() + "  is " + lastLine);
-	    int id = b.getBlockId();
-	   if((!lastLine.contains("goto,")) && (!lastLine.contains("return,")) && id < blocks.size() - 1) { //check if last is not goto nore return nor last blocks
-		System.out.println("set next and prev");
-		b.setNextBlock(id + 1);
-		blocks.get(id+1).setPrevBlock(id);
-	    }
+    	for(BasicBlock b: blocks) {
+    		List<Instruction> block = b.getBlockList();
+    		Instruction lastLine = block.get(block.size()-1);
+
+    		if (lastLine instanceof Return || lastLine instanceof Branch) {
+    			Label lb = null;
+    			if (lastLine instanceof Return) {
+    				Return curr1 = (Return) lastLine;
+    				lb = curr1.label;
+    			} else {
+    				Branch curr2 = (Branch) lastLine;
+    				lb = curr2.label;
+    			}
+    			for (BasicBlock r: blocks) {
+    				Instruction firstLine = r.getBlockList().get(0);
+    				if(firstLine instanceof InsLabel) {
+    					if(firstLine.equals(new InsLabel(lb))) {
+    						b.addNextBlock(r.getBlockId());
+    						r.addPrevBlock(b.getBlockId());
+    					}
+    				}
+    			}
+    		}
+    	}
 	}
-
-
-	for(BasicBlock b: blocks) {
-	    List<String> block = b.getBlockList();
-	    String lastLine = block.get(block.size()-1);
-
-	    if(isBranchReturn(lastLine)) {
-		for (BasicBlock r: blocks) {
-
-		    List<String> toCompare = r.getBlockList();
-		    String firstLine = toCompare.get(0);
-
-		    if(containLabel(firstLine)) {
-
-			if(lastLine.contains(firstLine.substring(0, (firstLine.length()-1) ) ) ) {
-			    b.setNextBlock(r.getBlockId());
-			    r.setPrevBlock(b.getBlockId());
-			}
-
-
-		    }
-		}
-	    }
-
-	}
-	
-
-    }
-
-
-    private String getLabel(String ins) {
-	String[] insA = ins.split("\\s*,\\s*");
-	String label = "";
-	if(insA[0].equals("return") || insA[0].equals("goto")) {
-	    label = insA[1];
-	} else {
-	    label = insA[3];
-	}
-	return (label+":");
-    }
-
-
-
-    private boolean isBranchReturn(String ins) {
-	if(ins.contains("goto,") || ins.contains("breq,") || ins.contains("brneq,")
-	   ||ins.contains("brlt,") || ins.contains("brgt,") || ins.contains("brgeq,")
-	   || ins.contains("brleq,") || ins.contains("return,")) {
-	    return true;
-	}
-	return false;
-    }
-
-    private boolean containLabel(String ins) {
-	//check "label#:", "main:"
-	return Pattern.matches("(main|label[0-9]+):*" , ins);
-    }
 
     public List<String> getLeader() {
-	return leader;
+    	return leader;
     }
 
     public List<BasicBlock> getBlockList() {
-	return blocks;
+    	return blocks;
     }
-
-    //   public 
     
+    public String toString() {
+    	String ans = "";
+    	for (BasicBlock a : blocks) {
+    		ans += a + "\n";
+    	}
+    	return ans;
+    }
 }
