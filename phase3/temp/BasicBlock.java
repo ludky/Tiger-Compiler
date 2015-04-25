@@ -9,8 +9,8 @@ public class BasicBlock{
     private List<Instruction> block;
     private List<Integer> nextBlock, prevBlock;
     private List<StreamInOut> instructions;
-    private List<String> in_var; // change to temp list
-    private List<String> out_var; //change to temp list
+   // private List<String> in_var; // same as the in set of first line
+    //private List<String> out_var; //same as the out set of last line
 
     public BasicBlock() {
     	this(null, 0);

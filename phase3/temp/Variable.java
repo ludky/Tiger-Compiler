@@ -5,22 +5,22 @@ import java.util.*;
 public class Variable {
 
     private int color; //use different numbers to represent colors
-    private String variable_name; // change to temp
+    private Temp variable_name; // change to temp
 
 
 public Variable() {
 }
 
-    public Variable(String name) {
+    public Variable(Temp name) {
 	this(name, -1); //-1 means not yet colored
     }
 
-    public Variable(String name, int color) {
+    public Variable(Temp name, int color) {
 	variable_name = name;
 	this.color = color;
     }
 
-    public String name() {
+    public Temp name() {
 	return variable_name;
     }
 

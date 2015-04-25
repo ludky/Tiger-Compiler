@@ -92,7 +92,7 @@ try {
 	List<BasicBlock> block = varTest.getBlockList();
 	for(BasicBlock b: block) {
 		//System.out.println(s.instruction());
-		for(StreamInOut sio: b.getLivenessList()) {
+		for(InsInOut sio: b.getLivenessList()) {
 			System.out.println(sio.instruction());
 		}
 	}
