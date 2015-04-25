@@ -8,7 +8,7 @@ public class BasicBlock{
     // private String label;
     private List<Instruction> block;
     private List<Integer> nextBlock, prevBlock;
-    private List<StreamInOut> instructions;
+    private List<InsInOut> instructions;
    // private List<String> in_var; // same as the in set of first line
     //private List<String> out_var; //same as the out set of last line
 
@@ -26,7 +26,7 @@ public class BasicBlock{
     	this.id = id;
     	nextBlock = new ArrayList<>();
     	prevBlock = new ArrayList<>();
-	instructions = new ArrayList<StreamInOut>();
+	instructions = new ArrayList<InsInOut>();
 	initializeStream(block, instructions);
 	findInOut();
     }
@@ -35,9 +35,9 @@ public class BasicBlock{
 	
     }
 
-    private void initializeStream(List<Instruction> block, List<StreamInOut> instrucions) {
+    private void initializeStream(List<Instruction> block, List<InsInOut> instrucions) {
 	for(Instruction ins: block) {
-	    instructions.add(new StreamInOut(ins));	    
+	    instructions.add(new InsInOut(ins));	    
 	}
     }
 
@@ -69,7 +69,7 @@ public class BasicBlock{
     	return block;
     }
 
-    public List<StreamInOut> getLivenessList() {
+    public List<InsInOut> getLivenessList() {
 	return instructions;
     }
 
