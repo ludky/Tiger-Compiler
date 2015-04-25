@@ -1,4 +1,6 @@
 import java.util.*;
+import java.lang.*;
+import java.util.regex.*;
 
 public class CFG {
 
@@ -9,44 +11,67 @@ public class CFG {
 
     public CFG(ArrayList<String> ir_code) {
 	this.ir_code = ir_code;
-	head = new BasicBlock();
+	//head = new BasicBlock();
+	blocks = new ArrayList<BasicBlock>();
 	leader = new ArrayList<String>();
+	//generateBasicBlock();
+	//generateCFG();
     }
 
     public void generateBasicBlock() {
 
 	//first is natually one of the entry point of a basic block
-	leader.add(ir_code.get(0)) ;
+	//leader.add(ir_code.get(0)) ;
 	List<String> block = new ArrayList<String>();
 	int blockId = 0;	//blockId should match the idx of block in the arraylist
-       	block.add(ir_code.get(0));
+       //	block.add(ir_code.get(0));
 	boolean newBlock = false;
 	String label = "null";
+	String prev = "";
+	boolean isLabel = false;
+	//int forward = 0;
 
 	//int curIdx
         for(String ins: ir_code) {
-	    
+	
+	if(containLabel(ins)) {
+		//noDupAdd(ins, block);
+		//block.add(ins);
+		//newBlock = true; //indicate next is a leader
+		//	leader.add(ins);
+	} 
+
 	    if(newBlock) {
 		blocks.add(new BasicBlock(block, blockId));
-		block.clear();
+		block = new ArrayList<String>();
 		blockId++;
-		leader.add(ins);
-		//	block.add(ins);
+		noDupAdd(ins, block);
+		//block.add(ins);
 		newBlock = false;
 	    }
 
 	    if(isBranchReturn(ins)) { //check branch first to make sure not messing up with label
-		//	block.add(ins);
+		//block.add(ins);
+		noDupAdd(ins, block);
 		newBlock = true; //indicate next is a leader
 	    } else if(containLabel(ins)) {
 		newBlock = true; //indicate next is a leader
-		//	leader.add(ins);
+		
 	    } else {
-		//	block.add(ins);
-	    }
-	    block.add(ins); //entry may be a label
+		//block.add(ins);
 	}
+		//noDupAdd(ins, block);
+	  	//block.add(ins); //entry may be a label
+	}
+	
     }
+
+	public void noDupAdd(String ins, List<String> block) {
+		if (block.size()==0)
+			block.add(ins);
+		if(!block.get(block.size()-1).equals(ins))
+			block.add(ins);
+	}
 
     public void generateCFG() {
 
@@ -105,14 +130,14 @@ public class CFG {
 
     private boolean containLabel(String ins) {
 	//check "label#:", "main:"
-	return Pattern.matches("[label][0-9]+:*" , ins);
+	return Pattern.matches("(main|label[0-9]+):*" , ins);
     }
 
-    public ArrayList<String> getLeader() {
+    public List<String> getLeader() {
 	return leader;
     }
 
-    public ArrayList<BasicBlock> getBlockList() {
+    public List<BasicBlock> getBlockList() {
 	return blocks;
     }
 

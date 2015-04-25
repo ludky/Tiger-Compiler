@@ -5,32 +5,28 @@ public class BasicBlock{
     private int id;
     // private String label;
     private List<String> block;
-    private List<int> nextBlock;
+    private List<Integer> nextBlock;
     private int prevBlock;
-    private List<streamInOut> instructions;
+   // private List<streamInOut> instructions;
     private List<String> in_var;
     private List<String> out_var;
 
     public BasicBlock() {
-	this(null, 0)
+	this(null, 0);
     }
 
-    public BasicBlock(ArrayList<String> block) {
+    public BasicBlock(List<String> block) {
 	this(block, 0);
     }
 
 
-    public BasicBlock(ArrayList<String> block, int id) {
+    public BasicBlock(List<String> block, int id) {
 	this.block = block;
 	this.id = id;
 	//	this.label = label;
-	nextBlock = new LinkedList<int>();
+	nextBlock = new LinkedList<Integer>();
 	prevBlock = -1;
     }
-
-    public ArrayList<BasicBlock> getNext() {
-	return nextBlock;
-    } 
 
     public void setBlockId(int id) {
 	this.id = id;
@@ -44,7 +40,7 @@ public class BasicBlock{
 	nextBlock.add(next);
     }
 
-    public void getNext(){
+    public List<Integer> getNext(){
 	return nextBlock;
     }
 

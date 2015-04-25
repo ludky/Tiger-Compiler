@@ -10,7 +10,7 @@ public class Var {
     private String variable_name;
 
     public Var(String name) {
-	this(name, -1) //-1 means not yet colored
+	this(name, -1); //-1 means not yet colored
     }
 
     public Var(String name, int color) {
@@ -30,14 +30,13 @@ public class Var {
 	this.color = color;
     }
 
-    @override
     public boolean equals(Object other) {
 	if (other == null)
 	    return false;
 	if(other == this)
 	    return true;
-	if(!other instanceof Var)
+	if(!(other instanceof Var))
 	    return false;
-	return (Var)other.name().equals(this.name());
+	return ((Var)other).name().equals(this.name());
     }
 }

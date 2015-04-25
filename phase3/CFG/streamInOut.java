@@ -13,7 +13,7 @@ public class streamInOut {
 
 
     public streamInOut(String ins) {
-	this.(ins, new ArrayList<Var>, new ArrayList<Var>);
+	this(ins, new ArrayList<Var>(), new ArrayList<Var>());
     }
 
     public streamInOut(String ins, ArrayList<Var> in, ArrayList<Var> out) {
@@ -45,18 +45,14 @@ public class streamInOut {
 	    out.add(v);
     }
 
-    public Var remFromIn(Var v) {
+    public void remFromIn(Var v) {
 	if(in.contains(v)) {
-	    return in.remove(v);
-	} else
-	    return null;
+	    in.remove(v);
     }
 
-    public Var remFromOut(Var v) {
+    public void remFromOut(Var v) {
 	if(out.contains(v)) {
-	    return out.remove(v);
-	} else
-	    return null;
+	    out.remove(v);
     }
 
     public void replaceIn(List<Var> in) {

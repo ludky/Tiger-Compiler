@@ -1,0 +1,13 @@
+import java.util.*;
+
+public class CFGTest {
+    public static void main(String[] args) {
+
+	//content = new Scanner(new File("ifElseIR"));
+	List<String> content = Files.readAllLines("ifElseIR", encoding);
+	ArrayList<String> test = new ArrayList<String>(content);
+	CFG cfg = new CFG(test);
+    }
+
+
+}
