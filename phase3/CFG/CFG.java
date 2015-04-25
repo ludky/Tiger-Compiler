@@ -58,14 +58,18 @@ public class CFG {
     		List<Instruction> block = b.getBlockList();
     		Instruction lastLine = block.get(block.size()-1);
 
-    		if (lastLine instanceof Return || lastLine instanceof Branch) {
+    		if (lastLine instanceof Return || lastLine instanceof Branch
+    			|| lastLine instanceof Goto) {
     			Label lb = null;
     			if (lastLine instanceof Return) {
     				Return curr1 = (Return) lastLine;
     				lb = curr1.label;
-    			} else {
+    			} else if (lastLine instanceof Branch ){
     				Branch curr2 = (Branch) lastLine;
     				lb = curr2.label;
+    			} else {
+    				Goto curr3 = (Goto) lastLine;
+    				lb = curr3.label;
     			}
     			for (BasicBlock r: blocks) {
     				Instruction firstLine = r.getBlockList().get(0);
