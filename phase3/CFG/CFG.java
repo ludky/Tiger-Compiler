@@ -35,7 +35,6 @@ public class CFG {
         for(int i = 1; i < ir_code.size(); i++) {
 		String ins = ir_code.get(i);
 		if(isBranchReturn(ins)) {
-		//	block.add(ins);
 			newBlock = true;
 		} else if(containLabel(ins)) {
 			if(!isBranchReturn(ir_code.get(i-1))) {
@@ -50,81 +49,57 @@ public class CFG {
 			blocks.add(new BasicBlock(block, blockId));
 			block = new ArrayList<String>();
 			blockId++;
-			//noDupAdd(ins, block);
-			//block.add(ins);
 			newBlock = false;
 		}
 	
 	}
 
-/*
-	{
-	if(containLabel(ins)) {
-		//noDupAdd(ins, block);
-		//block.add(ins);
-		//newBlock = true; //indicate next is a leader
-		//	leader.add(ins);
-	} 
-
-	    if(newBlock) {
-		blocks.add(new BasicBlock(block, blockId));
-		block = new ArrayList<String>();
-		blockId++;
-		noDupAdd(ins, block);
-		//block.add(ins);
-		newBlock = false;
-	    }
-
-	    if(isBranchReturn(ins)) { //check branch first to make sure not messing up with label
-		//block.add(ins);
-		noDupAdd(ins, block);
-		newBlock = true; //indicate next is a leader
-	    } else if(containLabel(ins)) {
-		newBlock = true; //indicate next is a leader
-		
-	    } else {
-		//block.add(ins);
-	}
-		//noDupAdd(ins, block);
-	  	//block.add(ins); //entry may be a label
-	}
-	*/
     }
-
+/*
 	public void noDupAdd(String ins, List<String> block) {
 		if (block.size()==0)
 			block.add(ins);
 		if(!block.get(block.size()-1).equals(ins))
 			block.add(ins);
 	}
-
+*/
     public void generateCFG() {
 
 	for(BasicBlock b: blocks) {
 	    List<String> block = b.getBlockList();
 	    String lastLine = block.get(block.size()-1);
+		System.out.println("lastline of " + b.getBlockId() + "  is " + lastLine);
 	    int id = b.getBlockId();
-	    if(!lastLine.contains("goto,") || !lastLine.contains("return,") && id < blocks.size() - 1) { //check if last is not goto nore return nor last blocks
+	   if((!lastLine.contains("goto,")) && (!lastLine.contains("return,")) && id < blocks.size() - 1) { //check if last is not goto nore return nor last blocks
+		System.out.println("set next and prev");
 		b.setNextBlock(id + 1);
 		blocks.get(id+1).setPrevBlock(id);
 	    }
 	}
 
+
 	for(BasicBlock b: blocks) {
 	    List<String> block = b.getBlockList();
 	    String lastLine = block.get(block.size()-1);
+
 	    if(isBranchReturn(lastLine)) {
 		for (BasicBlock r: blocks) {
+
 		    List<String> toCompare = r.getBlockList();
 		    String firstLine = toCompare.get(0);
+
 		    if(containLabel(firstLine)) {
-			if(getLabel(lastLine).equals(firstLine)) {
+
+			if(lastLine.contains(firstLine.substring(0, (firstLine.length()-1) ) ) ) {
 			    b.setNextBlock(r.getBlockId());
 			    r.setPrevBlock(b.getBlockId());
 			}
+
+
 		    }
 		}
 	    }
+
 	}
 	
 

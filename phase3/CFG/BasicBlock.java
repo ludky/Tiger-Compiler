@@ -48,7 +48,7 @@ public class BasicBlock{
 	prevBlock = prev;
     } 
 
-    public int getPrevBlock() {
+    public int getPrev() {
 	return prevBlock;
     }
 
