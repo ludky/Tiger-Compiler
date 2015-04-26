@@ -1,4 +1,4 @@
-package p3;
+//package p3;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -14,7 +14,14 @@ public class CFG {
     	blocks = new ArrayList<BasicBlock>();
     	leader = new ArrayList<String>();
     }
-
+/*
+	public CFG(ArrayList<String> strings, String s) {
+		//StringToInstruction si = new StringToInstruction(strings);
+		//this(si.getInstructionList());
+		//this((new StringToInstruction(strings)).convert(strings));
+		this(StringToInstruction.convert(strings));
+	}
+*/
     public void generateBasicBlock() {
     	List<Instruction> block = new ArrayList<>();
     	int blockId = 0;
@@ -90,8 +97,8 @@ public class CFG {
 
     public List<BasicBlock> getBlockList() {
     	return blocks;
-    }
-    
+    }   
+
     public String toString() {
     	String ans = "";
     	for (BasicBlock a : blocks) {
