@@ -5,23 +5,31 @@ public class Temp
 	protected static int count = 0;
 	protected int number;
 	protected String name;
+	protected boolean isFloat;
 
-	public Temp()
+	public Temp() {
+		this(false);
+	}
+	
+	public Temp(boolean isf)
 	{
 		number = ++count;
 		name = "t" + number;
+		isFloat = isf;
 	}
+	
 	public Temp(String n)
 	{
 		name = n;
 	}
+	
 	public Temp(int t) {
 		number = t;
 		if (t>0)
 			name = "t" + number;
 		switch (t) {
 		case 0:
-			name = "$0";
+			name = "$zero";
 			break;
 		case -2:
 			name = "$v0";

@@ -15,7 +15,7 @@ public class InsLabel implements Instruction {
 	public boolean equals(Object o) {
 		if (o instanceof InsLabel) {
 			InsLabel curr = (InsLabel) o;
-			return this.label.equals(((InsLabel) o).label);
+			return this.label.equals(curr.label);
 		}
 		return false;
 	}
