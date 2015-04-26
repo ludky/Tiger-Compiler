@@ -1,0 +1,26 @@
+label2:
+add, a, c, t9
+assign, c, t9,
+label3:
+brgeq, j, 5, label4
+brgeq, i, 3, label5
+add, j, 1, t10
+assign, j, t10,
+label5:
+goto, label3, ,
+label4:
+goto, label0, ,
+label1:
+add, 2.0, c, t11
+assign, a, t11,
+mult, a, a, t12
+assign, c, t12,
+brleq, c, 4.0, label6
+add, a, c, t13
+assign, a, t13,
+goto, label7, ,
+label6:
+mult, a, c, t14
+assign, c, t14,
+label7:
+return, s0, ,

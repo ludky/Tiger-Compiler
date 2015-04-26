@@ -20,15 +20,18 @@ public class CFG {
 
     public void generateBasicBlock() {
 
-	
+	//first is natually one of the entry point of a basic block
+	//leader.add(ir_code.get(0)) ;
 	List<String> block = new ArrayList<String>();
 	int blockId = 0;	//blockId should match the idx of block in the arraylist
         block.add(ir_code.get(0)); // add label main:
 	boolean newBlock = false;
-	//String label = "null";
-//	String prev = "";
-//	boolean isLabel = false;
+	String label = "null";
+	String prev = "";
+	boolean isLabel = false;
+	//int forward = 0;
 
+	//int curIdx
         for(int i = 1; i < ir_code.size(); i++) {
 		String ins = ir_code.get(i);
 		if(isBranchReturn(ins)) {
