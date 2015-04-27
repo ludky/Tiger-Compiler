@@ -1,26 +1,26 @@
-main:
-	assign, _t0, 1, 
-	assign, _t1, 1, 
-	brlt, _t0, 1, label0
-	assign, _t1, 0, 
-label0:
-	assign, _t2, 1, 
-	brneq, _t1, _t2, label1
-	assign, _t0, 1, 
-	div, _t0, 2, _t3
-	assign, _t0, _t3, 
-	goto, label2, , 
-label1:
-	assign, _t0, 2, 
 label2:
-	assign, _t4, 1, 
-	brgt, 1, 1, label3
-	assign, _t4, 0, 
+add, a, c, t9
+assign, c, t9,
 label3:
-	assign, _t5, 1, 
-	brneq, _t4, _t5, label4
-	assign, _t0, 3, 
-	goto, label5, , 
-label4:
+brgeq, j, 5, label4
+brgeq, i, 3, label5
+add, j, 1, t10
+assign, j, t10,
 label5:
-	return, , , 
+goto, label3, ,
+label4:
+goto, label0, ,
+label1:
+add, 2.0, c, t11
+assign, a, t11,
+mult, a, a, t12
+assign, c, t12,
+brleq, c, 4.0, label6
+add, a, c, t13
+assign, a, t13,
+goto, label7, ,
+label6:
+mult, a, c, t14
+assign, c, t14,
+label7:
+return, s0, ,

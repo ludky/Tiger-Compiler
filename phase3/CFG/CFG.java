@@ -15,6 +15,7 @@ public class CFG {
     	leader = new ArrayList<String>();
     }
 
+
     public void generateBasicBlock() {
     	List<Instruction> block = new ArrayList<>();
     	int blockId = 0;
@@ -22,10 +23,10 @@ public class CFG {
         boolean newBlock = false;
         for(int i = 1; i < ir_code.size(); i++) {
         	Instruction ins = ir_code.get(i);
-        	if (ins instanceof Branch || ins instanceof Return) {
+        	if (ins instanceof Branch /*|| ins instanceof Return || ins instanceof Goto*/) {
         		newBlock = true;
         	} else if (ins instanceof InsLabel) {
-        		if(!(ir_code.get(i-1) instanceof Branch || ir_code.get(i-1) instanceof Return)) {
+        		if(!(ir_code.get(i-1) instanceof Branch  || ir_code.get(i-1) instanceof Return || ins instanceof Goto )) {
         			blocks.add(new BasicBlock(block, blockId));
         			block = new ArrayList<Instruction>();
         			blockId++;
@@ -90,8 +91,8 @@ public class CFG {
 
     public List<BasicBlock> getBlockList() {
     	return blocks;
-    }
-    
+    }   
+
     public String toString() {
     	String ans = "";
     	for (BasicBlock a : blocks) {
