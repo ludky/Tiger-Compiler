@@ -223,7 +223,7 @@ public class dataFlowAnalysis {
     }
 
     public void printReg() {
-	int[] cost = graphColoring();
+	graphColoring();
 
 
 	String[] ss = new String[MAX_REG];

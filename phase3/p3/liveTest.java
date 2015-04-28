@@ -13,7 +13,7 @@ public class liveTest {
 try {
 /*****************************************************************************************************************************/
 
-	List<String> content = Files.readAllLines(Paths.get("/home/lu/Desktop/CFG/p3/test1.text"), Charset.defaultCharset());
+	List<String> content = Files.readAllLines(Paths.get("/home/lu-ubunttu/Desktop/p3/test1.text"), Charset.defaultCharset());
 	ArrayList<String> test = new ArrayList<String>(content);
 	
 	StringToInstruction si = new StringToInstruction(test);
@@ -27,11 +27,17 @@ try {
 
 
 
-	System.out.println("---------------basic block cfg-----------------");
+	//System.out.println("---------------basic block cfg-----------------");
 
 
 
 	CFG varTest = new CFG(te);
+
+	for(String s: varTest.getList()) {
+		System.out.println(s);
+	}
+
+/*
     	varTest.generateBasicBlock();
     	varTest.generateCFG();
     	System.out.println(varTest);
@@ -41,8 +47,8 @@ try {
 		dataFlowAnalysis da = new dataFlowAnalysis(block);
 
 		da.allBlocksLiveness(block);
-		da.printAll(block);
-
+	da.printAll(block);
+*/
 }
 	catch (Exception e) {
 		System.out.println(e.getMessage());
